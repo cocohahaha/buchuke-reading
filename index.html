@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#efe4cc">
-<title>补课 · 和 Ronin 聊过的东西</title>
-<meta name="description" content="Coco 的私人补课本：把和 Ronin 一个多月的对话，拆成一口气读得完的十二章。">
+<title>读本 · 信息、模型与人</title>
+<meta name="description" content="十五个主题：信息论、大模型的记忆与工作方式、agent、学习、产品、声音设计。每个说法都核对过。">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23fbf6ea'/%3E%3Ccircle cx='16' cy='16' r='7' fill='none' stroke='%23E8875F' stroke-width='2.4'/%3E%3Ccircle cx='16' cy='16' r='2.4' fill='%23F0EEE6'/%3E%3C/svg%3E">
 <style>
 :root{
@@ -74,7 +74,7 @@ body.ready #loader,body.nogl #loader{opacity:0;visibility:hidden}
 .plate::before{content:"";position:absolute;left:0;right:0;top:0;height:5px;background:var(--brick);border-radius:4px 4px 0 0}
 .cnum{display:inline-block;font:600 13px/1 var(--sans);letter-spacing:.24em;color:var(--brick)}
 .cnum::before{content:"第 "}
-.cnum::after{content:" 课"}
+.cnum::after{content:" 章"}
 .chead h2{margin:.4em 0 .2em;font:700 clamp(36px,4.6vw,60px)/1.2 var(--serif);letter-spacing:.03em}
 .chead .csub{margin:0;font:400 clamp(17px,1.8vw,21px)/1.55 var(--serif);color:var(--ink2)}
 .chead .clead{margin:1.3em 0 0;padding:12px 14px;background:var(--paper2);border-radius:3px;font:400 16.5px/1.85 var(--serif);color:var(--ink)}
@@ -98,10 +98,11 @@ body.ready #loader,body.nogl #loader{opacity:0;visibility:hidden}
 .card p.one b.tag{background:var(--ink)}
 .card b.t-more{background:transparent;color:var(--sky);border:1px solid currentColor;line-height:1.65}
 .card b.t-you{background:var(--sage)}
+.card b.t-fix{background:var(--red)}
+.card b.t-lim{background:var(--mustard);color:var(--ink)}
 .card b.t-ext{background:transparent;color:var(--sky);border:1px dashed var(--sky);line-height:1.65}
 .card .flag{display:inline-block;margin:0 .2em;padding:0 .45em;border-radius:3px;font:500 11px/1.7 var(--sans);letter-spacing:.06em;color:var(--brick);border:1px solid rgba(154,59,42,.45);background:#fff;vertical-align:.1em}
 .card.ext{background:#f6f3e6;border-style:dashed;border-color:#b9c7d4}
-.card.private::before{content:"只写给你";position:absolute;right:28px;top:-12px;padding:3px 10px;background:#f3c9cc;color:#6e2f37;font:600 11px/1.5 var(--sans);letter-spacing:.14em;transform:rotate(2deg);box-shadow:0 3px 8px -4px rgba(70,45,20,.4)}
 .card p.src{margin-top:1.1em;padding-top:.8em;border-top:1px dashed var(--rule);font-size:12.5px;line-height:1.7;color:var(--ink3)}
 .card p.src a{color:var(--sky)}
 .card em{font-style:normal;background:linear-gradient(transparent 58%,var(--hl) 58%);padding:0 .1em}
@@ -151,10 +152,10 @@ body.ready #loader,body.nogl #loader{opacity:0;visibility:hidden}
 
 <div id="loader" role="status" aria-live="polite">
   <div>
-    <div class="mark" aria-label="补课"><span>补</span><span>课</span></div>
+    <div class="mark" aria-label="读本"><span>读</span><span>本</span></div>
     <svg class="ul" viewBox="0 0 230 14" aria-hidden="true"><path d="M4 9 C 60 3, 120 13, 226 6"/></svg>
     <div class="drop"></div>
-    <p>和 Ronin 聊过的东西 · 正在翻开</p>
+    <p>正在翻开</p>
   </div>
 </div>
 
@@ -166,49 +167,24 @@ body.ready #loader,body.nogl #loader{opacity:0;visibility:hidden}
 
 <main>
 
-<!-- ============ 0 序 ============ -->
-<section class="chapter" data-title="序" data-caption="<b>图 0</b>两个人一来一回，纸条越摞越高，最后订成这本小册子">
+<!-- ============ 0 ============ -->
+<section class="chapter" data-title="目录" data-caption="<b>图 0</b>卡片一张张叠起来，十五个主题">
   <div class="hero">
-    <span class="kicker">写给 Coco 的补课本</span>
-    <h1>补课</h1>
-    <p class="sub">九月初到十月初，你和 Ronin 在微信上聊了两千六百条。<br>他说过的东西看着散，其实是一条线。<br>这里把它拆成十二章，一口气读得完。</p>
+    <span class="kicker">信息 · 模型 · 人</span>
+    <h1>读本</h1>
+    <p class="sub">十五个主题，每个主题几张卡片。<br>卡片里的说法都核对过：错的改了，片面的补了限制条件。</p>
     <div class="scroll"><i></i>向下滚动</div>
   </div>
   <article class="card">
-    <h3>为什么是这个样子</h3>
-    <p>你在对话里说过两句话。</p>
-    <p>一句是：「我现在的脑力只吃得进去优秀之人已经消化过一遍的总结版。」另一句是嫌他「表达精准但不易读」。</p>
-    <p>所以这本册子按第一句挑内容，按第二句写字。每张卡片三段：</p>
+    <h3>卡片上的标记</h3>
     <ul>
       <li><b class="tag">一句话</b>只读这一行也能拿走大意。</li>
-      <li><b class="tag t-more">展开</b>用生活里的东西打个比方，再讲来龙去脉。</li>
-      <li><b class="tag t-you">跟你的关系</b>落回你的工作、你的项目、你自己。</li>
+      <li><b class="tag t-more">展开</b>来龙去脉和例子。</li>
+      <li><b class="tag t-fix">更正</b>原说法有错，这里给出改后的版本。</li>
+      <li><b class="tag t-lim">限制</b>说法大体成立，但有适用范围，或有人持不同意见。</li>
+      <li><b class="tag t-you">例子</b>落到具体的工作或项目上。</li>
     </ul>
-    <p>原笔记里拿不准的地方，这里照样标<span class="flag">未核实</span>或<span class="flag">推断</span>。笔记之外另查的补充，标<b class="tag t-ext" style="margin:0 .2em">延伸</b>，出处写在卡片底部。</p>
-  </article>
-  <article class="card">
-    <h3>一条线</h3>
-    <p class="one">信息怎么被定义 → 机器怎么记事 → 思考放在哪 → 一万个 agent 怎么配合 → 循环卡在哪 → 落回人这一侧 → 意义从哪来 → 怎么讲明白 → 你站在哪 → 你和身边的人。</p>
-    <p>前半本是机器，后半本是人。Ronin 自己就是这么讲的：机器那一侧越跑越便宜，最后卡住的总是人。</p>
-    <p class="note">跳过了你已经会的：Gallup 报告、Anthropic 的 AI-Native SDLC、Bitter Lesson、FDE 这个词本身、冯·诺依曼《计算机与人脑》。</p>
-  </article>
-  <article class="card">
-    <h3>如果只有一个晚上</h3>
-    <p>原清单分七批，每批都标了「先学这几个」。合在一起是下面这些，按章节排：</p>
-    <table>
-      <tr><th>先学</th><th>为什么</th><th></th></tr>
-      <tr><td>香农与信息的四张脸</td><td>看懂「LLM 是语言模型」为什么是重点</td><td class="goto">第 1 章</td></tr>
-      <tr><td>模型不记得你、上下文税、「叫我哥」</td><td>直接决定你每天怎么用 Claude Code</td><td class="goto">第 2 章</td></tr>
-      <tr><td>状态的三次搬家</td><td>他整份文档的骨架</td><td class="goto">第 3 章</td></tr>
-      <tr><td>一万个 agent 解题、RSI</td><td>看懂这阵子的新闻和他的赌注</td><td class="goto">第 4 章</td></tr>
-      <tr><td>loop 卡在人、同一盏灯、BP 机、Agent<sup>n</sup></td><td>一个人干六个人的活，先优化哪一步</td><td class="goto">第 5 章</td></tr>
-      <tr><td>用户不需要那么好的油</td><td>选模型先问够不够用</td><td class="goto">第 4 章</td></tr>
-      <tr><td>快脑与慢脑</td><td>决定你怎么读同事</td><td class="goto">第 7 章</td></tr>
-      <tr><td>过度压缩与人味、概念图、记忆是重建</td><td>给机器写和给人写，各用一套规矩</td><td class="goto">第 8 章</td></tr>
-      <tr><td>价值传递、钱鹏飞那一刀、GEO 对标</td><td>游戏、课程、DLG 交付物第一屏放什么</td><td class="goto">第 9 章</td></tr>
-      <tr><td>Delta 与 Echo、SICP、1000 个人</td><td>你的职业定位</td><td class="goto">第 10 章</td></tr>
-      <tr><td>砌墙还是建教堂</td><td>同事说「AI 答得不好」，多半是没给它工作台</td><td class="goto">第 2 章</td></tr>
-    </table>
+    <p>拿不准的地方标<span class="flag">未核实</span>或<span class="flag">推断</span>。厂商或本人的自述标<span class="flag">自述</span>。</p>
   </article>
 </section>
 
@@ -216,866 +192,742 @@ body.ready #loader,body.nogl #loader{opacity:0;visibility:hidden}
 <section class="chapter" data-title="信息" data-caption="<b>图 1</b>8 个杯子里藏着 1 颗球。每问一个「是不是」，就能掀掉一半。问 3 次找到它，这就是 3 bit">
   <header class="chead"><div class="plate">
     <span class="cnum">01</span>
-    <h2>一切从香农开始</h2>
+    <h2>信息与熵</h2>
     <p class="csub">信息，是消除了多少不确定性</p>
-    <p class="clead">Ronin 说香农「到处都有他」。这不是客气话。你今天用的每一个大模型，训练时盯着的那个分数，都是香农 1948 年那篇论文的后代。</p>
+    <p class="clead">8 个杯子，一个下面藏着球。只许问「是不是」，最少问几次能找到？</p>
   </div></header>
   <article class="card">
-    <h3 data-n="1">香农与信息论</h3>
-    <p class="one"><b class="tag">一句话</b>一条消息越出乎意料，带的信息越多。信息的单位叫 bit。</p>
-    <p><b class="tag t-more">展开</b>在沙漠里听到「明天晴」，你几乎什么都没学到，本来就是晴。听到「明天下雪」，你吓一跳，这条消息信息量很大。</p>
-    <p>1948 年，香农在《通信的数学理论》里把这个直觉变成了公式。他故意不管「意义」，只算「意外」。由此他定义了<strong>熵</strong>（平均有多意外），算出一条线路每秒最多能可靠地传多少 bit，也证明了压缩和纠错的极限。今天所有数字通信、压缩包、纠错码都建在这上面。</p>
-    <p><b class="tag t-more">和大模型</b>语言模型训练时有一个分数叫<strong>交叉熵</strong>，说人话就是「猜下一个词猜错了多少」。它是香农熵的直系后代。AI 圈有一条核心信念：<em>猜得准 = 压得小 = 看懂了结构</em>。源头就是香农。</p>
-    <p><b class="tag t-you">跟你的关系</b>你做 GEO 时看到的 perplexity（困惑度）就是熵换了个写法（2 的熵次方）。数字越小，说明模型读这段文字越「不意外」。</p>
-    <p class="src">来源：Shannon (1948). A Mathematical Theory of Communication. Bell System Technical Journal.</p>
+    <h3 data-n="1">bit 和香农熵</h3>
+    <p class="one"><b class="tag">一句话</b>一条消息越出乎意料，带的信息越多，单位是 bit。</p>
+    <p><b class="tag t-more">展开</b>在沙漠里听到「明天晴」，几乎没学到什么。听到「明天下雪」，信息量就很大。</p>
+    <p>杯子的例子：先问「球在右半边吗」，8 个候选剩 4 个；再问一次剩 2 个；第三次剩 1 个。8 = 2×2×2，所以找到球这件事值 3 bit。</p>
+    <p>1948 年香农发表《通信的数学理论》，故意不管意义，只算意外。他由此定义了熵（平均有多意外）和信道容量（一条线路每秒最多能可靠传多少 bit），并证明了压缩和纠错的极限。</p>
+    <p><b class="tag t-more">和大模型</b>语言模型训练时最小化的是交叉熵，白话说就是「猜下一个词猜错了多少」。困惑度（perplexity）是 2 的交叉熵次方（交叉熵以 bit 计）：困惑度为 10，大致相当于每个位置平均在 10 个等可能的词里挑。</p>
+    <p><b class="tag t-lim">限制</b>常听到的说法是「预测得准 = 压缩得小 = 理解了结构」。前两个等号是数学事实，好的预测器可以直接变成好的压缩器。第三个等号有争议：一个把训练文本背下来的模型，在这些文本上压缩得很好，不等于它懂。</p>
+    <p><b class="tag t-you">例子</b>做 GEO 时看到的困惑度，就是这个熵换了写法。数字越小，模型读这段文字越不意外。</p>
+    <p class="src">来源：Shannon, C. E. (1948). A Mathematical Theory of Communication. Bell System Technical Journal.</p>
   </article>
   <article class="card">
-    <h3 data-n="1">「信息」有四张脸</h3>
-    <p class="one"><b class="tag">一句话</b>同一个词「信息」，在科学里至少有四种互不相同的意思。混着用，就会说错话。</p>
-    <p><b class="tag t-more">展开</b>他发给你的那篇 Nature Reviews Physics 文章（Rosas、Mediano、Carroll，2026 年 8 月）列了四张脸：</p>
+    <h3 data-n="1">「信息」的四种含义</h3>
+    <p class="one"><b class="tag">一句话</b>同一个词「信息」，在科学里至少有四种不同的意思，混着用会说错话。</p>
+    <p><b class="tag t-more">展开</b>Rosas、Mediano、Carroll 三人的综述把它们分成四类：</p>
     <ul>
-      <li><strong>工程的</strong>：香农那种，一根线能传多少。</li>
-      <li><strong>统计的</strong>：知道 A，能让你对 B 少猜多少。比如知道今天阴天，你对「会不会下雨」就少猜一点。</li>
-      <li><strong>热力学的</strong>：信息是实打实的物理量，擦掉一个 bit 要花能量（Landauer 1961）。</li>
-      <li><strong>本体论的</strong>：物理学家惠勒的说法，世界本身就是由信息构成的（it from bit）。</li>
+      <li><strong>工程的</strong>：香农那种，一条线路能传多少。</li>
+      <li><strong>统计的</strong>：互信息。知道今天阴天，对「会不会下雨」就少猜一点。</li>
+      <li><strong>热力学的</strong>：信息是物理量。擦掉 1 bit 至少要耗散一点热量（Landauer 1961）。这个下限在 2012 年的实验里测到了（Bérut 等）。</li>
+      <li><strong>本体论的</strong>：物理学家惠勒的 it from bit，认为世界由信息构成。</li>
     </ul>
-    <p>文章不打算选出一个正确答案。四种都对，各管各的地盘。<span class="flag">正文有付费墙，每张脸的解释按术语通常含义给出</span></p>
-    <p><b class="tag t-you">为什么发给你</b>他自己说：「澄清了一个符号背后的若干表征。」「信息」是一个符号，背后有四种东西。大模型也是一个符号系统，它学到的是第二张脸：词和词之间谁常跟着谁。它学到的不是意义本身。这就是他那句「因为 LLM 是语言模型」的意思。</p>
-    <p class="src">来源：Rosas, Mediano & Carroll (2026). Four faces of information in natural systems. Nature Reviews Physics.</p>
+    <p><span class="flag">未核实</span>我没找到这篇综述的期刊页面。Carroll 在 2026 年 3 月的播客里提过这篇文章和这四类。上面每一类的解释按术语的通常含义写。</p>
+    <p><b class="tag t-lim">限制</b>一种常见的推论是：大模型学到的只是词与词的统计依赖（第二种），没有意义。这一点有争议。Othello-GPT（Li 等 2023）只看棋谱序列训练，内部却出现了可以读出的棋盘状态，说明序列统计里可能包含世界的结构。能走多远，研究还在吵。</p>
+    <p class="src">来源：Landauer (1961); Bérut et al. (2012). Nature 483; Li et al. (2023). Emergent World Representations: Exploring a Sequence Model Trained on a Synthetic Task. ICLR; Sean Carroll's Mindscape, AMA, March 2026.</p>
   </article>
   <article class="card">
-    <h3 data-n="1">香农有自己的目标函数</h3>
-    <p class="one"><b class="tag">一句话</b>你搜到香农爱吹单簧管、带妻子去赌场，Ronin 说：「他有自己的目标函数。」</p>
-    <p><b class="tag t-more">展开</b>「目标函数」是机器学习的词：训练时模型拼命去优化的那一个分数，它的一切行为都朝那里长。说一个人有自己的目标函数，是说他真正在追的东西，不是别人以为的名和利。</p>
-    <p>传记《A Mind at Play》里香农的样子：</p>
+    <h3 data-n="1">香农自己的几件事</h3>
+    <p class="one"><b class="tag">一句话</b>香农爱吹单簧管、骑独轮车，还做过一台只会把自己关掉的机器。</p>
     <ul>
-      <li>1950 年做了一只机械老鼠「忒修斯」，会在迷宫里试错、记住路线，是最早的机器学习装置之一。</li>
-      <li>和数学家 Thorp 做了一台藏在身上的小电脑预测轮盘赌：脚趾按开关，耳机听结果。1961 年两对夫妻去拉斯维加斯实测。下注的思路叫凯利公式，是他的同事用信息论推出来的：你掌握的信息优势有多大，就押多少。</li>
-      <li>杂耍、骑独轮车，还做了一台唯一功能是「把自己关掉」的机器。</li>
+      <li>1950 年做了机械老鼠 Theseus，能在迷宫里试错并记住路线，是最早的机器学习装置之一。</li>
+      <li>1961 年和数学家 Ed Thorp 做了可穿戴的轮盘赌预测器（脚趾按开关，耳机听结果），带去拉斯维加斯实测。</li>
+      <li>凯利公式（1956，贝尔实验室的 John Kelly 用信息论推出）：每次押本金的 <em>优势 ÷ 赔率</em>。胜率 60%、赔率 1:1 时，押 20%。押得更多，长期反而更慢，甚至亏光。实际操作里常用「半凯利」，因为胜率本身估不准。</li>
     </ul>
-    <p>你问 Claude 的名字是不是致敬他，Ronin 说答对了。<span class="flag">据媒体转引纽约时报，未见 Anthropic 官方说法</span></p>
-    <p><b class="tag t-you">跟你的关系</b>一个人优化什么，决定他长期能做成什么。这个问题第 11 章还会回来。</p>
-    <p class="src">来源：Soni & Goodman (2017). A Mind at Play；作者 2017 年 Reddit AMA；Bridge Michigan 报道。</p>
-  </article>
-  <article class="card">
-    <h3 data-n="1">信息时代七人组</h3>
-    <p class="one"><b class="tag">一句话</b>他说你「会在不经意间遇到他们」。七个人分两派：一派定义了机器，一派研究人和机器怎么配合。</p>
-    <p><strong>定义机器的</strong></p>
-    <ul>
-      <li><strong>图灵</strong>：1936 年证明有一台「万能机器」，能扮演任何别的计算机器。他划出了「什么能被算」的边界。图灵测试也是他提的。</li>
-      <li><strong>冯·诺依曼</strong>：1945 年定下「程序和数据放在同一个抽屉里」，今天所有电脑都长这样。</li>
-      <li><strong>香农</strong>：就是上面那位。</li>
-    </ul>
-    <p><strong>研究人机配合的</strong></p>
-    <ul>
-      <li><strong>维纳</strong>：1948 年《控制论》。核心是反馈回路：做一下、看结果、和目标比、再调。今天 agent「执行、观察、修正」那一圈就是它。</li>
-      <li><strong>司马贺</strong>：人不找最好的答案，找够用的答案。1971 年他写下「信息的丰富造成注意力的贫乏」，「注意力经济」从这里来。</li>
-      <li><strong>恩格尔巴特</strong>：1962 年主张计算机是用来<em>增强</em>人，不是替代人。1968 年第一次公开演示鼠标和超链接。</li>
-      <li><strong>艾伦·凯</strong>：面向对象编程的原始提出者。他的原意是把程序拆成一群互相发消息、各管各的小细胞。Java 课本里那套层层继承，是后人加的。</li>
-    </ul>
-    <p><b class="tag t-you">跟你的关系</b>Ronin 明显偏后一派，你的 Gallup 结构（读人、读技术、自己能交付）也在后一派。你在 DLG 做的 AI adoption，职业上的祖师爷是恩格尔巴特。当年 Java 课上让你死去活来的 OOP，凯本人的版本其实简单得多。</p>
+    <p><b class="tag t-lim">说明</b>Claude 这个名字是向香农致敬，是媒体广泛的说法，我没找到 Anthropic 的官方确认。</p>
+    <p class="src">来源：Soni & Goodman (2017). A Mind at Play; Kelly, J. L. (1956). A New Interpretation of Information Rate. Bell System Technical Journal.</p>
   </article>
 </section>
 
 <!-- ============ 2 白纸 ============ -->
-<section class="chapter" data-title="白纸" data-caption="<b>图 2</b>模型像一张白纸，写满就擦。能留下的只有旁边那盒卡片，每次开工先递上去。小黄鸟是那只「叫我哥」的金丝雀：纸快写满，它就不叫了">
+<section class="chapter" data-title="白纸" data-caption="<b>图 2</b>模型像一张白纸，写满就擦。能留下的只有旁边那盒卡片，每次开工先递上去。黄色小鸟是金丝雀：规则快掉了，它先不叫">
   <header class="chead"><div class="plate">
     <span class="cnum">02</span>
-    <h2>它每次都不记得你</h2>
-    <p class="csub">模型是一张白纸，记忆都在纸外面</p>
-    <p class="clead">这是「先学这五个」里的第一个。它直接决定你每天怎么用 Claude Code：为什么窗口会满，为什么要写 CLAUDE.md，什么时候该重开。</p>
+    <h2>模型不记得上一次</h2>
+    <p class="csub">记忆都在纸外面</p>
+    <p class="clead">想象一位很聪明的实习生，每天早上醒来都忘了昨天的事。你要他接着干，只能把昨天的材料重新递给他。</p>
   </div></header>
   <article class="card">
-    <h3 data-n="2">模型是无状态的</h3>
-    <p class="one"><b class="tag">一句话</b>每次调用模型，它都是一张白纸，不记得上一次。所谓「记忆」，是你这一次把前情重新递给它。</p>
-    <p><b class="tag t-more">展开</b>想象一位极聪明的实习生，每天早上醒来都忘了昨天。聊天窗口看起来连贯，是因为每说一句，软件都把整段聊天记录从头递给他一遍。</p>
-    <p>所以「上下文窗口快满了」不是模型累了，是递过去的那一沓纸太厚了。CLAUDE.md、memory 文件、项目索引，全都是同一种东西：<strong>把状态放在模型外面</strong>，替它记事。</p>
-    <p><b class="tag t-you">跟你的关系</b>你现在的习惯是：窗口满了就开新窗口，口头重讲一遍，让它重新扫一遍代码。每一次，都在为「它不记得」付全价。</p>
-    <p class="note">这是你 09-13 记下的三个主题之一。</p>
+    <h3 data-n="2">无状态与上下文</h3>
+    <p class="one"><b class="tag">一句话</b>每次调用，模型拿到的只有这一次递给它的文字。</p>
+    <p><b class="tag t-more">展开</b>聊天窗口看起来连贯，是因为每发一句，软件都把整段聊天记录从头发一遍。所谓「上下文窗口快满了」，是递过去的那沓纸太厚，不是模型累了。</p>
+    <p>CLAUDE.md、memory 文件、项目索引都是同一类东西：把状态放在模型外面，每次开工先递上去。</p>
+    <p><b class="tag t-lim">限制</b>「无状态」是常见接口的默认，不是铁律。有的接口可以把对话存在服务端，之后只传一个编号续接（例如 OpenAI 的 Responses API）；聊天产品的「记忆」功能是服务端存一份摘要。但模型读到它们的方式，仍然是被塞进这一次的上下文。</p>
+    <p>上下文长了还有另一个问题：模型对里面各处内容的利用并不均匀。Liu 等人（2023）发现，相关信息放在开头或结尾时答得好，放在中间时明显变差。新一代模型这一点有改善，我没有逐个核对。</p>
+    <p><b class="tag t-you">例子</b>窗口满了就开新窗口、口头重讲一遍、让它重扫一遍代码，每次都在为「它不记得」付全价。</p>
+    <p class="src">来源：Liu, N. F. et al. (2023). Lost in the Middle: How Language Models Use Long Contexts. TACL 2024.</p>
   </article>
   <article class="card">
-    <h3 data-n="2">模型也是一台计算机</h3>
-    <p class="one"><b class="tag">一句话</b>你说「模型也是计算机」，他接了一句「Karpathy 说的 Software 3.0」。</p>
-    <p><b class="tag t-more">展开</b>写程序的方式换了三次：1.0 是人一行行写代码；2.0 是训练出来的神经网络；3.0 是用大白话写的 prompt，大模型就是执行它的那台电脑。</p>
-    <p>Karpathy 2025 年 6 月的演讲里有个比方：模型是 CPU，上下文窗口是内存，prompt 是程序。现在就像 1960 年代：电脑贵，放在机房，大家排队分时间用。</p>
-    <p>演讲里和你最相关的一段：好用的 AI 产品都给你一个「自主度滑杆」，AI 先做，人来验，产品的本事在于让「做一验一」这一圈转得快。第 5 章会接着讲。</p>
-    <p><b class="tag t-you">跟你的关系</b>把它当电脑看就好懂了：一台每次开机都清空内存的电脑。CLAUDE.md 和 memory 文件，是它的硬盘。</p>
-    <p class="src">来源：Karpathy, Software Is Changing (Again)，YC AI Startup School，2025-06；对话 09-15。</p>
+    <h3 data-n="2">把状态放到外面：索引、codegraph、RAG</h3>
+    <p class="one"><b class="tag">一句话</b>每个新会话都让 agent 重读整个项目，是在重复缴「上下文税」。</p>
+    <p><b class="tag t-more">展开</b>让 agent 自由发挥写项目索引，常常抓不住重点，读起来也费劲。更稳的做法是给索引一个固定模板，让它填空。例如六栏，每栏最多三行：这个项目要解决什么；入口文件在哪；数据怎么流；已经拍板的决定；还没决定的事；最近三次改了什么。</p>
+    <p><b>codegraph</b> 这类工具把代码预先解析成「符号、调用、依赖」的图，存在本地数据库里，agent 查图而不是逐个文件扫。一个开源实现（tree-sitter 加 SQLite，通过 MCP 暴露）的作者自报：工具调用减少 88%，token 减少 62%。<span class="flag">自述</span>7 个仓库上的自测，换成自己的仓库要重新量。</p>
+    <p><b>RAG</b>（检索增强生成，Lewis 等 2020）：回答前先从资料库里找出相关片段，塞进这一次的上下文。流程是切块、检索、拼进提示。它是「模型不记得」的标准补丁。</p>
+    <p><b class="tag t-lim">限制</b>模板和 CLAUDE.md 都会被每次读进去，写得越长，越贵，也越容易被忽略。RAG 的毛病是检索不到就答不对，切块还可能把一句话从中间切断。据公开访谈，Claude Code 团队早期试过向量索引，后来改成让模型自己用 grep 和文件列表搜索，效果更好<span class="flag">未逐字核对</span>。预先建索引并不总是赢。</p>
+    <p class="src">来源：Lewis, P. et al. (2020). Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks. NeurIPS; github.com/maxmilian/codegraph README.</p>
   </article>
   <article class="card">
-    <h3 data-n="2">上下文税</h3>
-    <p class="one"><b class="tag">一句话</b>每开一个新会话就让它重读整个项目，是在一遍遍交税。办法不是不做索引，是把索引做成能读、能维护的样子。</p>
-    <p><b class="tag t-more">展开</b>你说试过让 Claude 把项目整理成一份 Markdown 索引，不满意：人读着累，重点也抓歪了。Ronin 的回答很短：那是索引写得不可维护，不是索引没用，「那就设置规则」。</p>
-    <p>规则可以是一张固定的表，让它填空，而不是自由发挥。比如六栏，每栏最多三行：</p>
-    <ol>
-      <li>这个项目要解决什么</li>
-      <li>入口文件在哪</li>
-      <li>数据怎么流</li>
-      <li>已经拍板的决定</li>
-      <li>还没决定的事</li>
-      <li>最近三次改了什么</li>
-    </ol>
-    <p><b class="tag t-you">跟你的关系</b>你已经有一个 /handoff 命令在做类似的事。差的两步：把它变成固定模板；在每次会话结束时自动跑（用 hook）。下一个会话读的就是一页纸，不是整个代码库。</p>
-  </article>
-  <article class="card">
-    <h3 data-n="2">codegraph：给代码画一张地图</h3>
-    <p class="one"><b class="tag">一句话</b>他问你：「那你为什么不装一个 codegraph？」它把代码库预先画成一张地图，agent 查地图，不用一条街一条街走。</p>
-    <p><b class="tag t-more">展开</b>常被提到的是 GitHub 上的 maxmilian/codegraph：把代码拆成「谁定义了什么、谁调用了谁」的关系，存进本地数据库，再通过 MCP 交给 Claude Code。文件一保存就自动更新。它是按语法规则拆的，不是让大模型总结，所以不会「抓错重点」。</p>
-    <p>作者自报：工具调用少 88%，token 少 62%。<span class="flag">厂商自测数字，你的仓库要自己量</span></p>
-    <p><b class="tag t-you">跟你的关系</b>你觉得「让 cc 读一遍代码最直观」。读地图比读代码便宜得多，也不靠某一次总结的质量。可以先在 joran-LiveTranslate 或 coco 上试一个。</p>
-  </article>
-  <article class="card">
-    <h3 data-n="2">fan-out，和散会后的白板</h3>
-    <p class="one"><b class="tag">一句话</b>你截图里那套「一个主 agent 派活给一群子 agent」叫 fan-out。它解决一次会话里的并行，解决不了「散会以后还记得」。</p>
-    <p><b class="tag t-more">展开</b>像一场会里分了五个小组讨论，每组写满一块白板。散会时白板全擦掉。他问的正是这个：「你这里就是一个 fanout 模式，但是跨 session 乃至跨 project 呢？」</p>
-    <p>想让东西活过一次会话，只有三条路：写进文件（索引、memory、CLAUDE.md）；写进地图（codegraph）；或者等第 3 章说的「一直开着的机器」。</p>
-  </article>
-  <article class="card">
-    <h3 data-n="2">skill 该放哪：先弄清什么叫「项目」</h3>
-    <p class="one"><b class="tag">一句话</b>项目是有终点的事。「我怎么读书」「我怎么写文案」不是项目，是管着所有项目的习惯。</p>
-    <p><b class="tag t-more">展开</b>他说把 skill 绑在项目里能减少「skill 爆炸」。你举了反例：微信读书 skill 没法放进某个项目。他补了一个定义：项目是「为了一个独特成果而做的临时性工作」，有头有尾。「读一本书并画出来」是项目；「我怎么读书」是更高一层的东西，天然属于全局。</p>
-    <p>一个好用的分法：</p>
-    <ul>
-      <li>有终点、只服务这一个仓库的 → 放项目里的 .claude/</li>
-      <li>跨项目反复用的能力 → 放全局 ~/.claude</li>
-      <li>连能力都不算，只是你的偏好和背景 → 放 memory</li>
-    </ul>
-    <p><b class="tag t-more">他顺手说的两句</b>「划线等于你的偏好权重标注」：你划的每一道线，都是在告诉自己「这个重要」，和给模型做偏好标注是一回事。「被转移的那部分已经被编码了」：你截图、存进笔记的那个动作，本身就是在记，所以不划线也没丢。</p>
-  </article>
-  <article class="card">
-    <h3 data-n="2">上下文脏了，就重开</h3>
-    <p class="one"><b class="tag">一句话</b>一个错的前提一旦写进上下文，后面每一步都会被带偏，而且退不回去。最省事的办法是开新会话。</p>
-    <p><b class="tag t-more">展开</b>像一滴墨滴进一杯水，你没法把它挑出来。钱鹏飞在 9.9 那场会上说：「注入了错误的上下文……它不会把它回滚掉，这东西一直会在。」Ronin 的解法：「你不如直接重新开一个 session。」</p>
-    <p>这里要分清两种情况：</p>
-    <ul>
-      <li>窗口<strong>满了</strong>：该做的是把状态放到外面（索引、memory、handoff），别让它重读。</li>
-      <li>窗口<strong>脏了</strong>：早先一个错的假设已经在里面。这时重开是对的，不是浪费。重开时只带「已经确认的结论」，不带过程。</li>
-    </ul>
-    <p><b class="tag t-you">跟你的关系</b>判断信号很简单：你发现自己在<strong>第三次</strong>纠正同一个误解，这个会话就脏了。</p>
-  </article>
-  <article class="card">
-    <h3 data-n="2">「叫我哥」：一只金丝雀</h3>
-    <p class="one"><b class="tag">一句话</b>他让 agent 每次都叫他「哥」。哪天它不叫了，他就知道上下文已经炸了，前面的规矩它跟不住了。</p>
-    <p><b class="tag t-more">展开</b>以前矿工下井会带一只金丝雀，它先倒下，人就知道空气有毒。「叫哥」这条指令本身没用，但它和你真正在乎的规矩（格式、语气、不许做的事）写在同一个地方。它先掉，说明那些也快掉了。</p>
-    <p>为什么会掉：对话越长，模型对开头那些话越不上心。2023 年一篇叫「Lost in the Middle」的研究发现，长长一段上下文里，中间的信息最容易被忽略。</p>
-    <p>现成的类比：摇滚乐队 Van Halen 的巡演合同里有一条「后台不许有棕色 M&M 豆」。主唱后来解释，他们的舞台设备很重，合同里有一堆安全条款；碗里只要出现棕色豆子，就说明主办方没细读合同，所有安全项都得重查。</p>
-    <p><b class="tag t-you">跟你的关系</b>你现在是「窗口快满了就停」，看的是容量。金丝雀看的是质量：窗口没满，规矩也可能已经掉了。今天就能在一个项目的 CLAUDE.md 里试：让它固定用某个词开头，看大概聊多长它开始漏。</p>
-    <p class="src">来源：对话 09-27；Liu et al. (2023). Lost in the Middle；David Lee Roth (1997). Crazy from the Heat。</p>
-  </article>
-  <article class="card">
-    <h3 data-n="2">砌墙还是建教堂</h3>
-    <p class="one"><b class="tag">一句话</b>他这阵子反复说：模型已经差不多了，拉开差距的是模型外面那一整套工程。Claude 的那一套「设计得非常美」。</p>
-    <p><b class="tag t-more">展开</b>同一位厨师，给他一间设备齐全、刀具摆好、菜谱贴墙的厨房，和给他一口锅，做出来的菜不是一个水平。模型就是那位厨师，外面那套工程（工具、规则、上下文的组织）就是厨房。业内叫它 harness。</p>
-    <p>他的原话：「模型已经达到均线了，但是各家的 harness 惨不忍睹。」「Anthropic 非常耐心地给 Claude 这个模型准备好了它的工作台。」「LLM 只能吐 token，决定最终渲染效果的是一套复杂工程。」他说自己已经部分复现了「用 GPT 做出 Claude 的输出质量」，感觉是 GPT 的工程拖累了它的模型。还说「光是交互，Claude 就做了 39 个」。<span class="flag">39 这个数是他看到的，未核实</span></p>
-    <p>「你是在砌墙还是在建造教堂」，是他转来和博庸聊天时的一句。</p>
-    <p><b class="tag t-you">跟你的关系</b>你在 DLG 教同事用 AI，最常听到「它答得不好」。更准的诊断是：多数时候不是模型不行，是没给它工作台（文件、工具、规则、上下文）。你自己的 skill、MCP、CLAUDE.md，就是在搭工作台。</p>
-  </article>
-  <article class="card ext">
-    <h3 data-n="2">三个石匠</h3>
-    <p><b class="tag t-ext">延伸 · 出处</b>原笔记说「砌墙还是建教堂」出自一个流传很广的寓言，出处不可考。补一点：这个寓言最常被归到管理学家德鲁克 1954 年的《管理的实践》。有人问三个石匠在干什么，第一个说「在挣钱糊口」，第二个说「在做全国最好的石匠活」，第三个说「在建一座大教堂」。</p>
-    <p>有意思的是，据转述，德鲁克担心的恰恰是第二个：只顾把自己的手艺做到极致，忘了整座建筑要什么。放回 Ronin 的话里：把单个模型调到最强是第二个石匠，把工作台搭好、让模型为整件事服务，才是第三个。</p>
-    <p class="src">延伸来源：Drucker (1954). The Practice of Management（多见于二手引述，原书页码与更早出处未核实）；<a href="https://www.hrexchangenetwork.com/hr-management/columns/drucker-on-the-danger-of-professionalism-and-its-c" rel="noopener">HR Exchange Network: Drucker on the Danger of Professionalism</a>。</p>
+    <h3 data-n="2">窗口「满了」和「脏了」，金丝雀</h3>
+    <p class="one"><b class="tag">一句话</b>窗口满了，把状态搬到外面；窗口脏了，直接重开。</p>
+    <p><b class="tag t-more">展开</b>「脏」指早先一个错误的假设已经写进上下文，后面每一步都在它的基础上走。模型不会自己把它撤回。你发现自己在第三次纠正同一个误解，这个会话就脏了。重开时只带「已经确认的结论」，不带过程。</p>
+    <p><b>金丝雀指令</b>：在规则里加一条无关紧要的要求，例如「每次回复先称呼我一声『哥』」。哪天它不叫了，说明它已经跟不住前面的指令，真正重要的规则多半也在掉。</p>
+    <p>摇滚乐队 Van Halen 的巡演合同里有一条「后台不许有棕色 M&M 巧克力豆」。主唱 David Lee Roth 在自传里解释：舞台设备很重，合同里满是安全条款，碗里只要出现棕色豆子，就说明主办方没细读合同，得把所有安全项重查一遍。</p>
+    <p><b class="tag t-lim">限制</b>金丝雀只是个启发式。简单的格式规则和复杂的规则衰减速度不一样：它还在叫，不保证别的规则都在；它不叫了，也不能精确判断掉了多少。固定用某个词开头的规则可以先在一个项目里试，看大概多长的会话它开始漏。</p>
+    <p class="src">来源：Roth, D. L. (1997). Crazy from the Heat.</p>
   </article>
 </section>
 
-<!-- ============ 3 搬家 ============ -->
-<section class="chapter" data-title="三次搬家" data-caption="<b>图 3</b>一个四层书架。红球是「想到一半的东西」：从草稿纸，搬到出门查资料，再收回脑子里绕圈；最底层那台机器一直亮着">
+<!-- ============ 3 状态 ============ -->
+<section class="chapter" data-title="三次搬家" data-caption="<b>图 3</b>一个四层书架。红球是「想到一半的东西」：从草稿纸，搬到出门查资料，再收回脑子里绕圈；最底层那台机器一直亮着（这一层是推测）">
   <header class="chead"><div class="plate">
     <span class="cnum">03</span>
-    <h2>状态的三次搬家</h2>
-    <p class="csub">思考到一半的东西，放在哪里</p>
-    <p class="clead">这是他那篇署名文章《基础模式：第三次更替》的骨架。过去四年模型的每次换代，表面上眼花缭乱，其实只动了一个变量。</p>
+    <h2>思考的状态放在哪</h2>
+    <p class="csub">从草稿纸，到外部世界，到模型内部</p>
+    <p class="clead">模型想一件事的时候，中间结果存在哪儿？这几年的几次大变化，可以按这个问题排一排。</p>
   </div></header>
   <article class="card">
-    <h3 data-n="3">四次搬家</h3>
-    <p class="one"><b class="tag">一句话</b>模型每次换形态，动的都是同一件事：「想到一半的东西」放在哪。</p>
-    <p><b class="tag t-more">展开</b>拿做一道难题来比：</p>
+    <h3 data-n="3">四个位置</h3>
+    <p class="one"><b class="tag">一句话</b>思考中间的结果，先是写在纸上，然后是写在纸上加外部世界，然后收回模型内部。第四个位置是推测。</p>
     <ul>
-      <li><strong>第一次，写在草稿纸上。</strong>模型把想法一个字一个字写出来（叫「思维链」，CoT）。好处是不用在脑子里硬记；坏处是写下就擦不掉，第三步的「有可能」到第十步就变成了「就是」。</li>
-      <li><strong>第二次，草稿纸加出门查资料。</strong>模型可以调工具、看结果、再决定下一步（叫 ReAct，也就是今天的 agent）。Cursor、Claude Code、Codex 都长在这一格。</li>
-      <li><strong>第三次，收回脑子里。</strong>同一个脑子把问题闭着眼过好几遍，不说话，想完才开口。每过一遍都能推翻上一遍。这是第一次有了「回头路」。他称为「第三个基础模式」。</li>
-      <li><strong>第四次（他的赌注）：一台一直开着的机器。</strong>状态从不清零。</li>
+      <li><strong>思维链（CoT，Wei 等 2022）</strong>：把中间步骤一个词一个词写出来。像在草稿纸上算题。</li>
+      <li><strong>ReAct 和 agent（Yao 等 2022）</strong>：想一步，调用工具，看结果，再想下一步。Cursor、Claude Code、Codex 都长在这一格。</li>
+      <li><strong>隐空间循环</strong>：同一组参数反复过很多遍，中间结果留在隐藏向量里，不吐字，转完才开口。代表研究有 Meta 的 Coconut（2024 年 12 月）和 Geiping 等人的 Huginn（2025 年 2 月，同一个模块循环任意次，用循环次数换推理深度）。</li>
+      <li><strong>一直开着的机器</strong>：状态不清零。这一格是某些人的预测，没有哪家公司公开证实过。</li>
     </ul>
-    <p>他举的例子：问投资人「26 年还值得买苹果吗」，脱口而出是「不如买英伟达」；闭眼多想几遍，会改口。用的是同一个脑子，只是多转了几圈。</p>
+    <p>例子：问「现在还值得买苹果股票吗」。第一反应是「不如买英伟达」。多想几圈，可能改口。隐空间循环就是在模型内部做这几圈。</p>
+    <p class="src">来源：Wei et al. (2022). Chain-of-Thought Prompting; Yao et al. (2022). ReAct; Hao et al. (2024). Training LLMs to Reason in a Continuous Latent Space; Geiping et al. (2025). Scaling up Test-Time Compute with Latent Reasoning.</p>
   </article>
   <article class="card">
-    <h3 data-n="3">第三次搬家，哪些是真的</h3>
-    <p class="one"><b class="tag">一句话</b>「模型在脑子里绕圈」这条研究路线是真的；「GPT-6 Astra 用了它」是他的推断。</p>
-    <p><b class="tag t-more">展开</b>研究里叫 latent reasoning 或 recurrent depth。代表作：Meta 2024 年底的 Coconut（让模型在内部推理，不把每一步写成字），和 2025 年初的 Huginn（同一块网络循环任意次，用圈数换深度）。</p>
-    <p>Ronin 自己在文档里分得很清：「这条路线存在」是观察，「Astra 用了它」是推断，「没有人在外面能证实」。<span class="flag">推断</span>你读的时候也分开。</p>
-    <p><b class="tag t-more">Astra 博客说了什么</b>这部分核实过。OpenAI 开发者博客讲怎么给 GPT-6 Astra 写 skill 和 prompt：</p>
+    <h3 data-n="3">原来这套说法里不准的几处</h3>
+    <p class="one"><b class="tag t-fix">更正</b>这个四格框架好记，但有几句说过头了。</p>
     <ul>
-      <li>skill 的描述越短越好，只说清「什么时候用」。skill 本身变成一个「指路牌」，指向该读的文档。</li>
-      <li>「过于具体的指导，现在可能反而拖累结果。」</li>
-      <li>AGENTS.md 别再写「每次改代码前先读全部文档」，改成按场景给链接。</li>
-      <li>模型对「什么时候该停」更犹豫了，所以完成标准要你事先写清。</li>
+      <li><b class="tag t-fix">更正</b>「每次形态更替只动了一个变量」。同期至少还有基于人类反馈的强化学习（RLHF）、用可验证答案做强化学习（o1、R1 这一类的关键）、混合专家（MoE）。</li>
+      <li><b class="tag t-fix">更正</b>「思维链写下来就改不了」。模型可以在链里回头，o1 和 R1 一类模型经常写「等一下，我再检查」；也可以多采样几条链再投票（self-consistency）。毛病在于：第三步一个「有可能」被当成前提，后面会被它带偏。</li>
+      <li><b class="tag t-fix">更正</b>「隐空间循环是第一次出现回头路」。循环结构早就有：循环神经网络，2018 年的 Universal Transformer（同一层重复应用，步数可变）。新的是把它用到大语言模型的推理上。</li>
+      <li><span class="flag">推断</span>「GPT-6 Astra 用了隐空间循环」。外部没有证据，原笔记作者也标成推断。</li>
     </ul>
-    <p><b class="tag t-you">跟你的关系</b>这直接反驳了你「与其设计索引，不如口头重讲一遍」的习惯。方向变了：给 agent 的不是更多说明，是更短、更准的指路牌。你的 CLAUDE.md 和 skills 可以按这个标准做一次减法。</p>
-    <p class="src">来源：OpenAI 开发者博客 Rethinking skills and prompts for GPT-6 Astra；Hao et al. (2024) Coconut；Geiping et al. (2025) Huginn。</p>
+    <p class="src">来源：Dehghani et al. (2018). Universal Transformers; Wang et al. (2022). Self-Consistency Improves Chain of Thought Reasoning in Language Models.</p>
   </article>
   <article class="card">
-    <h3 data-n="3">第四格属于谁</h3>
-    <p class="one"><b class="tag">一句话</b>你问电脑上跑的 cc、agy、pi、hermes 谁会先进化到第四格，他答：「最强的玩家最先拿到结果，有云服务的模型公司。」</p>
-    <p><b class="tag t-more">展开</b>一台一直开着、从不清零的机器，要同时握着三样东西：模型本身、24 小时不关的算力、离模型足够近的记忆仓库。你电脑上那些都是外壳，笔记本一合，状态就停了。<span class="flag">这一段是按他的回答做的推演</span></p>
-    <p>你转「苹果重返服务器市场」，他只回一句：「这里的重点是模型公司。」有服务器、没有自己的前沿模型，进不了这一局。</p>
-    <p><b class="tag t-you">跟你的关系</b>不用花精力押「哪个本地 agent 会赢」。本地工具的价值是让你现在就能用，不是押未来。</p>
-  </article>
-  <article class="card">
-    <h3 data-n="3">ChatGPT Pro 不是一个更强的模型</h3>
-    <p class="one"><b class="tag">一句话</b>Pro 是一套跑在云上的 agent 工程：同时开很多路会话，再把结果对齐。</p>
-    <p><b class="tag t-more">展开</b>他说 Pro「类似 deep research」，可以把你的 GitHub 仓库交给它分析，「主要是用多路并行的 session 来实现一致性」。然后补了四个字：test time scaling。说人话：不是把模型练得更大，而是在答题的时候多花算力，多想几路，再挑出一致的答案。</p>
-    <p><b class="tag t-you">跟你的关系</b>你 09-11 说过「一个项目跑了 245 个子 agent」。跑的是同一个思路，只是规模小得多。</p>
-  </article>
-  <article class="card">
-    <h3 data-n="3">价格阶梯：$20 → $200 → $2000</h3>
-    <p class="one"><b class="tag">一句话</b>他的看法是，每贵十倍，卖的就换了一种东西：$20 卖对话，$200 卖 agent 工程，$2000 卖一台一直开着的机器。</p>
-    <p><b class="tag t-more">展开</b>他转来一篇「ChatGPT 要卖 500 美元套餐」的文章，只说了一句：「2000 美元档位留给 ultra。」9.9 那场会上他推演过：Plus $20，Pro $200，2027 年可能出 Ultra $2000。<span class="flag">推测与群聊传闻</span></p>
-    <p><b class="tag t-you">跟你的关系</b>以后评估 DLG 该买哪一档，先问一句：这一档卖的是更强的模型，还是更长的运行时间？大多数任务，前者就够。</p>
-  </article>
-  <article class="card">
-    <h3 data-n="3">人人都需要一个 Jarvis</h3>
-    <p class="one"><b class="tag">一句话</b>云算力谁都有了，缺的是让 AI 自己一直跑下去的工程：给它一个目标，它 24 小时在云上干活、检查自己、改进自己。</p>
-    <p><b class="tag t-more">展开</b>你说 Claude 送了你 250 美元云电脑额度还没试，他说「现在都有云服务，但是缺乏工程」。你反问「不是人人都要 7×24 做开发」，他答：「人人都需要一个 Jarvis」，「只需要读取你的历史对话就知道你的欲望，你的理想，你的愤怒，你的悔恨」。还有一句：「ASI 的雏形就是 550W，简称 Moss。」</p>
-    <p>Jarvis 是《钢铁侠》里的 AI 管家。550W 是《流浪地球 2》里的量子计算机，这串字转 180 度就是 MOSS。</p>
-    <p>你问在点上：「记忆问题还没有解决。」他说的「读取你的历史对话」，就是第 6 章的「开卷考试」（RAG）。这本册子本身就是这么做出来的：读你们的聊天记录，提炼出你该知道的东西。</p>
-    <p><b class="tag t-you">跟你的关系</b>群里有人抱怨这笔额度「花几个小时配好环境，修一个 bug，额度没了」。要试就挑一件需要反复跑的事，才看得出「一直跑」值不值。DLG 客户的数据别拿去试，得先过公司的模型白名单。</p>
+    <h3 data-n="3">给新模型写提示，越写越短</h3>
+    <p class="one"><b class="tag">一句话</b>OpenAI 给 GPT-6 Astra 的使用建议是：少给步骤，多给边界和完成标准。</p>
+    <p><b class="tag t-more">展开</b>据第三方汇总（OpenAI 的原文我没抓到）：技能（skill）的描述写短，只说「什么时候用」；AGENTS.md 里不要再写「每次改代码前先读完所有文档」，改成按场景链接；因为模型更倾向于遇到信息不全就停下来问，完成标准和哪些决定可以自己做，要事先写清。</p>
+    <p><b class="tag t-lim">限制</b>这是针对一个模型的建议。能力较弱的模型，详细的步骤说明通常还有用。更稳的做法是改一次，量一次，不要整套照搬。</p>
+    <p><b class="tag t-you">例子</b>给自己的 CLAUDE.md 和 skills 做一次减法：删掉模型已经会做的，留下它做不对的和必须遵守的。</p>
+    <p class="src">来源：OpenAI 开发者文档 GPT-6 Astra 页及第三方汇总（The Neuron、Mindverse 等），原提示指南未抓到。</p>
   </article>
 </section>
 
-<!-- ============ 4 工业化 ============ -->
-<section class="chapter" data-title="智力工业化" data-hud="agents" data-caption="<b>图 4</b>左边的小机器人越来越多，一直数到一万；往下滚，中间那排「做一个 App」的小店沉下去，只剩两头">
+<!-- ============ 4 工作台 ============ -->
+<section class="chapter" data-title="工作台" data-caption="<b>图 4</b>一架纸飞机想把数据带过去，可每个工具都是一道墙：门开着的能穿过，关着的就撞回来">
   <header class="chead"><div class="plate">
     <span class="cnum">04</span>
-    <h2>智力工业化</h2>
-    <p class="csub">一万个 agent，和留下来的两头</p>
-    <p class="clead">九月的大新闻：一道百年数学题，被一万个 AI 协作几天给出了解答。Ronin 看的不是题，是「配合没出问题」。接着的问题是：如果智力可以批量生产，普通人站在哪？</p>
+    <h2>给 agent 准备工作台</h2>
+    <p class="csub">CLI、MCP、网页、App，和数据要过的几道门</p>
+    <p class="clead">同一个模型，能不能读到文件、有没有合适的工具、规则写得清不清楚，产出差别很大。</p>
   </div></header>
   <article class="card">
-    <h3 data-n="4">一万个 agent，解一道百年难题</h3>
-    <p class="one"><b class="tag">一句话</b>描述水怎么流的 Navier-Stokes 方程，被约一万个 AI agent 协作找到了一个答案。<span class="flag">尚待独立验证</span></p>
-    <p><b class="tag t-more">题目是什么</b>搅一杯水，水流一开始是顺滑的。问题是：在三维空间里，它会不会永远顺滑下去？还是会在某个瞬间某个点上，速度「炸」成无穷大？2000 年这被列为七个千禧年难题之一，悬赏 100 万美元。</p>
-    <p><b class="tag t-more">发生了什么</b>2026-09-08，OpenAI 宣布它的内部系统找到了「会炸」的例子：一个不停往里转、越拉越细的漩涡。同时公布了论文和机器可检查的证明。到九月中旬，克雷研究所还没确认。另有优先权争议：NYU 的 Buckmaster 说 OpenAI 借用了他们的方法，OpenAI 否认。</p>
+    <h3 data-n="4">CLI、MCP、网页、App</h3>
+    <p class="one"><b class="tag">一句话</b>四个词说的是四种不同的东西，常被拿来互相类比，类比里有几处是错的。</p>
     <table>
-      <tr><td>同时在跑的 agent</td><td>约 10,000</td></tr>
-      <tr><td>时长</td><td>88 小时</td></tr>
-      <tr><td>消息 / 输出 token</td><td>约 490 万条 / 约 3000 亿</td></tr>
-      <tr><td>成本</td><td>纽约时报估「数百万美元」</td></tr>
+      <tr><th>名称</th><th>是什么</th></tr>
+      <tr><td>CLI</td><td>命令行程序，在你的机器上运行。agent 直接执行命令。</td></tr>
+      <tr><td>MCP</td><td>2024 年底 Anthropic 提出的协议，规定 agent 如何发现和调用工具与数据源。</td></tr>
+      <tr><td>网页</td><td>浏览器从服务器取回代码和数据，在本地渲染。</td></tr>
+      <tr><td>原生 App</td><td>代码装在你的设备上，在设备上运行。</td></tr>
     </table>
-    <p><b class="tag t-more">他为什么说「智力工业化」</b>重点不是题解出来了，是一万个 agent 零摩擦地配合完成一件极抽象的事。他的原话：「人类文明里没有任何一个组织做到过。」而且规模按题目配：同一套系统做一道相关的题，只用了约 100 个 agent、50 小时。</p>
-    <p><b class="tag t-you">跟你的关系</b>你当时不知道 NS 是什么，却随口说「平行宇宙里 OAI 和 A/ 联合开记者会」。你准确感觉到了：这条新闻的戏，在优先权之争，不在数学。</p>
-    <p class="src">来源：Wikipedia「Navier–Stokes existence and smoothness」2026 年 9 月版（转引 OpenAI 与纽约时报）。</p>
-  </article>
-  <article class="card">
-    <h3 data-n="4">RSI：会自己变聪明的机器</h3>
-    <p class="one"><b class="tag">一句话</b>AI 改进自己，改进后的版本更快地改进下一版。英文叫 Recursive Self-Improvement。</p>
-    <p><b class="tag t-more">展开</b>像一个学生自己出题、自己批改、自己升级学习方法，每一轮都比上一轮学得快。1965 年就有人以「智能爆炸」的名字提出过。今天的弱版本已经在发生：模型写代码训练下一代、自己造训练数据、自己做考试。</p>
-    <p>投资人朋友有一句：「lab API + RSI 基本上没有普通人的位置。」意思是能力都在实验室手里，实验室又能自我加速，中间做应用的人攒不下护城河。</p>
-    <p><b class="tag t-more">Ronin 不完全同意</b>他给了两个出口：一是硬件，「模型打开了硬件的空间」；二是平台，「application 撮合功能，platform 撮合人；AI 能凭空生成前者，生不出后者」。他文档里叫「两头留下，中间塌掉」：最后剩下模型公司，和人对人的服务；塌掉的是「做一个 App」。</p>
-    <p><b class="tag t-you">跟你的关系</b>你说「模型是上游，我进不去上游，所以来了中下游」。按他的地图，中下游还分「塌掉的中间」和「留下的两头」。你现在帮一家人对人服务的公司装上模型能力，站在带子边缘。往哪边挪，是你的选择。</p>
-  </article>
-  <article class="card">
-    <h3 data-n="4">「工作只有两种类型」</h3>
-    <p class="one"><b class="tag">一句话</b>你 09-13 只记了这个标题，没记内容。</p>
-    <p><b class="tag t-more">展开</b>他当面说的原话还原不了。他文档里最接近的，就是上一张卡的「两头」：一种工作智力密度极高（模型公司那一头），一种需要人的身体在场（人对人服务那一头）。不高不低、又不需要人在场的，会塌。<span class="flag">可能是，也可能不是，要拿去和他核对</span></p>
-  </article>
-  <article class="card">
-    <h3 data-n="4">用户不需要那么好的油</h3>
-    <p class="one"><b class="tag">一句话</b>他转来一句：「原来炼油厂被取代并不是炼油技术不够好，而是用户并不需要那么好的油。」</p>
-    <p><b class="tag t-more">展开</b>手机拍照早就超过大多数人发朋友圈的需要了，再好十倍，你也不会多付十倍的钱。商学院管这叫「性能过剩」（克里斯坦森《创新者的窘境》，1997）：产品好到超过多数人用得上的程度，竞争就转向价格、方便和「够用」。</p>
-    <p>他配的图把这件事画成两段：性能不够时，模型和外壳绑死的「一体派」赢；性能过剩以后，外壳可以随便换模型的「拼装派」赢。参考文章是 Stratechery 的《Frontier Overhangs》和 Dario Amodei 的《We Must Pace the Frontier》。炼油厂这个比喻是 Ronin 自己的概括，原文里没有。</p>
-    <p><b class="tag t-you">跟你的关系</b>选模型、选工具，先问「这个活够不够用」，不问「哪个最强」。你之前做的那张「Claude Code 选火山方舟还是百炼」的对比图，就是这类判断。对客户也一样：多数奢侈品品牌的内容需求，用不上最前沿的模型。</p>
-    <p class="src">来源：Thompson (2026-09-21). Frontier Overhangs；Amodei (2026-09). We Must Pace the Frontier；Christensen (1997, 2003)。</p>
-  </article>
-  <article class="card">
-    <h3 data-n="4">模型是「工业碱」</h3>
-    <p class="one"><b class="tag">一句话</b>他认为大模型会像烧碱一样，变成便宜的基础原料。只卖模型能力的公司，会在下一阶段死掉。</p>
-    <p><b class="tag t-more">展开</b>烧碱是工业里最基础的原料之一，几乎什么都要用，但没人记得是谁家产的。他的原话：「大模型就是现代工业碱，现在是中国模型主动开源以降低模型价格」，「如果模型厂只是纯卖能力，这家公司会在第二阶段到来时死亡」。</p>
-    <p>他还说靠「蒸馏」追赶有致命问题。蒸馏就是让小模型抄大模型的答案。他的说法是，学到的变成了「一个模型对另一个模型的理解」，二手的。研究里有个方向相近的发现：模型一代代吃模型造的数据，会逐渐丢掉原始世界里那些少见的细节，叫「模型崩溃」（Nature，2024）。</p>
-    <p>「Kimi 和 GLM 都会死」是他的预测，记进最后一章的「判断表」。<span class="flag">预测</span></p>
-    <p><b class="tag t-you">跟你的关系</b>油便宜了，赚钱的是炼油之后的加工：工程、产品、分发。DLG 给客户做的东西，都在加工这一层。</p>
-  </article>
-  <article class="card">
-    <h3 data-n="4">Jev 和「后训练大爆发」</h3>
-    <p class="one"><b class="tag">一句话</b>他说「Jev 是真耐用」「1 美分」，又预测「未来 6 个月会冒出新的 Jev，我们马上要进入一个后训练大爆发时代」。</p>
-    <p><b class="tag t-more">展开</b>Jev 是一个专做快速判断的小模型，像第 7 章说的「快脑」。「后训练」是模型练好之后，再针对具体用途调教的那一步。你 09-26 说过「jev 的技术思路往上再走走会给 LLM 锦上大大大添花」，和他是同一个方向。「1 美分」是一次调用、一个任务还是一天，他没说。</p>
-    <p><b class="tag t-you">跟你的关系</b>记进判断表：2026-10-08 说的，6 个月，2027 年 4 月前后回来对照。</p>
-  </article>
-  <article class="card">
-    <h3 data-n="4">身体那一头：逃不掉的边界，和到处缺的数据</h3>
-    <p class="one"><b class="tag">一句话</b>他的赌注之一：机器有没有「身体」，不看接了几个摄像头，看它有没有一个逃不掉的边界。</p>
-    <p><b class="tag t-more">展开</b>多装几个摄像头和麦克风，不算有身体。只有碰到绕不开的物理约束（会摔、会坏、时间不能倒回）才算。这个问题他隔七个月给过两个答案，自己也没合上。</p>
-    <p>你转来一段群聊，他回了一句「其实大家都缺数据」。三个领域各一个例子：</p>
+    <p><b class="tag t-fix">更正</b>有人这样讲：「MCP 把计算放在服务器上，所以能做隐私和安全控制」「App 的计算发生在服务器上，你只看渲染结果」「app = MCP，web = CLI」。这三句都不对。</p>
     <ul>
-      <li><strong>语言模型</strong>：公开的人类文字估计约 300 万亿 token，按现在的速度，2026 到 2032 年之间会用完（Epoch AI）。</li>
-      <li><strong>机器人</strong>：网上没有现成的「动作」数据，只能靠人遥控演示或真机试错，一条条攒。几十个实验室拼起来的一百多万条，在这一行已经算大。</li>
-      <li><strong>情绪识别</strong>：同一张脸，不同人判断成不同情绪；人脸和声音又是法律上的敏感个人信息，要单独同意。</li>
+      <li>MCP 是协议，不规定计算在哪。MCP 服务可以在你本机作为子进程跑（stdio），也可以在远端（HTTP）。数据会不会离开你的机器，由服务放在哪里、做什么决定，协议本身不保证隐私。</li>
+      <li>原生 App 在本机跑。「计算在服务器、你只看结果」说的是云应用或瘦客户端。</li>
+      <li>网页：数据确实到了你的浏览器，但发什么数据由服务器决定。权限和复杂逻辑可以留在服务器，浏览器只拿到结果。</li>
     </ul>
-    <p><b class="tag t-you">跟你的关系</b>他说年底以后可能回深圳做具身智能，这三类里最缺数据的一类，多半也是他眼下在想的事。反过来读：缺数据的年代，手里有别人拿不到的数据，就有位置。你入职时说想「每天晚上研究一点硬件」，至今没开始。这条不急，先知道他为什么把硬件当出口。</p>
-    <p class="src">来源：Villalobos et al. (2024). Will we run out of data?；Open X-Embodiment (2023)；《个人信息保护法》第二十八条。</p>
+    <p>「CLI 是爬行类，MCP 是哺乳类」是比喻：CLI 直接、偏执行，MCP 带说明、对 agent 友好。两者是并存关系，没有谁取代谁。实际争论点是 MCP 的工具说明要占上下文，工具一多就费 token，所以不少 agent 工作流更爱直接调 CLI。</p>
+    <p><b class="tag t-more">本地与远端</b>常见的 connector（如 Notion 的官方 MCP）在远端；CLI 在本地。这是常见配置，不是定义。</p>
+    <p><b class="tag t-you">例子</b>同事想「把公众号文章里的文字摘下来存好，发给客户」。公众号文章是网页，通常没有 CLI 也没有 MCP，agent 只能走浏览器自动化或截图识字。这是目前 connector 覆盖最差的一类。</p>
+    <p class="src">来源：modelcontextprotocol.io 规范（传输方式：stdio 与 streamable HTTP）。</p>
   </article>
   <article class="card">
-    <h3 data-n="4">机器人的「关节」</h3>
-    <p class="one"><b class="tag">一句话</b>你看了他的「AI 概念扫描」图，猜日本会因为机器人关节受益；他说宇树做的就是「关节」。</p>
-    <p><b class="tag t-more">展开</b>大模型决定机器人「做什么」，关节决定「做得准不准、扛不扛得住」。每个关节是电机、减速器、驱动器、传感器装在一起。宇树起家靠的就是自己做关节电机，这是它能把价格压下来的原因之一。日本在精密减速器上长期领先，这是你那句判断的依据。</p>
-    <p><b class="tag t-more">一处更正</b>群里有人说「波音是被星球大战计划补贴烧出来的」。论点成立，例子时间对不上：星球大战计划是 1983 年的，那时波音早就是头号民航飞机商。更准的是更早那段：轰炸机攒下的喷气技术，加上空军大批订的加油机，一起养出了 707。经济学家 Mazzucato 的《创业型国家》讲的就是这类事：iPhone 里的 GPS、互联网、触摸屏，源头都是政府出钱的研究。</p>
-    <p><b class="tag t-you">跟你的关系</b>你以前觉得机器人是诈骗，听他讲完改了看法。一个区分标准：做关节、减速器、传感器这些硬底子的，和只做演示视频、讲大模型故事的，是两类公司。长期留下来的，更可能是前一类。</p>
+    <h3 data-n="4">数据从产生到被用上，要过几道门</h3>
+    <p class="one"><b class="tag">一句话</b>捕获、存储、检索、进上下文，每一层都可能有应用把数据关在自己的格式里。</p>
+    <p><b class="tag t-more">展开</b>例子：微信 4.x 在本机的图片缓存是加密的，导出聊天记录时图片只剩一个「[图片]」，要靠微信里的查看器逐张补。用 MCP、命令行工具去抓数据，都是在凿墙。</p>
+    <p>跨 agent 的 memory 工具（nowledge mem 一类）想补的是最后几层：把不同 agent 的会话存进同一个库，用 RAG 取回来。它们自述本地优先，这类说法要自己验证数据到底存在哪。</p>
+    <p><b class="tag t-you">例子</b>工作中涉及客户材料，只能进公司批准的工具，不能进第三方云。装任何 memory 工具之前先确认数据存在哪里。</p>
+    <p class="src">来源：mem.nowledge.co 官网（自述）。</p>
+  </article>
+  <article class="card">
+    <h3 data-n="4">AI 浏览器要的权限</h3>
+    <p class="one"><b class="tag">一句话</b>能替你在已登录的网站上操作的浏览器，风险有两层：权限，和藏在网页里的指令。</p>
+    <p><b class="tag t-more">展开</b>第一层是权限：它能看到你登录过的所有网站。第二层是提示注入：网页里藏一段写给 AI 的指令（白底白字，或图片里的字），agent 读到就可能照做，例如把邮箱里的内容发出去。Brave 在 2025 年公开过 Perplexity 的 Comet 浏览器的这类漏洞。</p>
+    <p>Simon Willison 把危险条件总结成「致命三要素」：同时具备（1）访问私有数据，（2）接触不可信内容，（3）能对外发送信息。三样凑齐就危险，砍掉任何一样都能降低风险。数据存在本地只缓解第一层。</p>
+    <p><b class="tag t-you">例子</b>「邮件只能读，不能触发动作」这条规则，砍的是第三样。工作电脑上不装会自动操作已登录网站的浏览器；想试就在个人电脑上用不重要的账号试。</p>
+    <p class="src">来源：Brave (2025) 关于 Comet 的安全披露；Willison, S. (2025). The lethal trifecta for AI agents.</p>
+  </article>
+  <article class="card">
+    <h3 data-n="4">工作台（harness）有多重要</h3>
+    <p class="one"><b class="tag">一句话</b>harness 是模型外面那一整套：工具定义、规则、上下文管理、运行环境。同一个模型，工作台不同，产出就不同。</p>
+    <p><b class="tag t-more">展开</b>有人的说法是：模型已经差不多了，各家的差距主要在 harness。例如 Claude Code 把所有工具都定义得很详细，上下文层设计得很细。</p>
+    <p><b class="tag t-lim">限制</b>前半句有证据：同一个模型放在不同的 agent 脚手架里，在基准上的得分可以差很多。后半句说过头了：模型本身仍然拉开差距，「模型都到均线了」不成立。他说自己用 GPT 复现了 Claude 的输出质量，这个实验无法核实。</p>
+    <p><b class="tag t-fix">更正</b>同一段对话里说 Dario Amodei 是 GPT-1 和 GPT-2 的技术负责人。他在 OpenAI 的职位是研究副总裁，是 GPT-2、GPT-3 论文的作者之一；GPT-1 的作者是 Radford 等人，没有他。「砌墙还是建教堂」来自三个石匠的寓言，出处不明，常被说成是德鲁克讲的。</p>
+    <p><b class="tag t-you">例子</b>同事说「AI 答得不好」。先检查：给没给它文件？给没给工具？规则写没写？完成标准有没有？多数时候缺的是这些。</p>
   </article>
 </section>
 
-<!-- ============ 5 灯 ============ -->
-<section class="chapter" data-title="同一盏灯" data-caption="<b>图 5</b>一圈循环四个站。AI 那三站越跑越快，弹珠全堵在「人审」门口，像火锅店只有一个收银台">
+<!-- ============ 5 循环 ============ -->
+<section class="chapter" data-title="循环" data-caption="<b>图 5</b>一圈循环四个站。AI 那三站越跑越快，弹珠全堵在「人审」门口，像火锅店只有一个收银台">
   <header class="chead"><div class="plate">
     <span class="cnum">05</span>
-    <h2>同一盏灯</h2>
-    <p class="csub">一圈循环，最慢的总是人</p>
-    <p class="clead">他这一个多月讲得最多的一个词是 loop：做一下、看结果、再改。AI 那一段越跑越快，整圈的速度就越来越取决于另一段：你审得过来吗？</p>
+    <h2>循环卡在人这一步</h2>
+    <p class="csub">AI 再快，也快不过你审稿</p>
+    <p class="clead">火锅店后厨再快，客人也得一个一个在收银台结账。agent 干活也是这样。</p>
   </div></header>
   <article class="card">
-    <h3 data-n="5">loop 的四格，和「限制在人」</h3>
-    <p class="one"><b class="tag">一句话</b>他发过一张四格图：一圈循环由什么组成、每一段交给谁、为什么要循环、以及人机循环的限制在人。</p>
-    <p><b class="tag t-more">展开</b>原图当时没读到，按他说过的话推测每一格：<span class="flag">推断</span></p>
+    <h3 data-n="5">阿姆达尔定律</h3>
+    <p class="one"><b class="tag">一句话</b>任务里不能加速的那一部分，决定整体最多能快多少倍。</p>
+    <p><b class="tag t-more">展开</b>Gene Amdahl 1967 年提出。一圈工作里，人工审核占 20%，AI 那部分哪怕快到零秒，整圈最多快 5 倍（1 ÷ 0.2）。所以优化的顺序是先量一下哪一步最慢，通常是人。</p>
+    <p><b class="tag t-lim">限制</b>Gustafson（1988）的反面观点：如果有了更多算力，人会把任务做大，可并行的部分也跟着变大，瓶颈没那么硬。放在 agent 上，产出量涨了，要审的东西也涨了，所以审稿仍然是瓶颈，但它不是一个固定的 20%。</p>
+    <p class="src">来源：Amdahl, G. (1967). Validity of the single processor approach to achieving large scale computing capabilities. AFIPS; Gustafson, J. (1988). Reevaluating Amdahl's Law. CACM.</p>
+  </article>
+  <article class="card">
+    <h3 data-n="5">让人这一步变快的三个办法</h3>
+    <p class="one"><b class="tag">一句话</b>验收标准事先写好，产出做成一眼能审的样子，需要拍板的点做成选择题。</p>
     <ul>
-      <li><strong>组成</strong>：看、想、做、看结果、修正。就是维纳那个反馈回路。</li>
-      <li><strong>分配</strong>：哪一段交给大模型，哪一段交给小模型或工具，哪一段留给人。</li>
-      <li><strong>为什么要循环</strong>：他说过「用循环的次数换窗口的长度」。一次想不清的事，拆成好几圈，每圈只带必要的东西。</li>
-      <li><strong>限制在人</strong>：这一格对得上一条老定律。</li>
+      <li>验收标准事先写清，让 agent 自己先检查一遍再交。</li>
+      <li>产出做成对比表、改动高亮，少给长文。</li>
+      <li>需要人决定的点，问「A、B、C 选哪个」，不问「你觉得怎么样」。</li>
     </ul>
-    <p><b class="tag t-more">阿姆达尔定律</b>一件事里不能加速的那一段，决定了整件事最多能快多少。比如人工那一段占整圈时间的 20%，AI 那部分就算快到零，整圈最多也只能快 5 倍。</p>
-    <p><b class="tag t-you">跟你的关系</b>你一个人干六个人的活。瓶颈多半不在 agent 跑得慢，在你审产出、给反馈这一步。两个提速办法：事先把验收标准写清，让 agent 自己先查一遍；让产出变成一眼能审的样子（对比表、改动高亮），少读长文。</p>
-  </article>
-  <article class="card ext">
-    <h3 data-n="5">火锅店的收银台</h3>
-    <p><b class="tag t-ext">延伸 · 比喻与公式</b>一家火锅店，后厨从 2 个厨师加到 20 个，上菜快多了。但收银台只有一个，结账的队排在门口，翻台率还是上不去。加再多厨师，也快不过收银台那一步。</p>
-    <p>写成公式：如果不能并行的那一段占比是 s，并行的那段分给 N 个人，整体最多快 1 ÷ (s + (1−s) ÷ N) 倍。N 再大，也顶不过 1 ÷ s。你的「收银台」就是你自己审稿的那一步。</p>
-    <p class="src">延伸来源：<a href="https://thinkinsights.net/strategy/amdahls-law" rel="noopener">Think Insights: Amdahl's Law</a>；Amdahl (1967). AFIPS Conference Proceedings。火锅店比喻为本页自拟。</p>
+    <p>有人设想的 BP 机版本：agent 把状态和三个选项推到手机上，人回一句话或按一个键。麦克风解决的是人把话说给机器的速度，这个设想针对的是机器干完一段活后等人的时间。Karpathy 在 Software 3.0 的演讲里讲过同一个思路：部分自主的产品给用户一个「自主度滑杆」，重点是让「AI 生成、人验证」这一圈转得快。</p>
+    <p><b class="tag t-you">例子</b>Claude Code 的会话可以在手机上跟进，需要决定时给出选项。自己设计 agent 流程（会议整理、月报）时，把「需要人决定」的点都做成选择题。</p>
+    <p class="src">来源：Karpathy, A. (2025-06). Software Is Changing (Again). YC AI Startup School.</p>
   </article>
   <article class="card">
-    <h3 data-n="5">探照灯与事件线</h3>
-    <p class="one"><b class="tag">一句话</b>Chat、Co-pilot、Agent 是同一盏灯，区别只有一个：你手里的线有多长。</p>
-    <p><b class="tag t-more">展开</b>起因是你给 DLG 培训做的开场视频。他看完说：「形态那里可以用 event line 来可视化，然后 AI 是一个雷达。」</p>
+    <h3 data-n="5">Chat、Co-pilot、Agent：线放多长</h3>
+    <p class="one"><b class="tag">一句话</b>三种形态的区别只有一个：你手里那根线放出去多长。</p>
+    <p><b class="tag t-more">展开</b>Chat 给方案，路你自己走（秒到分钟）。Co-pilot 替你做其中几段，你随时喊停（小时到天）。Agent 你只握两端，给目标，做验收（周到月）。</p>
+    <p>线能放多长，取决于世界会不会「回波」。测试、编译器像镜子：对不对一眼看出，可以放心委托。战略、审美像黑绒布：做完没有人能自动告诉你对不对，只能人看。所以有回波的活先交给 agent，没回波的留在人手里。</p>
+    <p><b class="tag t-you">例子</b>月报管线里数字对不对可以自动对账，是有回波的活；客户关系怎么处理，没有回波。</p>
+  </article>
+  <article class="card">
+    <h3 data-n="5">AI 能做多长的活，能审多少</h3>
+    <p class="one"><b class="tag">一句话</b>METR 的统计：AI 能以 50% 成功率完成的任务长度，大约每 7 个月翻一倍。</p>
+    <p><b class="tag t-more">展开</b>METR 2025 年 3 月的论文（Kwa 等）用人类专家完成任务所需的时间衡量任务长度，测了 2019 到 2025 年的模型：50% 成功率下能完成的任务长度，2019 年以来约每 7 个月翻一倍，论文称 2024 年以后可能更快（约 4 个月）。</p>
+    <p><b class="tag t-lim">限制</b></p>
     <ul>
-      <li><strong>Chat</strong>：只扫到想法，给你方案，路你自己走。尺度是秒到分钟。</li>
-      <li><strong>Co-pilot</strong>：扫到你工作里的几个节点，替你做几段，你随时喊停。尺度是小时到天。</li>
-      <li><strong>Agent</strong>：扫到更大的业务，你只握两端：给目标、做验收。尺度是周到月。</li>
+      <li>这是 50% 成功率。要 80% 可靠，能完成的任务长度大约短 5 倍。</li>
+      <li>任务以软件和推理为主，换到别的工作要小心。</li>
+      <li>另一项 METR 研究（2025 年 7 月）：16 位有经验的开源开发者，在自己熟悉的仓库里做真实任务，用 AI 工具后反而慢了约 19%，而他们自己以为快了约 20%。样本小，用的是当时的工具，但它提醒：「感觉快」和「实际快」可以差很远。</li>
+      <li>有人引用的「约 89 天翻一倍」我没找到出处<span class="flag">未核实</span>。</li>
     </ul>
-    <p>当晚他把它做成了 60 秒的视频《同一盏灯》，论证是这样走的：</p>
-    <ol>
-      <li>直觉以为 Agent 是「更大的圆」，其实是「更低的灯」。离世界越近，光越窄、越硬。</li>
-      <li>只有碰到世界才有回波。峰是人在想，谷是 AI 在做，触地的地方弹回一个绿色方块。</li>
-      <li>世界越会反光，线才能放得越长。测试、编译器是<strong>镜面</strong>，回波又多又清楚，可以放心交出去；战略、品味是<strong>黑绒布</strong>，光被吞掉，没有回波。</li>
-      <li>AI 能干的活大约几个月翻一倍，你能审的活一天不变。两条线撞上的地方，他叫「验证墙」。</li>
-      <li>峰留给人，谷交给 Agent。模型决定活多大，验证决定你吞多少。</li>
-    </ol>
-    <p>视频里写的是「METR，2024 年以来约 89 天翻倍」。能核实到的是 METR 2025 年 3 月的论文：大约每 7 个月翻一倍，2024 年以后更快，约 4 个月。<span class="flag">89 天未核实</span></p>
-    <p><b class="tag t-you">跟你的关系</b>你十月底前要教同事用 AI，这张图可以原样当课的骨架。每个部门问自己两个问题：我手里哪一段有回波（能写成清单、能跑测试、能对数）？哪一段是黑绒布（客户关系、审美、战略）？有回波的先交出去。DLG 的月报管线就是有回波的活：数字对不对，能自动对账。</p>
-  </article>
-  <article class="card">
-    <h3 data-n="5">BP 机比麦克风更适合这个时代</h3>
-    <p class="one"><b class="tag">一句话</b>agent 跑得够快以后，一圈里最慢的是人坐在电脑前等着拍板。他的设想是一个像 BP 机的东西：agent 把进度和三个选项推给你，你按一下就行。</p>
-    <p><b class="tag t-more">展开</b>你讲了一位朋友做的硬件语音输入。他说：「也许，bp 机比麦克风更适合这个时代。」「Agent 状态的同步，解放人类必须在桌面前等待。」「三个选项或者发一条短讯回复。」「驾驭工程，把控制还给人类。」</p>
-    <p>麦克风解决的是「人怎么更快地把话说给机器」。可现在卡住的是另一头：机器干完一段，等人确认。BP 机只收消息、只回短句，形状正好对上。「驾驭工程」应该是 harness engineering 的译法，就是上一章说的「工作台」。</p>
-    <p><b class="tag t-you">跟你的关系</b>Claude Code 已经有这个形态的零件：手机上能跟进会话，要你拍板时给选项。你自己设计流程时（coco、月报），把「需要人决定」的点做成<strong>选择题</strong>，不是问答题；验收标准事先写好，人一眼就能按。</p>
-  </article>
-  <article class="card">
-    <h3 data-n="5">human × Agent<sup>n</sup></h3>
-    <p class="one"><b class="tag">一句话</b>他认为衡量一个人的核心指标，是能同时驾驭多少个 agent。</p>
-    <p><b class="tag t-more">展开</b>他和小马聊天时说：「Agent 的驾驭数量是衡量一个人的核心指标。」「human * Agent ^n。」「这个是 24 年底的共识，各个行业都需要一个 Cursor。」</p>
-    <p>但要和他自己那支视频对着看：AI 能干的活几个月翻一倍，你能审的一天不变。n 能不能往上加，取决于这些 agent 的活能不能<strong>自动验收</strong>。不能自动验收的部分，n 再大也堵在你身上。还是火锅店那个收银台。</p>
-    <p><b class="tag t-you">跟你的关系</b>你 09-11 那个「野蛮解决方案」（多开会话）已经是 n 大于 1 了。下一步不是再多开几个，是给每一路配上能自动检查的东西（测试、对账、清单），再往上加。</p>
-  </article>
-  <article class="card">
-    <h3 data-n="5">机器人在真实世界里跑 loop</h3>
-    <p class="one"><b class="tag">一句话</b>一家机器人公司让机器人在现场试错，只用约 15 分钟的真实数据，就把拧螺丝、插网线这种毫米级动作练熟了。</p>
-    <p><b class="tag t-more">展开</b>Physical Intelligence 的 RLT。背景是：大的机器人模型什么都会一点，但最后一毫米不准；拿整个大模型现场练又太慢太贵。他们的办法像「师傅带徒弟」：大模型给方向，一个很小的网络在现场一圈圈地微调，只管修正最后那一点。</p>
-    <p>结果：电动螺丝刀拧小螺丝，从每 10 分钟约 5 次提到约 15 次。算上复位，总共练了约两小时。插网线那个任务，最后有一半的尝试比任何一次人类遥控都快。</p>
-    <p><b class="tag t-you">为什么在这一章</b>这是 loop 放进了物理世界。螺丝拧歪了就是歪了，这种「回波」只能在真实世界里拿到，也就是上一章说的「逃不掉的边界」。</p>
-    <p class="src">来源：Physical Intelligence, Precise Manipulation with Efficient Online RL（2026-03-19）。</p>
-  </article>
-  <article class="card">
-    <h3 data-n="5">小模型学会「什么时候该求助」</h3>
-    <p class="one"><b class="tag">一句话</b>先让小模型答，它没把握时才转给大模型。成本大降，准确率不降。</p>
-    <p><b class="tag t-more">展开</b>像医院的分诊台：常见病护士就处理了，拿不准的才转给专家。这类方法叫「模型级联」。关键在那一步：小模型怎么知道自己没把握？常见做法是看它多答几次是否一致、它自己报的把握有多大。已发表的结果里，有的在保持 GPT-4 准确率的同时省了最多 98% 的成本。他发的那篇文章标题里的「96%、性能反超」没找到原论文。<span class="flag">未核实</span></p>
-    <p><b class="tag t-you">跟你的关系</b>你问「typeless 背后算小模型吧」，他说是 Sonnet，你说那并不小，他同意。这个来回本身就是级联思路：语音输入这种活，Sonnet 已经是「专家」那一档了。</p>
-  </article>
-  <article class="card">
-    <h3 data-n="5">指标变成目的</h3>
-    <p class="one"><b class="tag">一句话</b>你讲初中化学老师第一节课只问「谁是月考前十」，之后只盯那几个人。他说：「名校的代价。」「指标变成目的。」</p>
-    <p><b class="tag t-more">展开</b>这叫古德哈特定律。流传最广的版本是：「当一个指标变成目标，它就不再是好指标。」老师要的本来是学生学会化学，排名只是一个温度计；后来大家开始盯着温度计本身。</p>
-    <p><b class="tag t-you">跟你的关系</b>你在 DLG 做培训也有指标：参训人数、用量、满意度。只看用量，大家会为了用量而用，不是为了把活干好。验证墙也能这么看：能自动验收的活才适合交出去，因为只有在那里，指标和目的是一回事。</p>
+    <p class="src">来源：Kwa, T. et al. (2025). Measuring AI Ability to Complete Long Tasks. METR, arXiv:2503.14499; Becker, J. et al. (2025). Measuring the Impact of Early-2025 AI on Experienced Open-Source Developer Productivity. METR.</p>
   </article>
 </section>
 
-<!-- ============ 6 工具箱 ============ -->
-<section class="chapter" data-title="一层层的墙" data-caption="<b>图 6</b>一架纸飞机想把你的数据带过去，可每个 App 都是一道墙：门开着的能穿过，关着的就撞回来">
+<!-- ============ 6 多 agent ============ -->
+<section class="chapter" data-title="多个 agent" data-hud="agents" data-caption="<b>图 6</b>左边的小机器人越来越多，一直数到一万（OpenAI 的自述）；右边三摞硬币是 token 用量：聊天 1，单个 agent 约 4，多个 agent 约 15">
   <header class="chead"><div class="plate">
     <span class="cnum">06</span>
-    <h2>一层层的墙</h2>
-    <p class="csub">工具箱：爬行类和哺乳类</p>
-    <p class="clead">信息从产生到被 agent 用上，要穿过好几道墙。这一章是你手边的工具：它们各自在哪一层，哪一层还凿不通。</p>
+    <h2>多个 agent 一起干活</h2>
+    <p class="csub">能并行的活很多，协调也要花钱</p>
+    <p class="clead">一个 agent 干不完，就开十个、一万个？先看看已有的数字。</p>
   </div></header>
   <article class="card">
-    <h3 data-n="6">CLI / MCP / Web / App</h3>
-    <p class="one"><b class="tag">一句话</b>你把 connector 拆成 CLI 和 MCP 两类，被人喷「太技术了」。他花四十分钟拆成四格，最后给了一句最好记的：<strong>CLI 是爬行类，MCP 是哺乳类。</strong></p>
-    <p><b class="tag t-more">用一家餐厅来比</b></p>
+    <h3 data-n="6">一万个 agent 解 Navier–Stokes？</h3>
+    <p class="one"><b class="tag">一句话</b>2026 年 9 月 8 日，OpenAI 宣布内部系统证明了一个流体力学千禧难题的爆破结果。截至目前没有被独立验证。</p>
+    <p><b class="tag t-more">展开</b>Navier–Stokes 方程描述流体运动。克雷数学研究所 2000 年把它列为七个千禧年难题之一，悬赏 100 万美元：三维空间里，光滑的初始流体会不会在有限时间内出现速度无穷大的奇点（爆破）？证明光滑性永远保持，或者给出爆破，都算解决。</p>
+    <p>OpenAI 称自己找到了爆破，同时发布了论文和 Lean 形式化证明。报道里的说法：约一万个 agent 协作了几十个小时。<span class="flag">自述</span>这些规模数字我只在二手来源里看到，没有核对到 OpenAI 原文。</p>
+    <p><b class="tag t-lim">限制</b></p>
     <ul>
-      <li><strong>CLI（命令行）</strong>：你自己进厨房，照着菜谱做。东西在你本地算。他的例子：「你说给我做饭，然后程序就给你做饭。」</li>
-      <li><strong>MCP</strong>：餐厅给服务员一本带说明的菜单：有哪些菜、每道怎么点。agent 看了说 ok，一句「老样子」就能上菜。它是一种<strong>协议</strong>，计算放在服务器那头，所以能控制隐私和安全。</li>
-      <li><strong>Web（网页）</strong>：你打开别人的一份文档，其实是把整份内容搬到你电脑上，再在你这儿显示出来。他说：「网页对于你而言是一个裸体，因为你已经拿到了数据。」</li>
-      <li><strong>App</strong>：菜在后厨做，你只看到端上来的成品。</li>
+      <li>争议点之一：被证明的是带外力项的方程。克雷的原始表述里，爆破那两个选项本来就包括带外力的情形，所以这一点本身不算违规。但有数学家认为它不是大家心里想的那个问题，也有人认为它符合原始表述。双方都有人说。</li>
+      <li>克雷的规则：成果要正式发表，经过至少两年的学界接受，再由顾问委员会推荐，才发奖。现在谈「已经解决」为时过早。</li>
+      <li>优先权争议：前一天，NYU 的 Buckmaster 和 Anthropic 的 Alpöge 发布了相关流体方程（欧拉类）的爆破证明。OpenAI 说自己的系统没有看过他们的工作。</li>
     </ul>
-    <p>你的总结是「app = MCP，web = CLI」。他的总结是爬行类和哺乳类：CLI 更底层、管执行；MCP 带着意思，适合 agent。「你可以直接比划来点餐，也能一句『老样子』让 agent 给你上菜。」</p>
-    <p>他还补了一句：connector 一般在远端（比如 Notion 的服务器），本地的是 CLI 那一格。</p>
-    <p><b class="tag t-you">跟你的关系</b>你拆成 CLI/MCP，方向没错，缺的是中间两格。你给同事那句「传统软件能不能被 agent 用，就看它有没有开放 CLI 和 MCP」仍然成立，可以加一句：网页类的东西（文档、看板、内容库）走的是 web 那一格，目前 connector 覆盖最差。同事「从公众号里摘文字发给客户」，卡的就是这一格。</p>
-    <p>你自嘲「一知半解地出去误人子弟了」。挺准：你对这套东西的感觉是对的，但还没到能讲给别人的程度。他说「需要先建立心智模型才能理解」。</p>
+    <p class="src">来源：Scientific American, Did OpenAI solve the wrong Navier–Stokes problem?; NYU Shanghai RITS 关于署名争议的文章; Fefferman, C. L. Existence and Smoothness of the Navier–Stokes Equation（克雷官方问题说明）。</p>
   </article>
   <article class="card">
-    <h3 data-n="6">记忆层，和「打穿多层」</h3>
-    <p class="one"><b class="tag">一句话</b>他推荐 nowledge mem，说它「核心就是一个剪藏 session 工具 + RAG」；又说上下文层和信息捕获层还没见到好用的 App，「都没办法打穿多层」。</p>
-    <p><b class="tag t-more">RAG 是什么</b>开卷考试。模型回答前，先去资料库里翻出相关的几页，夹进这一次的题目里，再作答。它是「模型不记得你」的标准补丁：不记得，就每次现查现给。英文叫检索增强生成（Retrieval-Augmented Generation）。</p>
-    <p><b class="tag t-more">nowledge mem 自己说能做什么</b>本地优先；在 Claude Code、Cursor 里「保存记忆」，存下对话，提炼出决定和理由；用知识图谱把记忆串起来，新证据会更新旧结论；不同 agent 能读同一份。<span class="flag">官网自述</span></p>
-    <p><b class="tag t-more">「打穿多层」</b>信息要过好几道墙：捕获（公众号、微信、网页）→ 存储 → 检索 → 进入上下文。每一层都有 App 把数据关在自己墙里。整理这份清单时就撞上过：他发的图在微信本地缓存里是加密的，导出只剩「[图片]」。你用微信 MCP、opencli 抓数据，做的都是凿墙。</p>
-    <p><b class="tag t-you">跟你的关系</b>你已经有一个记忆层：Obsidian 加 Claude Code 的 memory 文件。nowledge mem 能补的是「跨 agent」。装之前先看数据存哪：DLG 的客户材料只能进公司批准的工具，不能进第三方云。</p>
+    <h3 data-n="6">多 agent 的账</h3>
+    <p class="one"><b class="tag">一句话</b>Anthropic 自己的数据：多 agent 系统用的 token 约是聊天的 15 倍，单个 agent 约 4 倍。</p>
+    <p><b class="tag t-more">展开</b>Anthropic 2025 年 6 月介绍了自己的多 agent 研究功能：一个主 agent 拆题，几个子 agent 并行去搜。在内部评测里，Opus 4 做主、Sonnet 4 做子的组合，比单个 Opus 4 高 90.2%。他们还发现 token 用量一项就解释了大部分性能差异。</p>
+    <p>他们的结论是：适合广度优先、能拆开并行的任务（比如查资料），任务的价值要高到值得多花这些钱。编程这类各部分依赖很紧的任务，收益小得多。</p>
+    <p><b class="tag t-fix">更正</b>有人写成公式：<em>人 × Agent<sup>n</sup></em>，理由是「agent 之间通信损失很低，是指数级」。这句没有依据。agent 之间要传的是文字，每传一次要花 token，要对齐上下文，还会互相不一致。Cognition（Devin 的团队）2025 年专门写过文章反对多 agent 架构，理由是上下文难以共享。软件工程里有类似的老经验：给晚了的项目加人，只会更晚（Brooks，《人月神话》）。</p>
+    <p><b class="tag t-you">例子</b>多开会话之前，先给每一路配上能自动检查的东西（测试、对账、清单）。不能自动验收的部分，路数再多也会堵在人身上。</p>
+    <p class="src">来源：Anthropic Engineering (2025-06). How we built our multi-agent research system; Cognition (2025-06). Don't Build Multi-Agents; Brooks, F. (1975). The Mythical Man-Month.</p>
   </article>
   <article class="card">
-    <h3 data-n="6">AI 浏览器要的权限</h3>
-    <p class="one"><b class="tag">一句话</b>他分享 AI 浏览器 Aside 时提醒了两次：「要注意你的隐私」「这个 AI 浏览器会请求很多权限」。</p>
-    <p><b class="tag t-more">展开</b>这类浏览器能在你登录过的网站上替你操作：发消息、付钱、用公司内部工具。风险有两层：</p>
-    <ul>
-      <li><strong>权限</strong>：它能看到你登录的所有网站。</li>
-      <li><strong>提示注入</strong>：网页里藏一张写给 AI 的小纸条（白底白字、图片里的字），AI 读到就可能照做，比如把你邮箱里的东西发出去。2025 年就有人公开过别家 AI 浏览器的这类漏洞。</li>
-    </ul>
-    <p>数据存在本地，能缓解第一层，解决不了第二层。</p>
-    <p><b class="tag t-you">跟你的关系</b>DLG 规则里「邮件只能读，不能触发动作」那一条，防的就是第二层。工作电脑上别装会自动操作已登录网站的浏览器。想试，就在个人电脑上、用不重要的账号试。</p>
+    <h3 data-n="6">多花算力换更好的答案</h3>
+    <p class="one"><b class="tag">一句话</b>让模型多想、多试几次再作答，叫测试时算力扩展（test-time scaling）。</p>
+    <p><b class="tag t-more">展开</b>办法有多种：想得更长，同一个问题多采样几次再投票，让模型自己检查。ChatGPT 的 Plus 约 20 美元一个月，Pro 约 200 美元一个月，Anthropic 的 Max 有 100 和 200 美元两档，都是公开的价格。</p>
+    <p><b class="tag t-lim">限制</b>有一种说法是「Pro 不是更强的模型，是用多路并行会话拼出来的 agent 工程」。OpenAI 的官方表述是 Pro 模式用更多算力去思考。多路并行是外界的推测<span class="flag">推断</span>，我没找到官方确认。「下一档会是 2000 美元」是预测，没有任何公告。</p>
+    <p class="src">来源：Snell et al. (2024). Scaling LLM Test-Time Compute Optimally can be More Effective than Scaling Model Parameters.</p>
   </article>
   <article class="card">
-    <h3 data-n="6">你的 Mac 自带一个小模型</h3>
-    <p class="one"><b class="tag">一句话</b>群里有人发现 MacBook 自带一个本机模型，做分类很好用；他说「可以去 Apple developer 里让他把所有的 API 梳理一遍」。</p>
-    <p><b class="tag t-more">展开</b>能确认的：Apple 2025 年开放了 Foundation Models 框架，开发者能直接调用本机模型，当时公开的规模约 3B。群里说的「20b」<span class="flag">未核实</span>。Apple Intelligence 在中国大陆没开放，国行机器大概率用不了。</p>
-    <p>不过 macOS 本来就带一批免费、不联网的本事：认图里的字（Vision）、语音转文字（Speech）、分词和识别语种（NaturalLanguage）。</p>
-    <p><b class="tag t-you">跟你的关系</b>微信 MCP 读不到图片和表情包里的字。下一步可以接 macOS 自带的 Vision 做识别，本机跑，不出网。他回答这个问题时画的那张「设备端 / 云服务 / 网页」三栏图，见第 8 章「图示不是图表」。</p>
-  </article>
-  <article class="card">
-    <h3 data-n="6">谛听：他的会议 agent</h3>
-    <p class="one"><b class="tag">一句话</b>他中午发来一个叫「谛听」的工具首页，说是「会议 agent」，你回了自己的 coco 仓库。首页写着「晚上好，Ronin」，所以你才说「哪里是晚上了！」</p>
-    <p><b class="tag t-more">截图里的四组</b>记录（随手记、最近、事件）→ 对象（待办、项目、领域、工作区、人）→ 委托（Agents）→ 系统。从上往下是一条流水线：先随手记下来，再整理成人、项目、待办这类「对象」，最后把对象交给 agent 去办。<span class="flag">按截图推断</span></p>
-    <p>有意思的是「项目」和「领域」分成了两项，正好是第 2 章那个定义：项目有终点，领域是跨项目的长期范围。他前一天刚说上下文层没见到好用的 App，这个可能就是他自己的答案。</p>
-    <p>名字：谛听是地藏菩萨座下善于听辨的神兽，《西游记》里真假美猴王就是它听出来的。给听会议的工具起这个名，意思是不光记下说了什么，还要分辨真假。</p>
-    <table>
-      <tr><th></th><th>coco</th><th>谛听</th></tr>
-      <tr><td>进来的</td><td>一场会：录音、转写、聊天</td><td>一条随手记：文字、语音、图片</td></tr>
-      <tr><td>攒下的</td><td>人、项目、承诺、术语</td><td>人、项目、待办、领域</td></tr>
-      <tr><td>出去的</td><td>给人看的简报和洞察</td><td>交给 agent 去办</td></tr>
-    </table>
-    <p><b class="tag t-you">coco 能借两点</b>一，「承诺」现在只跟踪谁答应了什么，可以升级成能交给 agent 执行的待办。二，DLG 各客户的会议混在一个库里，可以按客户或长期主题分「领域」。反过来，会前简报和跨会洞察，他的截图里看不到，是 coco 已经有的。</p>
-  </article>
-  <article class="card">
-    <h3 data-n="6">一本工具书：吴军《计算之魂》</h3>
-    <p class="one"><b class="tag">一句话</b>他发来的 PDF，前 Google 研究员吴军写的计算机思维入门，412 页。不用从头读，按你手上的问题挑。</p>
-    <p class="note">PDF 是扫描版，没有文字层，丢进 NotebookLM 之前要先做文字识别。</p>
-    <table>
-      <tr><th>你的问题</th><th>读哪一节</th></tr>
-      <tr><td>电脑到底是什么，AI 上限在哪</td><td>引子 0.3、0.4</td></tr>
-      <tr><td>为什么老在讲「状态」</td><td>第 9 章 9.1、9.2</td></tr>
-      <tr><td>索引为什么能省上下文</td><td>第 7 章 7.2、7.3</td></tr>
-      <tr><td>信息怎么被编码</td><td>第 3 章 3.5 哈夫曼编码</td></tr>
-      <tr><td>抽象和模式识别</td><td>第 4 章</td></tr>
-      <tr><td>并行和分工</td><td>第 8 章 8.1</td></tr>
-    </table>
-    <p class="note">第 1、2、5、6、10、11 章偏算法和面试题，可以跳过。</p>
+    <h3 data-n="6">递归自我改进（RSI）</h3>
+    <p class="one"><b class="tag">一句话</b>AI 改进自己，改进后的版本再更快地改进下一版。</p>
+    <p><b class="tag t-more">展开</b>I. J. Good 1965 年以「智能爆炸」的形式提出。弱形式今天已经在发生：模型写代码训练下一代，生成训练数据，给自己做评测。</p>
+    <p><b class="tag t-lim">限制</b>闭环加速没有被证明。现实里的限制还有算力、能源、数据，以及「怎么判断改好了」。投资人的一种看法是：能力都在实验室的接口里，实验室又能自我加速，中间层没有可积累的护城河。这是一种观点，不是结论。提这个看法的人自己也给了两个出口：硬件，和撮合人的平台。</p>
+    <p class="src">来源：Good, I. J. (1965). Speculations Concerning the First Ultraintelligent Machine.</p>
   </article>
 </section>
 
-<!-- ============ 7 快脑慢脑 ============ -->
-<section class="chapter" data-title="快脑慢脑" data-caption="<b>图 7</b>左边红铃是杏仁核（快跑！），右边蓝齿轮是前额叶（慢慢想）。压力表指针越高，铃越响，齿轮越转不动">
+<!-- ============ 7 够用 ============ -->
+<section class="chapter" data-title="够用" data-caption="<b>图 7</b>一条往上爬的阶梯是技术能提供的性能，一条缓坡是客户觉得够用的线。两条线交叉之前，整合者赢；交叉之后，谁便宜谁赢">
   <header class="chead"><div class="plate">
     <span class="cnum">07</span>
-    <h2>快脑，慢脑，和身体</h2>
-    <p class="csub">人这一侧</p>
-    <p class="clead">从这一章起，主角换成人。先学的第二个就在这里：一个人可以很会「看出模式」，却不太会「一步步推」。这件事决定你怎么读同事，也决定你怎么读自己。</p>
+    <h2>够用就行</h2>
+    <p class="csub">模型、价格和软件的成本</p>
+    <p class="clead">钢筋用不着最好的钢。多数任务也用不着最强的模型。</p>
   </div></header>
   <article class="card">
-    <h3 data-n="7">系统一，系统二</h3>
-    <p class="one"><b class="tag">一句话</b>系统一是快的、自动的「一眼看出来」；系统二是慢的、费劲的「一步步推」。抽象能力属于系统一，不属于系统二。</p>
-    <p><b class="tag t-more">展开</b>看到一张脸，你一瞬间就知道对方在生气，这是系统一。心算 17 × 24，你得停下来一步步算，这是系统二。这对名字是两位心理学家 2000 年提的，卡尼曼 2011 年的《思考，快与慢》让它出了圈。卡尼曼是心理学家，拿的却是诺贝尔经济学奖，所以 Ronin 说这是「经济学从认知科学借走的术语」。</p>
-    <p><b class="tag t-more">他加的那一层才是重点</b>他说自己以前以为抽象能力强的人，逻辑也强。后来发现错了：抽象的起点是模式识别，那是系统一。所以一个人可以一眼看出隐喻、看出小概率事件之间的关联，同时逻辑推理只是普通水平。你当场确认了，说的就是你。</p>
-    <p><b class="tag t-more">它的坑</b>错误的抽象，加上事后找理由。他的比喻是「没有一楼，挖了一个地下室」。例子是「因为某件事，就宣判某个人社交死亡」。你说前几年做得出这种事，现在觉得傻。</p>
-    <p><b class="tag t-more">机器那一侧</b>他文档里说，GPT-4 只有系统一；o1、R1 接上了系统二，却出了新毛病：长长的推理里，第三步把「有可能」当成「就是」。系统一和系统二不是两个模型，是同一个旋钮的两档，差在「转几圈」。</p>
-    <p><b class="tag t-you">马上能用的练习</b>你对同事的行为冒出一个解读时（系统一给的），先给它贴个标签：「假设」。然后逼自己找一条相反的证据。找不到，再当真。这一步就是手动接上系统二。可以并进你 Gallup 计划里的「周二一问一认」。</p>
-    <p class="note">卡尼曼那本确实难读，不是翻译的锅。只想拿走概念，读第一部分（系统一二）和第三部分（过度自信）就够。</p>
-  </article>
-  <article class="card private">
-    <h3 data-n="7">杏仁核与前额叶</h3>
-    <p class="one"><b class="tag">一句话</b>杏仁核是大脑的烟雾报警器，负责「快跑」；前额叶是总指挥，负责计划和刹车。压力一大，报警器会把总指挥压下去。</p>
-    <p><b class="tag t-more">展开</b>这个分工是神经科学的基本共识。压力激素一高，前额叶就不太灵，杏仁核接管（Arnsten 2009）。</p>
-    <p>Ronin 用它解释你的经历：小时候一个人被留在家里或办公室翻书，面对「难以解决的冲突」时，杏仁核一次次接管；看错模式的代价很高，于是你对模式的感觉被练得特别敏锐。长大以后，你就更容易抓到隐喻和藏着的关系。</p>
-    <p><b class="tag t-more">哪些是定论</b>「在高冲突或被忽视的环境里长大的孩子，对威胁信号更敏感」有研究支持（比如更快认出愤怒的表情）。「所以更擅长隐喻和抽象」是 Ronin 往前推的一步，逻辑通顺，但没找到直接研究。<span class="flag">他的假说</span></p>
-    <p><b class="tag t-you">跟你的关系</b>他接着说：「因为没人教你，你是第一代，你可以传递给后代。」意思是，这份敏感是环境给你的本事，也是代价。现在你有机会有意识地用它，而不是被它用。</p>
+    <h3 data-n="7">性能过剩</h3>
+    <p class="one"><b class="tag">一句话</b>产品性能超过大多数用户用得上的程度以后，竞争转向价格、方便和「够用」。</p>
+    <p><b class="tag t-more">展开</b>Christensen 的《创新者的窘境》（1997）讲的就是这个。后来他和 Raynor 的《创新者的解答》（2003）加了一步：性能不够时，各部件紧密配合的整合型产品赢；性能过剩以后，接口标准、部件可换的模块型产品赢。</p>
+    <p>书里的例子是钢铁。小型电炉厂（Nucor 这一类）先用废钢造钢筋，质量差一点但便宜，大钢厂懒得争这块低端市场；电炉厂质量上去以后，一层层往上吃。</p>
+    <p>放到模型上：一旦模型够用，用户可以换模型，价值转向做工具和产品的人。Ben Thompson 2026 年 9 月在 Stratechery 上写的《Frontier Overhangs》讨论的就是模型进步快过产品和市场能吸收的速度。<span class="flag">未核实</span>我只读到摘要和第三方转述，文章有付费墙。</p>
+    <p><b class="tag t-fix">更正</b>流传的一句话是「炼油厂被取代，不是炼油技术不够好，是用户不需要那么好的油」。这是形象的说法，不是历史案例。我没有找到炼油业这样的例子，Christensen 用的是钢铁和磁盘驱动器。</p>
+    <p><b class="tag t-lim">限制</b>Christensen 的理论被批评过：Jill Lepore（2014，《纽约客》）指出他挑选的案例有选择性，被预言会被颠覆的公司不少后来活得很好。另外「够用线」不是固定的：新任务（长任务、agent）出现，会把线往上推，所以不是一路向便宜走。</p>
+    <p><b class="tag t-you">例子</b>选模型选工具时，先问「这个任务够不够用」，再问「哪个最强」。奢侈品牌多数内容需求，用不上最前沿的模型。</p>
+    <p class="src">来源：Christensen, C. M. (1997). The Innovator's Dilemma; Christensen & Raynor (2003). The Innovator's Solution; Lepore, J. (2014). The Disruption Machine. The New Yorker; Thompson, B. (2026-09-21). Frontier Overhangs. Stratechery.</p>
   </article>
   <article class="card">
-    <h3 data-n="7">知识不在任何一个人那里</h3>
-    <p class="one"><b class="tag">一句话</b>哈耶克说，有用的知识散在每个人手里，没有哪个中心能收齐；价格，就是把这些散的知识汇总起来的信号。</p>
-    <p><b class="tag t-more">展开</b>番茄减产了，没人挨家挨户通知你，但菜市场的番茄涨价了，大家自然就少买一点。几百万人「当时当地」的小知识，被压缩成了一个数字。这是哈耶克 1945 年《知识在社会中的运用》的意思。Ronin 说他「比卡尼曼更抽象」。</p>
-    <p><b class="tag t-more">它为什么出现</b>Ronin 说「我们并不拥有知识，知识属于上帝」，你说想翻阅他的大脑。哈耶克的版本是：知识不在任何一个人那里，在人和人之间。这也是他那句「平台撮合的是人，AI 生不出这个」的底子。</p>
-    <p class="note">你读过的 Dario Amodei《恩典之机》引了哈耶克，可以顺着看。</p>
+    <h3 data-n="7">小模型先答，不行再转大模型</h3>
+    <p class="one"><b class="tag">一句话</b>让便宜的小模型先答，只在它没把握时转给大模型。</p>
+    <p><b class="tag t-more">展开</b>这叫模型级联。FrugalGPT（Chen、Zaharia、Zou，2023）报告在若干任务上匹配 GPT-4 的准确率，成本最多降 98%。关键在于「小模型怎么知道自己没把握」，常见信号有输出概率、多次采样是否一致、模型口头报出的置信度。</p>
+    <p><b class="tag t-lim">限制</b>省多少看任务，98% 是最好情况。模型自报的置信度常常不准；转给大模型要多等一轮，延迟变长。</p>
+    <p><b class="tag t-more">本机的小模型</b>Apple 在 2025 年 WWDC 发布 Foundation Models 框架，开发者可直接调用设备上的模型，当时公开的规模约 30 亿参数。<span class="flag">未核实</span>有人说是「20b 的端侧模型」，我没找到依据，可能是后来的新版本，也可能记错。Apple Intelligence 过去在中国大陆不开放，现在的情况没核实。macOS 本来就带一批本机能力：Vision（识字、图像分析）、Speech（语音转文字）、NaturalLanguage（分词、语种识别），免费，不联网。</p>
+    <p><b class="tag t-you">例子</b>微信聊天导出里图片只剩「[图片]」，下一步打算用 macOS 自带的 Vision 在本机识字，不出网。</p>
+    <p class="src">来源：Chen, L., Zaharia, M., Zou, J. (2023). FrugalGPT. arXiv:2305.05176; Apple Developer, Foundation Models framework (WWDC 2025).</p>
   </article>
   <article class="card">
-    <h3 data-n="7">注意力残留：一只脚还卡在门里</h3>
-    <p class="one"><b class="tag">一句话</b>每次换一件事，上一件事都会在脑子里留下一点残留，占着下一件事的位置。反复看消息，就是在不停制造残留。</p>
-    <p><b class="tag t-more">展开</b>像从一个房间走到另一个房间，一只脚还卡在门里。研究者 Sophie Leroy 2009 年给它起名叫「注意力残留」，没做完的事残留更重。Ronin 的做法是工作时不看手机、不反复确认消息，因为「反复确认会让大脑持续保持被触达的状态」，而「碎片化信息会让自己觉得这一天没什么进展」。这两句都能追到司马贺那句「信息的丰富造成注意力的贫乏」。</p>
-    <p><b class="tag t-you">跟你的关系</b>你已经在订会议室专注干活了。他补的一步是：把电脑上的微信也关掉。你回的是「再聊几句再关」。</p>
+    <h3 data-n="7">蒸馏，和模型崩溃</h3>
+    <p class="one"><b class="tag">一句话</b>蒸馏是让小模型去学大模型的输出。它和「模型崩溃」是两回事。</p>
+    <p><b class="tag t-more">展开</b>Hinton 等人 2015 年提出。今天几乎每家模型公司都在用，小模型常常是从大模型蒸出来的。</p>
+    <p><b class="tag t-fix">更正</b>有人说「蒸馏有致命问题，学到的是一个模型对另一个模型的理解」，并把它和 Shumailov 等人 2024 年发在 Nature 的「模型崩溃」论文放在一起。崩溃说的是另一种情况：模型反复用自己或同类生成的数据训练，又不掺新的真实数据，逐代丢掉分布里的长尾信息。后续研究（Gerstgrasser 等 2024）发现，只要把真实数据保留下来、合成数据累加进去，崩溃可以避免。</p>
+    <p>蒸馏的真实限制是：学生很难超过老师，而且只学得到老师输出覆盖的那一部分。</p>
+    <p><b class="tag t-lim">限制</b>「模型是工业碱」是类比：大模型像基础原料一样越来越便宜，只卖模型能力的公司利润会被压。这个方向有道理，但「某家公司会死」属于预测，这里不收录具体公司的预测。</p>
+    <p class="src">来源：Hinton, Vinyals, Dean (2015). Distilling the Knowledge in a Neural Network; Shumailov et al. (2024). AI models collapse when trained on recursively generated data. Nature; Gerstgrasser et al. (2024). Is Model Collapse Inevitable?</p>
   </article>
   <article class="card">
-    <h3 data-n="7">睡 5 到 6 个周期</h3>
-    <p class="one"><b class="tag">一句话</b>一个睡眠周期大约 90 分钟。成人一晚睡 5 到 6 个周期，也就是 7.5 到 9 小时。</p>
-    <p><b class="tag t-more">展开</b>这是他那句「你应该现在入睡，然后睡 5-6 个周期（7.5-9）」。90 分钟只是平均，每个人在 70 到 120 分钟之间浮动，按周期定闹钟只是个粗略工具。白天补觉（你的全季钟点房方案）也不冲突：睡 20 分钟，或者睡满一个周期；中间长度最容易在深睡里被叫醒。</p>
-    <p>他又补过两句。「累的时候就好好休息，控制慢性压力」：这句很扎实，长期压力的累积会伤身体，也伤前额叶，接上一张卡。「建议早上运动」：证据没那么硬，2019 年一篇综述发现晚上运动一般不影响睡眠，只有睡前一小时内的剧烈运动会让入睡变难。</p>
-    <p><b class="tag t-you">跟你的关系</b>你晚上八点多运动、十一点睡，问题不大。早上运动真正的好处是：不会被加班挤掉。</p>
+    <h3 data-n="7">软件的成本，和生产率从哪来</h3>
+    <p class="one"><b class="tag">一句话</b>传统软件卖出第二份的成本几乎为零。依赖大模型的产品不是这样。</p>
+    <p><b class="tag t-more">展开</b>Shapiro 和 Varian 的《信息规则》（1998）：信息产品的第一份成本很高，之后每多一份几乎不花钱，所以容易赢家通吃。</p>
+    <p><b class="tag t-fix">更正</b>
+      「软件的成本无限趋近于 0」对大模型产品不成立：每次请求都要付推理算力，公开报道里 AI 应用的毛利常明显低于传统 SaaS。另外毛利不是利润。咖啡和奶茶的饮品毛利可以很高（有人估计 80%），扣掉房租和人工以后净利很薄。这个 80% 是估计，没有出处。
+    </p>
+    <p><b class="tag t-fix">更正</b>另一种说法是「90–00 年代的高速增长，主要靠管理提升，不是信息技术」。增长核算的研究（Jorgenson、Oliner 和 Sichel 等）把 1995–2005 年美国生产率的回升大部分归因于信息技术；管理也有贡献，Chandler 的《看得见的手》（1977）讲的是职业经理人和管理层级怎样成为现代企业的核心。两者不是二选一。</p>
+    <p class="src">来源：Shapiro & Varian (1998). Information Rules; Oliner & Sichel (2000). The Resurgence of Growth in the Late 1990s. Journal of Economic Perspectives; Chandler, A. (1977). The Visible Hand.</p>
   </article>
 </section>
 
-<!-- ============ 8 相对位置 ============ -->
-<section class="chapter" data-title="相对位置" data-caption="<b>图 8</b>软木板上钉着一个个词，两两之间说得出一句话的才拉线。线最多的那颗钉子长得最大">
+<!-- ============ 8 快脑慢脑 ============ -->
+<section class="chapter" data-title="快脑慢脑" data-caption="<b>图 8</b>左边红铃代表杏仁核（快跑！），右边蓝齿轮代表前额叶（慢慢想）。压力表指针越高，铃越响，齿轮越转不动。这是示意图，不是解剖图">
   <header class="chead"><div class="plate">
     <span class="cnum">08</span>
-    <h2>意义来自相对位置</h2>
-    <p class="csub">记忆、压缩和人味</p>
-    <p class="clead">一个词是什么意思，由它挨着谁决定。一段记忆能不能留下，由它连着多少东西决定。这一章也解释了：为什么那些你读不进去的东西，做成游戏你就读进去了。</p>
+    <h2>快脑、慢脑和压力</h2>
+    <p class="csub">哪些心理学说法站得住，哪些被修正过</p>
+    <p class="clead">17 × 24 等于多少？你得停下来算。2 + 2 等于多少？不用想。这两种反应就是后面要讲的两套系统。</p>
   </div></header>
   <article class="card">
-    <h3 data-n="8">概念图：把想法摊成一张网</h3>
-    <p class="one"><b class="tag">一句话</b>把概念画成点，把关系画成写了字的线。一个概念的意思，由它连着谁决定。</p>
-    <p><b class="tag t-more">展开</b>你发了两张活动上记的关键词图，「乱乱的」。他建议你试试 concept map，接着说：「他们需要彼此的相对位置来让你的意义呈现出来。」「这是最基础的语义网络，也是神经网络参数的一种极简形式。」</p>
+    <h3 data-n="8">系统一和系统二</h3>
+    <p class="one"><b class="tag">一句话</b>系统一快、自动、凭感觉；系统二慢、费力、一步步推。</p>
+    <p><b class="tag t-more">展开</b>这对术语是 Stanovich 和 West 2000 年提出的，卡尼曼 2011 年的《思考，快与慢》把它普及。卡尼曼是心理学家，2002 年拿的是诺贝尔经济学奖（和 Vernon Smith 共享；诺贝尔没有心理学奖，他的合作者特沃斯基 1996 年去世）。他们证明人在不确定情况下的决策，会系统性地偏离经济学里「理性人」的假设。</p>
+    <p><b class="tag t-lim">限制</b>两套系统是对两类加工方式的描述，大脑里没有两个独立的器官。Melnikoff 和 Bargh（2018）批评这种二分太简单。《思考，快与慢》里讲「启动效应」的那一章，引用的研究后来大量复现失败，卡尼曼本人 2017 年公开承认当时过于信任这些研究。想拿走概念的话，读系统一二和过度自信的部分就够。</p>
+    <p class="src">来源：Stanovich & West (2000). Individual differences in reasoning. Behavioral and Brain Sciences; Kahneman (2011). Thinking, Fast and Slow; Melnikoff & Bargh (2018). The Mythical Number Two. Trends in Cognitive Sciences.</p>
+  </article>
+  <article class="card">
+    <h3 data-n="8">抽象能力属于系统一吗</h3>
+    <p class="one"><b class="tag t-fix">更正</b>「抽象能力是系统一，所以抽象强的人理性不一定强」，后半句有证据，前半句太强。</p>
+    <p><b class="tag t-more">展开</b>后半句：Stanovich 在《What Intelligence Tests Miss》里论证，智力和理性是可以分开的，聪明的人照样会犯系统性的判断错误。</p>
+    <p>前半句：模式识别确实是抽象的一个来源，看出两件事相似是系统一干的活。但把规律提炼成概念、迁移到新情境，通常要用到工作记忆和前额叶的控制，更接近费力的加工。流体智力（解新问题的能力）的研究也是这个方向。</p>
+    <p><b class="tag t-more">抽象的毛病</b>错误的抽象加上合理化：因为某件事就宣判某个人「社交死亡」，然后再找理由支持这个判断。比喻是「没有一楼，直接挖了个地下室」。</p>
+    <p><b class="tag t-you">例子</b>对同事的行为冒出一个解读，先给它贴上「假设」的标签，再逼自己找一条相反的证据。找不到，再当真。</p>
+    <p><b class="tag t-more">GPT-4 是系统一，o1 是系统二？</b>这是比喻。长思维链模型确实在做更多步的推理，但没有人证明它们和人的两套系统有对应关系。</p>
+    <p class="src">来源：Stanovich, K. (2009). What Intelligence Tests Miss.</p>
+  </article>
+  <article class="card">
+    <h3 data-n="8">杏仁核和前额叶</h3>
+    <p class="one"><b class="tag">一句话</b>压力很大的时候，负责计划和抑制的前额叶会变弱，负责快速反应的杏仁核占上风。</p>
+    <p><b class="tag t-more">展开</b>Arnsten（2009）的综述总结了这个机制：压力激素升高，前额叶的功能下降。受虐待的儿童对愤怒的表情更敏感、更快认出（Pollak 团队的一系列实验）。</p>
+    <p><b class="tag t-lim">限制</b></p>
     <ul>
-      <li><strong>概念图和思维导图不一样</strong>：思维导图是从中心长出来的一棵树；概念图是一张网，每条线上要写关系（导致、属于、取决于），读出来是一句完整的话。</li>
-      <li><strong>和神经网络的关系</strong>：语言学家 Firth 说过「看一个词的伙伴，就知道它的意思」。2013 年的 word2vec 把每个词变成空间里的一个点，意思全靠它和别的点的相对位置。最有名的例子：国王 − 男人 + 女人 ≈ 女王。</li>
-      <li><strong>他那句「像程序的 build」</strong>：写一段文字，是把网状的想法压成一条线；读的人要把线还原成网。</li>
+      <li>杏仁核不只管恐惧，也处理正面的、重要的刺激。「杏仁核是烟雾报警器」是方便的简化。</li>
+      <li>有人由此推出「在冲突环境里长大的人更擅长隐喻和抽象」。这是假说，我没找到直接研究。不少研究发现早期逆境和较弱的执行功能有关，方向正好相反。</li>
     </ul>
-    <p><b class="tag t-you">跟你的关系</b>你装了 XMind skill，但 XMind 默认画的是树。做概念图要多一步：把关键词摊开，两两之间能写出一句「A ___ B」的才连线，写不出的先不连。连完你会看到哪几个词连线最多，那就是你那天真正在想的事。</p>
+    <p class="src">来源：Arnsten, A. (2009). Stress signalling pathways that impair prefrontal cortex structure and function. Nature Reviews Neuroscience; Pollak & Sinha (2002). Effects of early experience on children's recognition of facial displays of emotion. Developmental Psychology.</p>
   </article>
   <article class="card">
-    <h3 data-n="8">记忆是重建，不是回放</h3>
-    <p class="one"><b class="tag">一句话</b>人记住的不是一段录像，是几块碎片，回想时再拼一次。一样东西和越多别的东西连过，越记得住。</p>
-    <p><b class="tag t-more">展开</b>这是 9.9 那场会上 Ronin 讲的学习理论。他的例子：第一次和喜欢的人约会，你只记得发型、香水、对方说过的几句话，「至于她长什么样子，有可能你都不记得」。所以一个词（他举 corner）要在不同场景里见大约 20 次，还要听伦敦、纽约、洛杉矶三种口音。「一首诗在伤心时念过、在离别时背过，于是不仅会背，还会唱。」中国人学英语难，是「一楼还没盖，就去盖五楼六楼」，一楼是声音和文字对齐。</p>
-    <p><b class="tag t-more">有实验的部分</b>1932 年，有人让英国人反复复述一个美洲原住民的故事，越讲越像他们自己的文化。1974 年的车祸实验里，被问「两车<em>猛撞</em>时多快」的人，比被问「两车<em>碰到</em>时多快」的人报的车速更高，一周后还更多人「记得」有碎玻璃，其实没有。</p>
-    <p><b class="tag t-you">跟你的关系</b>这解释了你在群里那句：「我好多遍都读不进去的内容，做成游戏就看进去了。」游戏把同一个道理放进角色、对白、选择、后果好几个场景，连接多了。书斋物语和第一炉香不只是玩具，是这套理论的一个实现。觉然做课也能用：一个概念，至少换三个场景讲。</p>
+    <h3 data-n="8">注意力残留</h3>
+    <p class="one"><b class="tag">一句话</b>切换任务以后，上一件事还会在脑子里占一阵子位置。</p>
+    <p><b class="tag t-more">展开</b>Sophie Leroy 2009 年的实验：人转到新任务之后，仍在想上一个任务，没做完的任务残留更重。司马贺 1971 年写过「信息丰富造成注意力贫乏」。</p>
+    <p><b class="tag t-you">例子</b>需要专注时，订个会议室，手机放一边，电脑上的微信也关掉。反复查看消息，是在给自己制造残留。</p>
+    <p><b class="tag t-lim">限制</b>实验大多是实验室里的短任务，「每次看一眼手机究竟损失多少」没有可靠的统一估计。</p>
+    <p class="src">来源：Leroy, S. (2009). Why is it so hard to do my work? Organizational Behavior and Human Decision Processes.</p>
   </article>
   <article class="card">
-    <h3 data-n="8">影关英语：把训练 AI 的方法倒过来教人</h3>
-    <p class="one"><b class="tag">一句话</b>他接手的英语产品，思路是「把多模态大模型的训练方法倒过来，就是人类的语言学习方法」：拿电影片段当材料，先听、不看字幕，由易到难一关关过。</p>
-    <p><b class="tag t-more">展开</b>他的几句话：「应用类语言和运动相似，多听就好。」「最大的误区就是把英语当书来学，而不是当方言来学。」「粤语和普通话完全不一样，但是你不会恐惧粤语。」「很多时候，兴趣远大于天赋。」</p>
-    <p>新界面拿《绿皮书》做例子：一部片分成 144 关，每关一个片段、一句台词。世界观片里有一句把原理说透了：「你的耳朵听到的不是六个词，是三块声音。」母语者说话会连读、吞音，听到的是一块一块的。</p>
+    <h3 data-n="8">睡眠、运动、压力</h3>
     <ul>
-      <li><strong>「倒过来」</strong>：训练 AI 有个方法叫「课程学习」，样本从易到难排，模型学得更好。他把这个顺序还给了人。</li>
-      <li><strong>「比现在难一点点」</strong>：语言学家 Krashen 说人靠听懂「比自己水平高一点」的材料习得语言，写作 i+1。</li>
+      <li><b>睡眠周期</b>平均约 90 分钟，个体在 70 到 120 分钟之间。成人推荐睡 7 到 9 小时；5 到 6 个周期正好是 7.5 到 9 小时。按周期数定闹钟是粗略的办法。</li>
+      <li><b>小睡</b>20 分钟，或者约一个完整周期。中间长度容易在深睡里被叫醒。</li>
+      <li><b>晚上运动</b>Stutz 等人（2019）的元分析：晚上运动一般不影响睡眠，只有睡前一小时内的高强度运动会让入睡变难。「早上运动更好」的证据不硬；早上运动的实际好处是不容易被加班挤掉。</li>
+      <li><b>长期压力</b>McEwen 的「稳态负荷」（allostatic load）概念：长期压力的累积负担会损害身体和前额叶功能。</li>
     </ul>
-    <p><b class="tag t-you">跟你的关系</b>你说出国好几年英语还是没自信。这套说法给了一个解释：你学的是「书」，缺的是大量「听得懂一点点」的输入。教同事用 AI 也一样：每一批材料比他们现在会的多一步，别一口气讲到 agent。</p>
+    <p class="src">来源：Stutz, Eiholzer, Spengler (2019). Effects of Evening Exercise on Sleep in Healthy Participants. Sports Medicine; McEwen, B. (1998). Protective and damaging effects of stress mediators. NEJM.</p>
   </article>
   <article class="card">
-    <h3 data-n="8">压缩过头，人味就没了</h3>
-    <p class="one"><b class="tag">一句话</b>你问他的 AI 为什么写得像文言文。他说是 system prompt 的问题，然后给了一条退化链：过度抽象 → 过度压缩 → 文化剥离 → 失去人味。</p>
-    <p><b class="tag t-more">展开</b>他的提示词大概要求高度抽象和精炼。于是模型每句都在压：删掉例子，删掉语气，删掉让读者对得上号的背景。剩下的句子密度很高，但读者得自己解压，没有上下文的人解不开。你自己说过一句更好的：「缩写词就像一个 zip 文件夹，解压后才知道。」</p>
-    <p><b class="tag t-more">和「写短一点」不矛盾</b>第 3 章 Astra 博客让你把 skill 写短，这里又说压缩丢人味。区别在读者是谁。给机器的（指路牌、完成标准），读者是模型，越短越准。给人的，读者没有你的上下文，压掉的要还回去。<strong>对机器压缩，对人解压。</strong></p>
-    <p><b class="tag t-you">跟你的关系</b>你当场说：「我要当你的翻译官。」这就是第 10 章 Echo 的活：把研究者和工程师的压缩说法，解压给业务的人。你给 DLG 定的「去 AI 味」，给觉然定的「说人话」，做的都是解压。这本册子也是。</p>
-  </article>
-  <article class="card">
-    <h3 data-n="8">图示不是图表</h3>
-    <p class="one"><b class="tag">一句话</b>你问他那些图怎么让 Claude 做的，他纠正你：「这不是图表，图表会调用内联图表渲染器，而不是图示。」</p>
-    <p><b class="tag t-more">展开</b>图表（chart）是把<strong>数据</strong>画到坐标上：柱状、折线、饼图。图示（diagram）是把<strong>概念</strong>画成形状：层级（树）、框架（矩阵、四格）、网络（点和线）、流程、事件线。跟 Claude 说「图表」，它会去找数字画坐标；说「图示」，再说出是哪一种形状，它才会画出你脑子里那种图。</p>
-    <p>你说想到的中文词第一个都是「图表」，自称「0 国语言掌握者」。他说「其实就是对语言不敏感」「刻意训练」。刻意训练有出处：有明确目标、即时反馈、专门练弱项，才会进步，光重复不行。</p>
-    <p>他截图里的那段常驻规则，把「我要干什么」对应到「你该给我什么形态」，摘几句：</p>
-    <blockquote>当我需要解释时，你最好帮我构造认知对象以及他们的基础模式……<br>当我需要理解时，你最好可视化以节省我的认知带宽<br>当我需要体感时，你最好可交互化、可操作化<br>当我想要应用时，你最好提供可计算化、可操作化的 methods & approach</blockquote>
-    <p><b class="tag t-you">跟你的关系</b>你装了 XMind、Whimsical 两个 MCP 但用得少。他的做法是不去挑工具，先把形态说准，让 Claude 自己挑怎么画；而且把「说准形态」写进了常驻规则，不用每次重说。</p>
-  </article>
-  <article class="card">
-    <h3 data-n="8">Ontology：先定表头，再填表</h3>
-    <p class="one"><b class="tag">一句话</b>ontology 是给一个领域立规矩：有哪几类东西，它们之间能有哪些关系。知识图谱，是按这套规矩填进去的具体内容。</p>
-    <p><b class="tag t-more">展开</b>打个比方：ontology 是表头和填表规则，知识图谱是填好的那张表。他转来一篇《Graph 的尽头是自进化 Ontology》，说这是「一个经典问题，怎么让机器理解上下文和领域知识」。「自进化」大概是让 agent 在使用中自己补类和关系。<span class="flag">原文没读到</span></p>
-    <p>你说「所见皆信息」，他回「卡尔·波普尔欢迎你」。最接近的可能是波普尔的「三个世界」：物理世界、心里的世界，和书本理论这种人造出来却独立存在的知识。<span class="flag">只能猜</span></p>
-    <p><b class="tag t-you">跟你的关系</b>DLG 的品牌知识库（品牌、产品、战役、KOL、帖子之间的关系），和 GEO 的实体梳理，本质都是这个问题。先把类和关系定清楚，比先堆数据重要。</p>
+    <h3 data-n="8">MBTI</h3>
+    <p class="one"><b class="tag t-lim">限制</b>MBTI 是一份量表，像量身高一样量出四个字母，但它的重测稳定性一直被批评。</p>
+    <p>Pittenger（1993）的综述指出，相当比例的人隔几周重测会得到不同的类型，有的研究里大约一半。人格研究里证据更充分的是大五模型。把 MBTI 当作自我介绍时的话题，没有问题；拿它预测一个人会怎么做，撑不住。</p>
+    <p class="src">来源：Pittenger, D. (1993). Measuring the MBTI… and coming up short. Journal of Career Planning and Employment.</p>
   </article>
 </section>
 
-<!-- ============ 9 讲明白 ============ -->
-<section class="chapter" data-title="讲明白" data-caption="<b>图 9</b>左边崖上的人走到边上就停了。往下滚，木板一块块铺过去，他们才走到对面：这就是「讲明白」">
+<!-- ============ 9 记忆与学习 ============ -->
+<section class="chapter" data-title="记忆与学习" data-caption="<b>图 9</b>软木板上钉着一个个词，两两之间说得出一句话的才拉线。线最多的那颗钉子长得最大">
   <header class="chead"><div class="plate">
     <span class="cnum">09</span>
-    <h2>做出来越来越便宜，<br>讲明白越来越贵</h2>
-    <p class="csub">价值传递</p>
-    <p class="clead">AI 让「做出一个东西」便宜到近乎免费。于是难的那一步挪了位置：别人能不能一眼看懂它是什么。这一章 Ronin 在讲别人，也被钱鹏飞讲到了他自己身上。</p>
+    <h2>记忆、学习与概念图</h2>
+    <p class="csub">记住的是特征，不是录像</p>
+    <p class="clead">回想第一次约会：你多半记得发型、香水、她说过的几句话，至于她整体长什么样，反而模糊。</p>
   </div></header>
   <article class="card">
-    <h3 data-n="9">产品死于「价值无法传递」</h3>
-    <p class="one"><b class="tag">一句话</b>技术扎实的小众产品死得快，多半不是点子差、技术不行，是用户还没弄明白它是什么。</p>
-    <p><b class="tag t-more">展开</b>你讲了活动上一位技术出身的朋友：起点是「硬件版 Typeless」，后来加了翻译、agent、浏览器控制，能控制整台电脑，但拉不到投资。你说：「好强啊，大神！但我好像还是没什么动力去用。」他的回应连起来是一整堂产品课：</p>
+    <h3 data-n="9">记忆是重建</h3>
+    <p class="one"><b class="tag">一句话</b>人存下来的是几个关键特征，回忆时再拼一次。</p>
+    <p><b class="tag t-more">展开</b>Bartlett 1932 年让英国人反复复述一个美洲原住民的民间故事，复述越来越像他们自己的文化，细节被改写。Loftus 和 Palmer 1974 年让人看车祸的录像：问「两车猛撞（smashed）时车速多少」的一组，报出的车速比问「碰到（hit）时」的一组高；一周后，前一组更多人说自己看见了碎玻璃，实际画面里没有。</p>
+        <p class="src">来源：Bartlett, F. (1932). Remembering; Loftus & Palmer (1974). Reconstruction of automobile destruction. Journal of Verbal Learning and Verbal Behavior.</p>
+  </article>
+  <article class="card">
+    <h3 data-n="9">连接越多，记得越牢</h3>
+    <p class="one"><b class="tag">一句话</b>一样东西在越多不同的场合出现过、和越多已知的东西连过，越不容易忘。</p>
+    <p><b class="tag t-more">展开</b>Craik 和 Lockhart（1972）的加工深度理论：只看字形是浅加工，联系意思、联系自己的经历是深加工，保持得更久。这个理论后来被批评循环论证，但实验结果本身站得住。</p>
+    <p>语言学习里的对应做法：同一个词听不同的人说。Lively、Logan 和 Pisoni（1993）训练日语母语者区分英语的 r 和 l，听多个说话人的训练组，比只听一个说话人的训练组迁移得更好。一个词需要见多少次，没有统一的数字，取决于词和语境。</p>
+    <p><b class="tag t-you">例子</b>读了好几遍都读不进去的道理，做成游戏就读进去了。游戏把同一个道理放进角色、对白、选择、后果好几个场景，连接变多了。做课也可以这样：一个概念至少换三个场景讲。</p>
+    <p class="src">来源：Craik & Lockhart (1972). Levels of processing. Journal of Verbal Learning and Verbal Behavior; Lively, Logan & Pisoni (1993). Training Japanese listeners to identify English /r/ and /l/. JASA.</p>
+  </article>
+  <article class="card">
+    <h3 data-n="9">概念图，和思维导图的区别</h3>
+    <p class="one"><b class="tag">一句话</b>节点是概念，连线上写关系；一个概念的意思，由它连着谁决定。</p>
+    <p><b class="tag t-more">展开</b>概念图是康奈尔大学的 Joseph Novak 团队在 1970 年代发展出来的，理论基础是 Ausubel 的同化理论：新知识要挂到已有知识上才学得会。思维导图是从一个中心长出的树；概念图是网，每条线上要写「导致」「属于」「取决于」，读出来是一句完整的话。</p>
+    <p><b class="tag t-you">做法</b>把关键词摊开，两两之间写得出「A ___ B」的才连线，写不出的先不连。连完看哪几个词线最多，那是你真正在想的东西。</p>
+    <p>语义网络（Quillian 1968）是知识图谱的祖先。词向量的思路来自语言学家 Firth 1957 年的话：看一个词的伙伴，就知道它的意思。</p>
+    <p><b class="tag t-fix">更正</b>有人说语义网络是神经网络参数的极简形式。不对：语义网络是带标签的离散符号结构，每条线都有名字；神经网络里的概念散布在大量数字里，没有一条线对应一个关系。</p>
+    <p><b class="tag t-lim">限制</b>词向量那个有名的例子「国王 − 男人 + 女人 ≈ 女王」被挑选过。计算时通常要把输入的几个词排除出候选，否则最接近的往往是「国王」本身（Nissim 等 2020）。</p>
+    <p class="src">来源：Novak & Cañas (2008). The Theory Underlying Concept Maps. IHMC; Quillian (1968). Semantic Memory; Firth (1957). A Synopsis of Linguistic Theory; Mikolov et al. (2013). Efficient Estimation of Word Representations in Vector Space; Nissim, van Noord, van der Goot (2020). Fair is Better than Sensational. Computational Linguistics.</p>
+  </article>
+  <article class="card">
+    <h3 data-n="9">Ontology 和知识图谱</h3>
+    <p class="one"><b class="tag">一句话</b>ontology 规定一个领域里有哪几类东西、它们之间能有哪些关系；知识图谱是按这套规矩填进去的具体内容。</p>
+    <p><b class="tag t-more">展开</b>Gruber 1993 年的定义是对一个概念体系的明确说明。比喻：ontology 是表头和填表规则，知识图谱是填好的表。Palantir 的做法是先把业务里的人和事建成对象，再定义「操作」（action）：一次操作能对哪些对象做哪些修改。模型也通过这些操作去改数据，而不是随便写库。</p>
+    <p><b class="tag t-you">例子</b>品牌知识库（品牌、产品、战役、KOL、帖子之间的关系）和 GEO 的实体梳理，都是这类问题。先把类和关系定清楚，比先堆数据重要。</p>
+    <p class="src">来源：Gruber, T. (1993). A Translation Approach to Portable Ontology Specifications. Knowledge Acquisition; Palantir Foundry 文档：Ontology 与 Action types。</p>
+  </article>
+  <article class="card">
+    <h3 data-n="9">学语言：听懂比自己高一点的材料</h3>
+    <p class="one"><b class="tag">一句话</b>Krashen 的假说：人靠听懂比自己水平略高一级的材料来习得语言，记作 i+1。</p>
+    <p><b class="tag t-more">展开</b>相关的几个说法：</p>
     <ul>
-      <li>「市场不需要第二个 typeless。」</li>
-      <li>「他应该拿起一个小本本，认真地和用户一起聊一个晚上。」</li>
-      <li>「大众在理解产品的优劣之前，需要先理解产品是什么。」</li>
-      <li>「这是绝大多数小众创业死掉的原因，不是点子不够好，不是技术不够扎实，而是价值无法传递。」</li>
-      <li>「做自己需要的东西，只有自己一个买家。」「写字楼下的包子铺三年赚了一百万，而写字楼上的创业团队要破产了。」</li>
-      <li>你又举了一个小产品，他说：「木工在闲暇之余会喜欢做一些小玩意……乐趣是不需要评价的。」</li>
+      <li><b>课程学习</b>（Bengio 等 2009）：训练样本从易到难排，模型学得更快。把这个顺序还给人，就是按难度分关卡的学习产品。</li>
+      <li><b>语块</b>（Michael Lewis，1993，《The Lexical Approach》）：口语里词会连读、吞音，母语者听到的是一块一块的声音，教学应该以语块为单位。</li>
+      <li><b>最近发展区</b>（维果茨基）：学习发生在「自己做不到、有人带一把能做到」的那一段。</li>
     </ul>
-    <p><b class="tag t-more">现成的理论</b>《跨越鸿沟》（1991）：早期尝鲜的人买的是新技术本身，愿意自己折腾；后面的大多数人买的是「解决我一个具体问题的完整方案」。两群人之间有条沟，大多数高科技产品死在这里。跨过去的办法，是先收窄到一个具体场景，做到一眼看懂。「小本本」那句，对应《The Mom Test》：问对方<em>过去实际做过</em>什么、花过什么钱，别问「你将来会不会用」，后一种只能换来客气话。</p>
-    <p><b class="tag t-you">跟你的关系</b>你那句「好强但没动力用」，就是沟对面的用户反应，你自己就是样本。拿它检查你手上的东西：一个没听说过的人，看第一屏，能不能一句话说出这是什么。</p>
-  </article>
-  <article class="card">
-    <h3 data-n="9">钱鹏飞那一刀</h3>
-    <p class="one"><b class="tag">一句话</b>9 月 9 日那场会，Ronin 说了 76% 的字，但会议的转向全来自钱鹏飞那 24%。最后一次，钱鹏飞说：「你研究的对象不是学习本身，是一个商业，你的课题是如何做生意。」</p>
-    <p><b class="tag t-more">展开</b>（全部出自那份会议图版）</p>
+    <p><b class="tag t-lim">限制</b></p>
     <ul>
-      <li>钱鹏飞给的顺序是：<strong>人性 → 潜质 → 学习目标 → 方法</strong>。「先要谈的是人性的问题——人是懒的，人是好面子的……」Ronin 整场会一直在最后那层「方法」上（怎么记得更快）。</li>
-      <li>「牛刀宰鸡」：「你这个牛刀宰的是不是鸡？可能不是个鸡，它可能是条蛇。」大妈跳舞要的是凤凰传奇的节奏，不是乐理。</li>
-      <li><strong>绝活放错了位置</strong>：他的 AI 教练 App 有一套别处没有的东西（拍照抠图、贴成画、摇一摇有物理效果），却埋在流程深处，第一屏摆的是 20 步问卷。钱鹏飞：「我看不到上来这个好像是个与众不同的 APP。」Ronin：「其实我是有的，但我确实是没有想到把它做到台前。」</li>
-      <li>图版的结论：<strong>「从外面看，『没做』和『做了没讲』是同一件事。」</strong></li>
+      <li>Krashen 的假说被批评过：只靠输入不够。Swain 的输出假说认为，开口说、动笔写会迫使人注意语法。「应用类语言像运动，多听就好」，运动也要练。</li>
+      <li><b>心流</b>常被说成「挑战略高于能力时最投入」。Csikszentmihalyi 的模型里，心流出现在挑战和技能都高、而且匹配的时候；挑战高、技能低是焦虑，两者都低是冷漠。</li>
+      <li>「兴趣远大于天赋」和刻意练习（Ericsson 1993）。Macnamara 等人（2014）的元分析：练习量解释的成绩差异，在游戏里约 26%，音乐约 21%，体育约 18%，教育约 4%，专业职业不到 1%。练习重要，但不是全部。语言能力倾向测验也能预测学习速度。</li>
     </ul>
-    <p>他两周后对那位硬件朋友说的「价值无法传递」，正是两周前钱鹏飞用在他自己身上的。<span class="flag">这是推断，不是他说的</span></p>
-    <p><b class="tag t-you">跟你的关系</b>三处能直接用。书斋、第一炉香这些游戏，第一屏放的是不是「别处没有」的那个东西？觉然的课和 DLG 的培训，是不是也从「方法」讲起，跳过了「人为什么会打开」？还有你那句「举手，我想当面听」：图版证明他最需要的，恰恰是钱鹏飞这种从商业和人性一侧切进来的人。这正是你 Gallup 里「关系建立」的强项。</p>
+    <p><b class="tag t-you">例子</b>一款英语学习应用把电影片段做成关卡：先听、不看字幕，片子多难题就多难。教同事用 AI 同样适用 i+1：每一批材料比他们现在会的多一步，别一次讲到 agent。</p>
+    <p class="src">来源：Krashen (1982). Principles and Practice in Second Language Acquisition; Swain (1985); Bengio et al. (2009). Curriculum Learning. ICML; Macnamara, Hambrick, Oswald (2014). Deliberate practice and performance. Psychological Science; Csikszentmihalyi (1990). Flow.</p>
   </article>
   <article class="card">
-    <h3 data-n="9">会议图版这个格式，coco 可以直接借</h3>
-    <p class="one"><b class="tag">一句话</b>那份图版是从一场会的逐字稿里做出来的信息图报告。它的几个做法，正好是 coco 还没有的。</p>
-    <ul>
-      <li><strong>按分钟画出每人说了多少字</strong>：上下两色，一眼看出谁在独讲、话语权在哪几刻换了手。比一句「76% / 24%」信息多得多。</li>
-      <li><strong>每个结论都标层级</strong>：观察到的、推断的、不知道的，分开写。</li>
-      <li><strong>更正公开写</strong>：初版记错了 agent 数量，第二版改正，并把更正写在图下面。</li>
-      <li><strong>分歧不压平</strong>：两人意见不同的地方，原样画两边。</li>
-      <li><strong>待办按人列</strong>，每条带原话。</li>
-    </ul>
-    <p><b class="tag t-you">跟你的关系</b>能借的三件：每分钟发言量的时间轴；观察和推断分开标（你 vault 的 ✅⚠️❓ 规则已经是这个思路）；看得见的更正区。对 DLG 客户会议，「话语权易手」那张图能直接回答：客户在哪几个点上主动接过了话题。</p>
-  </article>
-  <article class="card">
-    <h3 data-n="9">施乐实验室与苹果：「人群没有分群」</h3>
-    <p class="one"><b class="tag">一句话</b>你吐槽那个 999 刀闭门会，他的诊断是定位没想清楚：「一类人追寻理想与密教，一类人追寻目光和掌声，人群没有分群。」</p>
-    <p><b class="tag t-more">展开</b>「分群」是市场营销的基本功：先按需求把人切开，选你要服务的那一群，再决定在他们心里占什么位置。他说自己「只是一个 PMM，兼研究兼开发」。PMM（产品市场经理）每天干的就是这个，所以这句诊断是他的本行。</p>
-    <p>他说第一类人是「施乐实验室」。施乐的帕洛阿尔托研究中心在 70 年代做出了图形界面、以太网、激光打印机、个人电脑原型，还有艾伦·凯的 Smalltalk，但施乐自己几乎没把它们变成生意。1979 年乔布斯去参观，之后做出了 Macintosh。你问反义词，他说「Apple Inc」。你第二天凌晨补了一句：「apple 也没有错，没有让实验室的发现都只存在于实验室里。」技术史的结论也是这样：发明和创新是两件事。</p>
-    <p><b class="tag t-you">跟你的关系</b>你对那个社群的不舒服（「加入进去之后会被他当作资源」），用他的框架说就是：组织者要目光和掌声，你要信息交换，两群人被关进了同一个房间。你说「如果被当作资源的同时能获得信息交换，那我愿意让渡」。这是一笔清楚的交换，前提是你知道自己在换什么。</p>
-  </article>
-  <article class="card">
-    <h3 data-n="9">The Prompting Company：你 GEO 的直接对标</h3>
-    <p class="one"><b class="tag">一句话</b>你当年做作品集用的建站工具 Typedream，那三位创始人现在做 GEO 了，公司叫 The Prompting Company。</p>
-    <p><b class="tag t-more">GEO 先说人话</b>以前做 SEO，是让你在搜索结果里排前面。GEO 是让 AI 在回答别人问题的时候，提到你。</p>
-    <p><b class="tag t-more">展开</b>三位创始人是印尼移民，之前做过 Typedream（被 beehiiv 收购）和一个登录工具（被 Stytch 收购），这次拿了 650 万美元种子轮。做法三步：</p>
-    <ol>
-      <li>找出大家常问 AI 的、带购买意图的问题；</li>
-      <li>生成结构化的内容来回答这些问题；</li>
-      <li>把来访的 AI agent 引到专门为 AI 准备的页面。</li>
-    </ol>
-    <p>CEO 的原话：「大多数公司的网站还只为人设计，但互联网上增长最快的用户群是 AI agent。」</p>
-    <p><b class="tag t-you">跟你的关系</b>拿它三步对照 DLG：第一步对应 Elsie 交代的 SOV 工具和 Emergine 的监测；第三步（给 AI 专门准备的页面），DLG 的奢侈品客户能不能做、愿不愿做，值得问一句。你注意到他们还加了文风分析。群里拉你做 GEO 的那位朋友，也可以拿这家当对标。</p>
-    <p class="src">来源：TechCrunch, 2025-10-30。</p>
-  </article>
-  <article class="card">
-    <h3 data-n="9">「画面不重要，声音不重要，文字最重要」</h3>
-    <p class="one"><b class="tag">一句话</b>他认为 Claude 证明了：语言模型写代码、调度别的工具，就能做出视频。所以单独做视频模型是「歧途」。</p>
-    <p><b class="tag t-more">展开</b>群里这阵子那些「一句话出片」，其实是模型写了一段动画代码，浏览器一帧帧画出来，配乐配音交给 Suno、ElevenLabs。代码是文字，所以他说文字最重要。他还有一句：「当一个岗位工程化的时候，说明这个岗位需要依靠人的判断就少了。」</p>
-    <p><b class="tag t-more">这是他的判断，不是共识</b>群里同时有人说「画面精美这件事 AI 还搞不定」；你也说 Suno 的音乐编辑起来很麻烦。另外，「看懂视频」那一侧，大家公认 Gemini 很强。所以「歧途」如果只指<em>生成</em>，证据多一些；如果连<em>理解</em>也算上，就站不住。</p>
-    <p><b class="tag t-you">跟你的关系</b>「岗位工程化」那句可以拿去看 DLG：设计、文案、剪辑里，哪些环节已经能写成流程交给 agent，剩下的判断才是人的位置。</p>
-  </article>
-  <article class="card">
-    <h3 data-n="9">做视频，要的是 context，不是指令</h3>
-    <p class="one"><b class="tag">一句话</b>你连着两次「请交出你的 prompt」，他说：「我的 prompt 在 flomo 里。」「严格来说，做一个视频，需要的是 context，不是指令。」</p>
-    <p><b class="tag t-more">展开</b>他后来发的《同一盏灯》大纲，就是他说的 context 长什么样。不是一句「帮我做个视频」，是七块：</p>
-    <ol>
-      <li>一句话：整支片要让人记住的那句。</li>
-      <li>叙事线，以及为什么这么排。</li>
-      <li>视觉规则：底色、每种颜色代表什么、字号、动作几秒。</li>
-      <li>分镜表：按 120 拍每分钟切成 30 小节，每一镜写明时间、字、画面、声音。</li>
-      <li>哪三帧适合截图。</li>
-      <li>砍掉了什么，为什么砍。</li>
-      <li>音乐规格：调性、主旋律、每个声部用什么音色。</li>
-    </ol>
-    <p>音乐也是代码合成的，不是 Suno 生成的。和上一张卡是同一个判断。</p>
-    <p><b class="tag t-more">世界观片和宣传片</b>他发过一支影关英语的片子，你说「很好的讲解原理的视频，但这不是一个好的宣传视频」。他说：「这是世界观视频。」「宣传片是要快节奏的。」紧接着发来一支快节奏版。世界观片讲清楚「为什么」，宣传片让人「想试」。</p>
-    <p><b class="tag t-you">跟你的关系</b>你喜欢的写法是「风格必须快节奏、炸裂、炫目」，给风格下形容词；他的写法是把每一秒要发生什么写死。前者适合宣传片，要惊喜；后者适合讲道理，要准确。给同事做开场视频之前，先定它是哪一种。</p>
-  </article>
-  <article class="card">
-    <h3 data-n="9">管理、软件和毛利</h3>
-    <p class="one"><b class="tag">一句话</b>他有两个判断：90 到 00 年代的高速发展，主要靠管理提升了「调度能力」；软件的成本无限接近于零，只要用户够多。</p>
-    <p><b class="tag t-more">展开</b>你讲以前在二次元主题咖啡厅打杂，他说「水的毛利在 80%」「app 在 90%」。<span class="flag">他的估计，当量级看</span>软件第一份很贵，之后每多卖一份几乎不花钱，这是信息经济学的老结论。你问开发呢，他说「开发就是人力」。你说同类软件太多、用户看不到，他说「已经到末期了，自然演化」。你回的是：「下一步沉思：我怎么培养自己的管理能力。」</p>
-    <p><b class="tag t-you">跟你的关系</b>「开发就是人力」正在被 AI 改写，这也是你说的「AI 后非码农的产品创意有机会实现了」。但本章开头那条结论不变：做出来越来越便宜，有人用才是难的。</p>
+    <h3 data-n="9">奖励会不会毁掉兴趣</h3>
+    <p class="one"><b class="tag">一句话</b>事先许诺的、和表现挂钩的物质奖励，会削弱人本来的兴趣。</p>
+    <p><b class="tag t-more">展开</b>Lepper、Greene、Nisbett（1973）：本来爱画画的幼儿园小孩，被告知画了有奖之后，自由活动时画画的时间反而减少。Deci、Koestner、Ryan（1999）综合了 128 项实验：事先许诺、和表现挂钩的物质奖励会削弱内在兴趣；事后意外给的奖励、口头肯定不会。</p>
+    <p><b class="tag t-lim">限制</b>削弱只发生在本来就有兴趣的活动上。本来就枯燥的任务，奖励不会毁掉什么。Cerasoli 等人（2014）的元分析发现，内在动机和奖励都能预测表现，数量类的任务奖励更管用。「把兴趣变成钱，兴趣就没了」说得太满。</p>
+    <p class="src">来源：Lepper, Greene & Nisbett (1973). JPSP; Deci, Koestner & Ryan (1999). Psychological Bulletin; Cerasoli, Nicklin & Ford (2014). Psychological Bulletin.</p>
   </article>
 </section>
 
-<!-- ============ 10 你的位置 ============ -->
-<section class="chapter" data-title="你的位置" data-hud="need" data-caption="<b>图 10</b>小山上站着你，周围一千个小人。往下滚，需要你的人一个个亮起来">
+<!-- ============ 10 产品 ============ -->
+<section class="chapter" data-title="没人用" data-caption="<b>图 10</b>左边崖上的人走到边上就停了。往下滚，木板一块块铺过去，他们才走到对面">
   <header class="chead"><div class="plate">
     <span class="cnum">10</span>
-    <h2>你站在哪</h2>
-    <p class="csub">Echo、内部人，和需要你的 1000 个人</p>
-    <p class="clead">「先学这五个」的最后一个，是你的职业定位。他前后给过好几个说法：真 FDE、Echo、刘备、AIO 的下位替代。拼起来是一张挺清楚的地图。</p>
+    <h2>做出来了，没人用</h2>
+    <p class="csub">价值怎么传到用户那里</p>
+    <p class="clead">一个能控制整台电脑的语音输入硬件，技术很强，找不到投资，听的人也说「好强，但我没动力用」。常见的毛病出在哪里？</p>
   </div></header>
   <article class="card">
-    <h3 data-n="10">Delta 与 Echo</h3>
-    <p class="one"><b class="tag">一句话</b>Palantir 派到客户那里的团队是两人一组：Delta 写代码；Echo 不写代码，负责弄清问题、重排流程、让人真的用起来。</p>
-    <p><b class="tag t-more">展开</b>Delta 就是 FDE（驻场工程师），像一个派驻在外的小 CTO。Echo 懂机构里的人情和政治、懂工作流的真实样子、懂大家为什么不愿意用。两人的张力，保证东西既做得出来，又对得上业务。Ronin 说 FDE「主要是帮助平台型企业从客户那里获得行业数据」，「和他配合的还有一个岗位叫 echo」。</p>
-    <p><b class="tag t-you">跟你的关系</b>你说「双人配合比较合理，但目前已经是一个人干六个人的活了」。按你的 Gallup（关系建立 5、战略 3、执行 2），你更像 Echo，眼下同时兼着 Delta。这不是让你放弃开发，是说你在 DLG 真正稀缺的是 Echo 那一半：知道哪个位置放错了人，知道同事真正需要什么。他看了你的 Gallup 说「比较适合做 C 级别人力资源的工作，负责从业务架构到组织架构，想一想刘备」，说的也是 Echo。他叫你「真 FDE」，是在夸你。</p>
-  </article>
-  <article class="card">
-    <h3 data-n="10">你其实不叫 FDE</h3>
-    <p class="one"><b class="tag">一句话</b>他认为国内 FDE 只有一条路：「帮老板搞自动化」。而且你做的事，严格说不叫 FDE。</p>
-    <p><b class="tag t-more">展开</b>他的话很重：「FDE 是个『外人』。」「企业内部都推不动，你指望一个外人推？」「这比咨询分析师还不靠谱。」然后转过来对你说：「你不能叫 FDE，因为 FDE 实际上是平台企业帮助行业中相关企业解决数据问题。」「你本质上是一个 AIO 的下位替代。」「企业要进行数字化转型，内部有余力就会聘请你这类人才，当然现在是 AI 化转型。」</p>
-    <p><b class="tag t-you">跟你的关系</b>你是公司「内部有余力聘请的人」，不是外人。这是优势：你有授权，有上下文。给自己的定位可以写成「企业内部的 AI 转型负责人」，比「FDE」准，也更好讲。「AIO」具体指什么他没说，放进最后一章的问题里。</p>
-  </article>
-  <article class="card">
-    <h3 data-n="10">SICP：用一层层的墙管住复杂</h3>
-    <p class="one"><b class="tag">一句话</b>MIT 1985 年的编程入门书。它教的不是哪门语言，是怎么用「抽象」管住复杂。</p>
-    <p><b class="tag t-more">展开</b>核心是「抽象屏障」：每一层只露出接口，藏住怎么做的。像公司里的交接，上游只交一份文件，下游只读那份文件，不需要知道上游开了几次会。书里最有名的一句：「程序首先是写给人读的，其次才是给机器执行的。」</p>
-    <p>他那份 AI 编程流程图「基于 SICP 和 Anthropic 的 SDLC」：从需求、规格、计划、代码到验收，每层产出一份东西，下一层只读这份东西。他说「普通人没有古法手搓编程的话，缺乏对应的心智模式」，指的就是：拆分、分层、守住不变的规矩。</p>
-    <p>你嫌它把简单事说复杂。他的回答是「和你想控制的规模有关系」：街边包子店，一个本子记流水就够；要同时管 10 台、100 台云主机，就复杂了。你说：「那不就是我现在做的吗。」所以这套东西你迟早要用。</p>
-    <p><b class="tag t-you">最省力的入门</b>不读书。看 1986 年 MIT 的 SICP 视频课第一讲（约一小时），或者只读书的 1.1 节和 2.1 节。</p>
-  </article>
-  <article class="card">
-    <h3 data-n="10">有 1000 个人需要你，你就成功了</h3>
-    <p class="one"><b class="tag">一句话</b>他问你怎么定义成功，你列了一长串条件。他说：「有 1000 个人需要你，你就成功了。」</p>
-    <p><b class="tag t-more">展开</b>「有人需要你，说明你直接参与价值传递。」「打工是价值分配……整个公司是一个人，这个人被 1000、10000 个人需要。」你说那我们都已经成功了。他补了两句关键的：「问题是你的那 1000 个人并不是非你不可。」「而且难以规模化，于是无法去中心化分发。」</p>
-    <p>合起来是三个条件：<strong>有人需要、非你不可、能分发出去</strong>。Kevin Kelly 2008 年有篇《一千个真粉丝》：一个创作者有 1000 个愿意每年为你花 100 美元的人，就能靠作品生活。他的版本把「粉丝」换成了「需要你的人」，又加了后两个条件。</p>
-    <p>他还发过一条讲彼得·蒂尔「三个时间尺度」的视频，说「觉得你需要」：短期看开不开心、学没学到，中期看简历，长期看重不重要。你回：「我现在工作的短期和中期价值是有的，长期价值是偏弱的。」</p>
-    <p><b class="tag t-you">跟你的关系</b>拿三个条件检查手上的事：有没有一群具体的人需要（DLG 同事、培训学员、玩你游戏的人）？他们是不是非你不可？你的东西能不能不靠你本人就被分发出去（课程、工具、文章）？你说的「长期价值偏弱」，大概就是第三条还没有。</p>
-  </article>
-  <article class="card">
-    <h3 data-n="10">声音这一块，你是老师</h3>
-    <p class="one"><b class="tag">一句话</b>他问你音乐、音效、配音有没有好用的服务，你给他讲了影视声音是怎么分工的。这一条，是你教他。</p>
-    <p><b class="tag t-more">展开</b>你讲：AI 之前，一部片子的声音要好几个部门。配音进棚做 ADR（演员后期重录对白）；音效分环境音、合成的特殊音效、拟声；音乐又是另一个领域。拟声英文叫 Foley，就是人碰到东西时的声音：翻书、笔尖划纸、衣服摩擦。这个名字来自 1920 年代末在环球影业做现场拟声的 Jack Foley。你还说音效「是一个不太被重视的部门」，要是能把这些细分全组合起来，「确实可以做出一个史无前例的工具」。</p>
-    <p><b class="tag t-you">跟你的关系</b>你做过音效师，这是他没有的东西，也是「非你不可」的候选。他在做的影关英语、他的视频都需要声音，这里你能给他的，比你从他那里拿的更具体。</p>
-  </article>
-  <article class="card">
-    <h3 data-n="10">「中之人」：不出镜，也能做自媒体</h3>
-    <p class="one"><b class="tag">一句话</b>你说想克服镜头羞耻做自媒体，他建议走「中之人」路线：写文案、录声音，不出镜，可以用虚拟形象。</p>
-    <p><b class="tag t-more">展开</b>「中之人」是日语里，藏在玩偶服或虚拟主播背后的那个真人；「皮套」是虚拟主播的形象。你说「纯文案就够了」「克隆音色去读」。后来他又说：「你的心性，做自媒体对你来说是一个痛苦却适合的工作。」你问是不是怕恶评，他说：「不是害怕，是你不喜欢被冤枉。」</p>
-    <p><b class="tag t-you">跟你的关系</b>你最怕的不是被看见，是被冤枉。所以真要做，先做文字和声音，评论区怎么处理提前想好（不回、只回事实、或者交给助手），这比先克服镜头重要。</p>
-  </article>
-  <article class="card">
-    <h3 data-n="10">房间里最高的人</h3>
-    <p class="one"><b class="tag">一句话</b>你说聊 AI 时身边基本只有你在输出，你需要输入。他说：「如果你是房间里最高的人，说明你来错了地方。」又补了一句：要找一个相对的位置，不能太高也不能太低。</p>
-    <p><b class="tag t-more">展开</b>你开玩笑说想去 DeepSeek 或 Anthropic 当前台，他说「那里可能也没有良师益友」。两个现成的理论说的是同一个区间：</p>
+    <h3 data-n="10">跨越鸿沟</h3>
+    <p class="one"><b class="tag">一句话</b>买新技术本身的早期用户，和买「解决我一个具体问题」的大众，是两群人，中间有道鸿沟。</p>
+    <p><b class="tag t-more">展开</b>Geoffrey Moore《跨越鸿沟》（1991）：早期用户愿意自己拼凑，大众要完整的方案。大多数高科技产品死在这道沟里。办法是先收窄到一个具体场景，做到别人一眼看懂。成熟度不高的品类，要更简单的形态，不要更复杂的。</p>
+    <p><b class="tag t-lim">限制</b>几个常听到的论断，各有反例：</p>
     <ul>
-      <li><strong>最近发展区</strong>（维果茨基）：学习发生在「自己做不到、有人带一把能做到」那一段。</li>
-      <li><strong>心流</strong>（契克森米哈赖）：挑战比能力略高一点，人最投入；高太多焦虑，低太多无聊。</li>
+      <li>「市场不需要第二个 X」。后来者赢的例子很多：Google 之于 AltaVista，Facebook 之于 Friendster 和 MySpace。要看第二个是不是明显不同。</li>
+      <li>「做自己需要的东西，只有自己一个买家」。Slack 起初是一家游戏公司的内部沟通工具。Paul Graham 的建议恰好是做你自己想要的东西。只服务自己的东西多半没人买，但不是必然。</li>
+      <li>「小众创业死，是因为价值无法传递」。CB Insights 对创业失败原因的汇总里，最常见的是资金耗尽和没有市场需求。价值没传到是其中一种。</li>
     </ul>
-    <p><b class="tag t-you">跟你的关系</b>找输入的标准，不是「对方整体比我强」，是「在我正卡住的那一格，比我强一点」。钱鹏飞只说了 24% 的字，但每次都接在 Ronin 的盲区上，这就是「相对位置」的样子。技术深度上可以找 Ronin，产品和商业上找钱鹏飞这类人，一线玩法上 VF999 的徐善、Jiacheng 已经够用。</p>
+    <p class="src">来源：Moore, G. (1991). Crossing the Chasm; CB Insights, The Top Reasons Startups Fail（多年版本）；Graham, P. How to Get Startup Ideas.</p>
+  </article>
+  <article class="card">
+    <h3 data-n="10">去问用户，问过去，不问将来</h3>
+    <p class="one"><b class="tag">一句话</b>问对方过去实际做过什么、花过什么钱，不要问「你将来会不会用」。</p>
+    <p><b class="tag t-more">展开</b>Steve Blank 的客户开发（2005）是离开办公室去见用户。Rob Fitzpatrick 的《The Mom Test》（2013）教具体怎么问，因为问将来只会得到客气话。</p>
+    <ul>
+      <li>差的问法：「你会用一个自动整理会议的工具吗？」</li>
+      <li>好的问法：「上次开完会，你是怎么整理的？花了多久？」</li>
+    </ul>
+    <p class="src">来源：Blank, S. (2005). The Four Steps to the Epiphany; Fitzpatrick, R. (2013). The Mom Test.</p>
+  </article>
+  <article class="card">
+    <h3 data-n="10">第一屏放什么</h3>
+    <p class="one"><b class="tag">一句话</b>最与众不同的东西要放在第一屏。</p>
+    <p><b class="tag t-more">例子</b>一款 AI 教练 App 有一套别处没有的功能：拍照抠图，粘成贴画，摇一摇还有物理效果。它埋在收集流程的深处，第一屏摆的是 20 步问卷。外部的人一进去，看不出它和别的 App 有什么不同。从外面看，「没做」和「做了没讲」是一回事。</p>
+    <p>另一位顾问给这家团队的顺序是：先弄清人为什么会打开（懒、好面子），再谈潜质、目标，最后才是方法。团队一直在最后一层，也就是「怎么记得更快」。这是一个人的经验，没有研究背书。</p>
+    <p><b class="tag t-you">检查</b>找一个没听过的人，让他看游戏、课程或交付物的第一屏，看他能不能一句话说出这是什么。</p>
+  </article>
+  <article class="card">
+    <h3 data-n="10">1000 个真粉丝</h3>
+    <p class="one"><b class="tag">一句话</b>Kevin Kelly 2008 年的文章：创作者只要有 1000 个愿意每年为你花 100 美元的真粉丝，就能靠作品生活。</p>
+    <p><b class="tag t-more">展开</b>1000 × 100 美元 = 10 万美元。这个数字是举例，不是规律。有人把它改成「有 1000 个人需要你，你就成功了」，又加了两个条件：需要你的人非你不可；你的东西能不靠你本人被分发出去（课程、工具、文章）。</p>
+    <p><b class="tag t-lim">限制</b>「需要」不等于愿意付钱，Kelly 的前提是持续付费。「打工是价值分配，不是价值传递」说得太绝对，雇员同样在创造价值。</p>
+    <p><b class="tag t-you">例子</b>拿三个条件检查手上的事：有没有具体的一群人需要（同事、学员、玩游戏的人）；他们是不是非你不可；东西能不能不靠你本人被分发。</p>
+    <p class="src">来源：Kelly, K. (2008). 1,000 True Fans. The Technium.</p>
+  </article>
+  <article class="card">
+    <h3 data-n="10">FDE 是什么</h3>
+    <p class="one"><b class="tag">一句话</b>FDE 是驻在客户那里的工程师，把软件改到能在客户的环境里跑通。</p>
+    <p><b class="tag t-more">展开</b>Palantir 的部署团队由两种人配对：Delta（FDE，写代码）和 Echo（部署策略师，不一定是工程师，负责定义问题、重设流程、推动采用）。OpenAI、Anthropic 近年也招 FDE。</p>
+    <p><b class="tag t-fix">更正</b>有人说 FDE 是「平台企业帮助行业里的企业解决数据问题」。这只是其中一种用法，通用的定义是上面那样。「FDE 在中国只有帮老板做自动化这一个真需求」是个人判断，没有数据。</p>
+    <p><b class="tag t-you">例子</b>在公司内部推 AI 转型的人，有授权，有上下文，不是外人，称作「内部 AI 转型负责人」比「FDE」准确。</p>
+    <p class="src">来源：Palantir Blog, Dev versus Delta: Demystifying engineering roles at Palantir; A Day in the Life of a Palantir Deployment Strategist.</p>
   </article>
 </section>
 
-<!-- ============ 11 拔出来看 ============ -->
-<section class="chapter" data-title="拔出来看" data-caption="<b>图 11</b>镜头从你身边升起，看见你和 Ronin、老板、同事、爸妈之间的线。升到上面那一层，就是 n+1 层">
+<!-- ============ 11 写给机器写给人 ============ -->
+<section class="chapter" data-title="压缩与解压" data-caption="<b>图 11</b>左边是压得很紧的一小块，像 zip 文件夹。往下滚，它展开成好几页：例子、语气、背景">
   <header class="chead"><div class="plate">
     <span class="cnum">11</span>
-    <h2>把自己拔出来看</h2>
-    <p class="csub">你，和你身边的人</p>
-    <p class="clead">这一章不是知识点。是深夜那些对话里，他对你说过的话。同事、老板、父母、兴趣、衰老。他很少给建议，多半是给你一个往上看一层的位置。</p>
+    <h2>写给机器，写给人</h2>
+    <p class="csub">压缩与解压</p>
+    <p class="clead">缩写词像一个 zip 文件夹，解压之后才知道里面是什么。</p>
   </div></header>
-  <article class="card private">
-    <h3 data-n="11">谁受益，谁受损</h3>
-    <p class="one"><b class="tag">一句话</b>你讲了和一位同事的冲突。他没评对错，只让你问两个问题：「整个事情，谁受益，谁受损？」以及「谁授权的？」</p>
-    <p><b class="tag t-more">展开</b>那天你先得知身边有同事要被裁。然后讲到另一位：他半年没推动的项目，你接手一个月做完了，之后他对你态度很差。Ronin 的回应：</p>
-    <ul>
-      <li>「砸人饭碗，犹如杀人父母。」</li>
-      <li>「你不把自己拔出来，就不看到真相。」</li>
-      <li>「因为你的出现本身，而非你的行为影响了他。」「你的存在属性不是由你决定，而是由 leader 决定。」</li>
-      <li>「你凭什么推动他的业务线？谁授权的？」你说老板。他说：「那不就是老板借刀杀人。」</li>
-    </ul>
-    <p>「谁受益」是一句古罗马法谚 cui bono：查案先看谁从中得利。</p>
-    <p><b class="tag t-you">跟你的关系</b>他给的是一套把情绪换成结构的问法。下次再遇到，先写三行：这件事的授权人是谁；我的出现改变了谁的处境；谁从现在的局面里得利。写完再决定是友善还是正面冲突。你自己已经说过「可能老板只是要我的出现来敲打他」，这就是第三行。</p>
-    <p><b class="tag t-more">第二天晚上</b>你说公司「明显风光不再了」，打算写简历。他问：「关键是你想要什么？」你说养活自己、尽可能多赚点。他引你自己的话回了一句：「你的表达是自己能够被人尽其才。」最后他说：「因为你确实被气到了。」「需要抱抱被气到的自己，让自己不生气。」他没给建议，给的是两件事：先弄清目的，先照顾好此刻的情绪。</p>
-  </article>
-  <article class="card private">
-    <h3 data-n="11">父母的「上下文」固化了</h3>
-    <p class="one"><b class="tag">一句话</b>国庆回家你和家里吵了几次。他的解释是：现在强大的那个人是你；而父母，像大模型一样，会留在自己的那个年代。</p>
-    <p><b class="tag t-more">展开</b>你说早上和爸爸吵架，他说：「因为，现在强大的人是你。」「你还没有习惯这具强大身体里的力量如何与家庭成员之间配合。」「当然，他们也很不习惯。」后来你讲到一位长辈替你弟弟讲「吃苦论」，喝醉了还打电话催婚，爸妈默许，你说自己「在这方面有点应激」。他说：「看来你想要分家了。」「其实父母也是小朋友。」「只是每个人的 context layer 发生不同程度的固化。」「人其实和大模型的型号是一样的，会留在过去。」</p>
-    <p><b class="tag t-more">现成的说法</b>家庭治疗里有个词叫「自我分化」：和原生家庭保持感情上的连接，同时不被家里的情绪和规矩带着走。分化得好的人能做到「不同意，但不翻脸」。他说的「分家」不是搬出去，是这个意思。</p>
-    <p><b class="tag t-you">跟你的关系</b>大模型的比喻很好用。模型有训练截止日期，你不会因为它不知道最新消息而生气，只会补上下文。对父母也一样：催他们进步，是往一个旧模型里硬塞新知识，效果有限。更省力的是，先决定哪些事你自己拍板，不需要他们同意。</p>
+  <article class="card">
+    <h3 data-n="11">过度压缩</h3>
+    <p class="one"><b class="tag">一句话</b>要求模型「高度抽象、精炼」，它每句话都在压缩：删例子，删语气，删背景。读者得自己解压。</p>
+    <p><b class="tag t-more">展开</b>读起来像文言文的 AI 文字，常常是这样来的。没有上下文的读者解不开。这个现象有现成的名字：<b>知识的诅咒</b>（Camerer、Loewenstein、Weber 1989，后来 Pinker 在写作建议里常用），懂的人忘了不懂是什么感觉。</p>
+    <p>规矩因读者而异。给机器的文字（路由规则、完成标准）读者是模型，越短越准。给人的文字，读者没有你的上下文，压掉的东西要还回去：补例子，补背景，补一句「这是什么意思」。</p>
+    <p><b class="tag t-you">例子</b>给品牌做内容时「去 AI 味」「说人话」，做的就是解压这一步。</p>
+    <p class="src">来源：Camerer, Loewenstein & Weber (1989). The curse of knowledge in economic settings. Journal of Political Economy.</p>
   </article>
   <article class="card">
-    <h3 data-n="11">兴趣变成钱，兴趣就没了</h3>
-    <p class="one"><b class="tag">一句话</b>你说他研究这么前沿，回报还没跟上。他连着回了四句，合起来是一套关于回报的看法。</p>
-    <ul>
-      <li><strong>「居于木雁之间，应有龙蛇之变。」</strong>出自《庄子·山木》：山里的大树因为没用活下来，主人家的鹅因为不会叫被杀了。弟子问该怎么办，庄子先说「处在有用和没用之间」，又自己否定了一半，说更好的是像龙和蛇，该显就显，该藏就藏。</li>
-      <li><strong>「找到一个长长的雪坡滚雪球会更好玩一些。」</strong>巴菲特：人生像滚雪球，要找很湿的雪和很长的坡。说的是复利。</li>
-      <li><strong>「把自己的兴趣变成钱，兴趣很快就没了。」</strong>心理学叫「过度理由效应」：本来爱画画的小孩，被告知画了有奖之后，自由时间里反而画得少了。事先许诺、和表现挂钩的奖励最伤兴趣；事后意外的奖励和夸奖不会。</li>
-      <li><strong>「金融即融金。」</strong>字面倒过来读：让钱自己流动、自己生钱，和滚雪球是一回事。<span class="flag">这是一种解读</span></li>
-    </ul>
-    <p>后来他说你是「一个等待戈多的人」，又说：「如果你能明确地知道自己的天命，你就有足够的理由燃烧自己。」你说天命是辅佐，他回：「还没有起风。」不知道自己要什么时，人会一直等；知道了，就值得全力投入；什么时候投入，要等风。和「龙蛇之变」是同一个判断。</p>
-    <p><b class="tag t-you">跟你的关系</b>你说过自己「不能允许任何一件交到我手里的事情因为我的能力而失败」。这句定的是<em>别人交来的事</em>的标准。他那几句问的是另一件事：<em>你自己选的事</em>，是什么。</p>
-  </article>
-  <article class="card private">
-    <h3 data-n="11">清洁是熵减，很累</h3>
-    <p class="one"><b class="tag">一句话</b>一个下雨天，他说「清洁是熵减，很累」，然后讲了一串关于复杂和衰老的话。</p>
-    <blockquote>你：今天外面雨绵绵，晚饭可以外卖（请好好吃饭<br>他：清洁是熵减，很累。今天已经吃过了，晚上就不吃了，正好禁食 16 小时<br>他：人生就是负担越来越多，复杂性越来越高<br>他：所以尽可能少占有和产生连接<br>他：人的衰老，是系统无法处理复杂性<br>他：复杂，complexity，complex，com + plex，共同纠缠产生复杂<br>你：主要是我已经很久没有想要占有一个人的冲劲了<br>你：所以老师继续淡下去吧！我去追逐下一次衰老了<br>他：好</blockquote>
-    <p><b class="tag t-more">熵减先说人话</b>屋子不收拾会越来越乱，这是世界的默认方向，叫熵增。把它收拾整齐，要花力气，叫熵减。</p>
-    <p><b class="tag t-you">为什么收进来</b>这不是知识点，是状态。和上一张卡是同一件事的两面：占有和连接都要付代价，代价是复杂，复杂让人老。你一边说「不能允许交到我手里的事失败」，一边说「很久没有想要占有一个人的冲劲了」，这两句放在一起，比任何一个概念都值得想一想。</p>
+    <h3 data-n="11">做一支视频，要的是 context，不是一句指令</h3>
+    <p class="one"><b class="tag">一句话</b>一句「帮我做个视频」得不到好结果。要把这支视频的前提条件一块一块写下来。</p>
+    <p><b class="tag t-more">例子</b>一份 60 秒竖屏视频的大纲分七块：</p>
+    <ol>
+      <li>一句话：整支片子要让人记住的那句。</li>
+      <li>叙事线，以及选这条线的理由（第几秒放反转）。</li>
+      <li>视觉规则：底色、四种颜色各代表什么、字号、安全区、一个动作几秒。</li>
+      <li>分镜表：按 120 BPM 切成 30 小节，每一镜写时间、屏幕文字、画面、声音。</li>
+      <li>高光帧：哪三帧适合截图。</li>
+      <li>砍掉的内容和原因（公式一秒读不完；第二个反直觉点会稀释主反转）。</li>
+      <li>音乐规格：调性、主动机、每个声部用什么波形、同步点。</li>
+    </ol>
+    <p><b class="tag t-more">两种片子</b>同一个产品，讲清「为什么」的世界观片，和让人「想试」的快节奏宣传片，是两种东西。动手前先定是哪一种。给风格加形容词（「快节奏、炸裂、炫目」）适合要惊喜的宣传片；把每一秒写死适合要准确的讲解。</p>
   </article>
   <article class="card">
-    <h3 data-n="11">n+1 层：能看见自己的那一层</h3>
-    <p class="one"><b class="tag">一句话</b>他和钱鹏飞从「什么是值得过的生活」聊到宗教、哲学和 AI：各种安身立命的经典，都在人身上造一个「n+1 层」，也就是能看见自己的那一层。</p>
-    <p><b class="tag t-more">展开</b>他说：「这个觉察就是观自在菩萨的观自在，就是古希腊神庙上的认识你自己，就是王阳明的知行合一，也是道家的内观，科学家的内省。」「在研究者来看就是元认知，佛教称之为般若。」（小更正：「认识你自己」刻在德尔斐的阿波罗神庙，不是帕特农神庙。般若的意思是智慧。）</p>
-    <p>钱鹏飞说：「佛提供了闭环，哲学没有闭环，提供了一个知性循环路径，后者引领科学改变世界。」他接：「他们的 loop engineering 选择了不同的拓扑。」说人话：都是循环，形状不一样。一个绕回原点，一个一直往外开口。</p>
-    <p>还有一句接得上司马贺：「旧的机制选择了最便宜最可行的方案，不追求最优，追求当前最可用。」</p>
-    <p><b class="tag t-more">你的回应</b>你讲了大学朋友怎么把你从低谷里拽回来。他说「你在拟态」「会比较耗蓝」：拟态是一种生物模仿另一种的样子，蓝条是游戏里的法力值。意思是你在学那位朋友的乐观画风，但那不是你的出厂设置，维持起来费劲。你回：「我证明个毛线，我本来就好得很。」后来他说：「你只是在表达。」</p>
-    <p><b class="tag t-you">跟你的关系</b>「n+1 层」就是你这几个月在练的东西：写复盘，让 Claude 分析你们的对话，做这份清单，都是在给自己加一层能看见自己的眼睛。</p>
+    <h3 data-n="11">图示不是图表</h3>
+    <p class="one"><b class="tag">一句话</b>图表是把数据画到坐标上；图示是把概念画成形状。</p>
+    <p><b class="tag t-more">展开</b>图表：柱状、折线、饼图。图示：层级（树）、框架（矩阵、象限）、网络（节点和连线）、流程、事件线。对 Claude 这类工具说「图表」，它会去找数据画坐标；说出「象限图」「流程图」，才会画出想要的那种。</p>
+    <p>刻意练习（Ericsson 等 1993）：有明确目标、即时反馈、针对弱项的练习才能持续提高，光重复不行。对不会给形态命名的人来说，一个办法是每次要图之前，先说出形态的名字。</p>
+    <p class="src">来源：Ericsson, Krampe, Tesch-Römer (1993). The Role of Deliberate Practice. Psychological Review.</p>
+  </article>
+  <article class="card">
+    <h3 data-n="11">「文字最重要」</h3>
+    <p class="one"><b class="tag t-lim">限制</b>有人认为：画面不重要，声音不重要，文字最重要；单独做多模态和视频模型是歧途。这句只对一类视频成立。</p>
+    <p><b class="tag t-more">展开</b>成立的部分：现在流行的「一句话生成视频」，常常是模型写 p5.js、three.js 或 Remotion 的代码，由浏览器逐帧渲染，配乐配音交给 Suno、ElevenLabs 这类工具。代码是文字，所以文字确实是核心。它适合讲解、动效、数据可视化。</p>
+    <p><b class="tag t-fix">更正</b>写实画面、人物表演、复杂镜头，靠的是视频生成模型（如 Veo、Sora 这一类）或实拍。这条路没有被代码渲染取代。「理解视频」（例如用 Gemini 批量粗剪几百条课程视频）是另一件事，更不能说歧途。同一时期，也有人认为 AI 生成的画面还不够精美，论文插图不能让 AI 画，生成的音乐有点千篇一律。</p>
   </article>
 </section>
 
-<!-- ============ 12 尾声 ============ -->
-<section class="chapter" data-title="下次见面" data-caption="<b>图 12</b>一盏盏纸灯笼往上飘：没问完的问题，下次见面再问">
+<!-- ============ 12 机器人 ============ -->
+<section class="chapter" data-title="机器人" data-caption="<b>图 12</b>一条三节的机械臂在拧螺丝。大模型给方向，下面的小网络一圈圈修正最后一毫米；右上角的条是数据量">
   <header class="chead"><div class="plate">
     <span class="cnum">12</span>
-    <h2>留给下次见面</h2>
-    <p class="csub">判断表、几句白话、只有他能回答的问题</p>
-    <p class="clead">你说过他「每一步预判都中了」。与其记住「他很准」，不如把他的判断写下来，到期回来打勾。</p>
+    <h2>机器人：缺数据，缺关节</h2>
+    <p class="csub">算法让动作算准，关节让动作做准</p>
+    <p class="clead">语言模型读的是互联网上现成的文字。机器人要的动作数据，互联网上没有。</p>
   </div></header>
   <article class="card">
-    <h3 data-n="12">他的时间判断表</h3>
-    <table>
-      <tr><th>说的时间</th><th>判断</th><th>回来对照</th></tr>
-      <tr><td>2023 年底</td><td>2027 年会有好莱坞级别的 AIGC（今年 9 月他说 2026 年底已可实现）</td><td>2027 年底</td></tr>
-      <tr><td>2026-09-27</td><td>24 小时常驻的智能体要来了</td><td>未给时间</td></tr>
-      <tr><td>2026-09（会上）</td><td>2027 年会出 $2000 一档的 Ultra</td><td>2027 年</td></tr>
-      <tr><td>2026-10-08</td><td>6 个月内冒出新的 Jev，进入后训练大爆发</td><td>2027 年 4 月</td></tr>
-      <tr><td>2026-10-08</td><td>只卖模型能力的公司会在第二阶段死掉，「Kimi 和 GLM 都会死」</td><td>未给时间</td></tr>
-    </table>
-    <p class="note">「好莱坞级别」没有公认标准，到时候怎么算「中」，你自己先定一个。</p>
-  </article>
-  <article class="card">
-    <h3 data-n="12">几句被你划过去的话，翻成白话</h3>
+    <h3 data-n="12">大家都缺数据</h3>
+    <p class="one"><b class="tag">一句话</b>语言、机器人、情绪识别，三个领域缺的数据各不相同。</p>
     <ul>
-      <li><strong>「文化把战略当午餐」</strong>：再好的战略，遇到不配合的组织文化也会失效。他用它说上一代企业的核心竞争力在组织，下一代「以 agent 为核心，人退位」。</li>
-      <li><strong>「连接与计算」</strong>：平台的价值是把人连起来，AI 的价值是算得又快又好。夹在中间的应用，两边都不占。</li>
-      <li><strong>「From prompt to loop」</strong>：从「写好一句提示词」，走到「设计一个循环」。迷失的时候，回到起点想：模型是一个不记得你、只会猜下一个词的函数。</li>
-      <li><strong>「当你放弃可能性的时候，你能获得主体性」</strong>：选择就是放弃。一直留着所有可能性的人，其实没在选。你回的是「我拥有主体性」。</li>
-      <li><strong>「优秀是素养，厉害是能力，这是 2 个方向」</strong>：你追问他之前的夸奖走没走心，他把两个词拆开了。</li>
-      <li><strong>「MBTI 只是一种心理量表，就像量身高一样」</strong>：你说你用它来塑造别人对你的第一印象。这个用法，它撑得住。</li>
-      <li><strong>「文静是你的保护色，暴力是你保护自己的手段」</strong>：表哥说你现在说话文文静静，初中却经常揍他。两者不冲突，都是自我保护，方式不同。你回：「懂我。」</li>
-      <li><strong>「知止而后有定」</strong>：出自《大学》。先知道停在哪，心才定得下来。他把它改成了一条给 Claude 的规则。</li>
-      <li><strong>「缩写词就像一个 zip 文件夹，解压后才知道」</strong>：这句是你说的。很准，留着。</li>
+      <li><b>语言模型</b>：Epoch AI（Villalobos 等 2024）估计，公开的人类文本约 300 万亿 token，按现在的训练规模增长，会在 2026 到 2032 年之间用完。</li>
+      <li><b>机器人</b>：没有现成的动作数据，只能靠人遥控演示或真机试错一条条攒。Open X-Embodiment（2023）把几十个实验室的数据拼在一起，22 种机器人，超过一百万条轨迹，在这个领域已经算大数据集。</li>
+      <li><b>情绪识别</b>：同一张脸，不同的人会判断成不同的情绪，标注本身主观。人脸和声音又属于生物识别信息，《个人信息保护法》第二十八条把它列为敏感个人信息，采集要单独同意。</li>
     </ul>
+    <p><b class="tag t-lim">限制</b>「用完」指的是高质量的公开文本，估计区间也很宽。合成数据、多模态数据、把同一批数据多训几轮，都能往后推。</p>
+    <p class="src">来源：Villalobos et al. (2024). Will we run out of data? ICML; Open X-Embodiment Collaboration (2023). arXiv:2310.08864; 《中华人民共和国个人信息保护法》第二十八条。</p>
   </article>
   <article class="card">
-    <h3 data-n="12">只有 Ronin 能回答的问题</h3>
-    <p>原清单攒了 28 个，这里挑最值得当面问的：</p>
-    <ol>
-      <li>「任务或者工作只有两种类型」那天，到底怎么说的？</li>
-      <li>他那份 AI 编程流程图，对应 SICP 的哪几个概念？</li>
-      <li>「其实大家都缺数据」是说群里那几位，还是整个行业？他要去的具身公司缺哪一类：遥控演示、真机试错，还是仿真？</li>
-      <li>谛听的四组（记录 / 对象 / 委托 / 系统），是不是就是他说的那几层？agent 拿到一个待办之后具体怎么办？</li>
-      <li>BP 机那条：他心里是一台单独的硬件，还是手机上的通知加快捷回复？</li>
-      <li>9.9 会议之后，AI 教练 App 把那套绝活搬到第一屏了吗？</li>
-      <li>「多模态是歧途」，只指生成画面，还是也包括看懂画面？</li>
-      <li>「叫我哥」写在哪一层？一般聊多长它开始掉？</li>
-      <li>「用户不需要那么好的油」，是所有用户，还是某一类用户、某一类任务？</li>
-      <li>「你本质上是一个 AIO 的下位替代」，AIO 指什么？</li>
-      <li>human × Agent<sup>n</sup>，他自己现在的 n 是多少？验收怎么做？</li>
-      <li>那段关于复杂和衰老的话，是他的通用看法，还是针对你那句说的？</li>
-    </ol>
-    <p class="note">还有一件你能补上的：他 9 月 16 日那两张图（loop 四格、AI 概念扫描）当时没读到。截图放进 vault，第 5 章那张卡就能从「推断」改成「原图」。</p>
+    <h3 data-n="12">最后一毫米：RL Token</h3>
+    <p class="one"><b class="tag">一句话</b>大模型给动作的大方向，一个小网络在真实世界里一圈圈试，把最后一毫米修准。</p>
+    <p><b class="tag t-more">展开</b>Physical Intelligence 2026 年 3 月 19 日发布的方法（RLT）：视觉-语言-动作大模型（VLA）什么都会一点，最后一毫米不准；拿整个大模型去做强化学习又太慢太贵。做法是让冻结的 VLA 多输出一个压缩过的「RL token」，交给一个很小的网络做在线强化学习，它只修正 VLA 给的动作，不替换。</p>
+    <p>官方的结论：任务中最精细的阶段最多快 3 倍，在某些任务上可以超过人类遥控的速度。测试任务有拧 M3 螺丝、扎扎带、插网线、插电源线。</p>
+    <p><b class="tag t-lim">限制</b>流传的「只用 15 分钟真实数据」来自二手报道，官方页面和论文写的是「几分钟到几小时」。<span class="flag">未核实</span></p>
+    <p class="src">来源：Physical Intelligence (2026-03-19). RL Token: Bootstrapping Online RL with Vision-Language-Action Models; pi.website/research/rlt; arXiv:2604.23073.</p>
+  </article>
+  <article class="card">
+    <h3 data-n="12">关节，和国家补贴</h3>
+    <p class="one"><b class="tag">一句话</b>机器人每个关节是一个执行器：电机、减速器、驱动器、传感器装在一起。大模型决定做什么，关节决定做得准不准、扛不扛得住。</p>
+    <p><b class="tag t-more">展开</b>宇树科技 2016 年由王兴兴创立，起家靠自研关节电机，这是它能把四足和人形机器人价格压下来的原因之一。精密减速器上日本长期领先：Harmonic Drive 的谐波减速器，Nabtesco 的 RV 减速器。国内也有厂商在追赶，例如绿的谐波。</p>
+    <p><b class="tag t-fix">更正</b>常听到「波音是被美国星球大战计划补贴烧出来的」。论点（政府采购培育产业）成立，例子的时间对不上。星球大战计划（战略防御倡议）是 1983 年提出的，那时波音早就是头号民航制造商：707 在 1958 年投入航线，747 在 1970 年。更准的说法是更早的一段：B-47、B-52 轰炸机积累的喷气技术，加上空军大批订购的 KC-135 加油机，养出了 707。硅谷类似：早期集成电路最大的买家是民兵导弹和阿波罗计划。</p>
+    <p><b class="tag t-lim">限制</b>Mazzucato 的《创业型国家》（2013）系统论证了这类现象，说 iPhone 里的 GPS、互联网、触摸屏、Siri 都源自政府资助的研究。有经济学家批评她夸大了政府的作用，低估了企业把技术做成产品的功夫。</p>
+    <p>区分机器人公司的一个标准：做关节、减速器、传感器这些硬件底子的，和只做演示视频、讲大模型故事的，是两类。国家叙事下两类都能拿到钱，长期留下来的更可能是前一类。这是判断，不是定论。</p>
+    <p class="src">来源：Mazzucato, M. (2013). The Entrepreneurial State.</p>
+  </article>
+  <article class="card">
+    <h3 data-n="12">具身智能</h3>
+    <p class="one"><b class="tag">一句话</b>让智能有一个身体，在物理世界里感知和行动。</p>
+    <p><b class="tag t-more">展开</b>一种看法：多接几个摄像头和麦克风不算具身，只有当系统面对一个绕不开的物理约束（会摔、会坏、时间不能倒回）时，才算跨过门槛。这是一种看法，具身的定义本身有多个版本。</p>
+    <p>相关的老问题是莫拉维克悖论：对人来说容易的感知和动作（认出杯子，端起来），对机器很难；对人难的下棋、算数，对机器容易。</p>
+  </article>
+</section>
+
+<!-- ============ 13 看问题 ============ -->
+<section class="chapter" data-title="三个问题" data-caption="<b>图 13</b>镜头从人群中间升起，看见各人之间的线。升到上面那一层描图纸，就能看见整个局面">
+  <header class="chead"><div class="plate">
+    <span class="cnum">13</span>
+    <h2>看问题的几个办法</h2>
+    <p class="csub">把情绪换成结构</p>
+    <p class="clead">一个半年没推进的项目，被另一个人一个月做完了。原来的负责人从此态度很差。该怎么看？</p>
+  </div></header>
+  <article class="card">
+    <h3 data-n="13">谁授权、谁受益、谁受损</h3>
+    <p class="one"><b class="tag">一句话</b>遇到冲突，先别问谁对谁错，先写三行：这件事是谁授权的；我的出现改变了谁的处境；谁从现在的局面里得利。</p>
+    <p><b class="tag t-more">展开</b>回到开头的例子：原负责人受影响的，是接手者的出现本身，不一定是接手者的做法。接手者的位置是上级安排的，原负责人的处境也是。两人之间有直接的利益影响。接手者可以选择友善或敌对，原负责人也可以；只是这个局面是外部变化造成的，不是谁先动的手。</p>
+    <p>「谁受益」是拉丁语法谚 cui bono，西塞罗在演讲里引用过，本意是查案先看谁从中得利。三十六计的第三计「借刀杀人」：「敌已明，友未定，引友杀敌，不自出力，以《损》推演。」</p>
+    <p><b class="tag t-lim">限制</b>cui bono 只能给出假设，不能当证据。得利的人不一定是安排的人，很多局面是没人安排的。写完三行以后，还要找一条能推翻你猜测的事实。「鲶鱼效应」（往沙丁鱼桶里放一条鲶鱼，沙丁鱼因为紧张活得更久）出处不可考，当比喻用可以，不要当研究结论。</p>
+  </article>
+  <article class="card">
+    <h3 data-n="13">指标变成目的</h3>
+    <p class="one"><b class="tag">一句话</b>当一个指标变成目标，它就不再是好指标。</p>
+    <p><b class="tag t-more">展开</b>古德哈特定律。Goodhart 1975 年在谈英国货币政策时提出，Strathern 1997 年概括成流传最广的说法。例子：一位化学老师第一节课问「谁是月考前十」，从此只关注那几个人。公司要求每月 AI 用量达标，大家为了用量而用，不为把活干好。能被自动验收的活适合交给 agent，原因之一就是只有它的指标和目的一致。</p>
+    <p><b class="tag t-lim">限制</b>有人据此认为「用量高，说明心智模型没对准」。片面。用量还取决于任务类型、是否并行、是否自动循环。用量既不能证明投入，也不能证明浪费。</p>
+    <p>「token 是实打实的资源，在浪费水」：单次请求的耗水估计差两个数量级，从零点几毫升到几十毫升，取决于是否算上发电用水和数据中心所在地，各家口径不一。</p>
+    <p class="src">来源：Goodhart, C. (1975). Problems of monetary management: the UK experience; Strathern, M. (1997). 'Improving ratings': audit in the British University system. European Review.</p>
+  </article>
+  <article class="card">
+    <h3 data-n="13">保持连接，又不被带着走</h3>
+    <p class="one"><b class="tag">一句话</b>家庭系统理论里的「自我分化」：能和原生家庭保持情感连接，又不被家里的情绪和规则牵着走。</p>
+    <p><b class="tag t-more">展开</b>Murray Bowen（1978）的概念。分化程度高的人可以「不同意但不翻脸」。它指的是在情感上分开，不是搬出去住。</p>
+    <p>有人用大模型比喻父母：他们的上下文固化在自己的年代，催他们进步，像给旧模型塞新知识，效果有限，所以先决定哪些事自己拍板。</p>
+    <p><b class="tag t-fix">更正</b>这个比喻前半句顺手，不能推广。心理学里有流体智力和晶体智力之分（Cattell、Horn）：解新问题的能力随年龄下降，积累的知识和经验保持甚至增长。老年人能学新东西，只是速度和意愿不同。</p>
+    <p class="src">来源：Bowen, M. (1978). Family Therapy in Clinical Practice.</p>
+  </article>
+  <article class="card">
+    <h3 data-n="13">够用就停</h3>
+    <p class="one"><b class="tag">一句话</b>人不去找最优解，找到够好的就停，这叫 satisficing。</p>
+    <p><b class="tag t-more">展开</b>司马贺 1956 年提出。有时被说成「行为经济学」，更准确的出处是他的有限理性。选工具、选模型时，先问「够不够用」，不问「哪个最好」。</p>
+    <p class="src">来源：Simon, H. (1956). Rational choice and the structure of the environment. Psychological Review.</p>
+  </article>
+</section>
+
+<!-- ============ 14 声音 ============ -->
+<section class="chapter" data-title="声音" data-caption="<b>图 14</b>一块调音台，五条推子：对白、环境音、特殊音效、拟声、音乐。往下滚，推子一条条推上来">
+  <header class="chead"><div class="plate">
+    <span class="cnum">14</span>
+    <h2>声音是怎么分工的</h2>
+    <p class="csub">影视和游戏的声音设计</p>
+    <p class="clead">一部电影里翻书的沙沙声，通常不是翻书时录的。</p>
+  </div></header>
+  <article class="card">
+    <h3 data-n="14">影视声音的几个部门</h3>
+    <p class="one"><b class="tag">一句话</b>影视作品的声音由好几个部门分头做，最后在混音里合在一起。</p>
+    <ul>
+      <li><b>现场收音</b>：拍摄时录下的对白和现场声。</li>
+      <li><b>对白与 ADR</b>：现场录得不好的台词，演员进棚重新配。ADR 是 Automated Dialogue Replacement（有时也说 Additional Dialogue Recording）。</li>
+      <li><b>环境音</b>：街道、风、房间的底噪，让画面里的空间显得是真的。</li>
+      <li><b>特殊音效</b>：用合成器和各种素材做出来的声音，比如飞船、魔法。</li>
+      <li><b>拟声（Foley）</b>：人接触物品时的声音，翻书、笔尖划过纸面、衣服摩擦。叫法来自 Jack Foley，1920 年代末在环球影业做现场拟声的音效师。</li>
+      <li><b>音乐</b>：另一个独立的领域，还牵涉版权和授权。</li>
+      <li><b>混音</b>：把对白、音乐、音效三大类声音按画面平衡，输出成立体声、5.1 或杜比全景声。</li>
+    </ul>
+    <p><b class="tag t-more">游戏和影视不一样</b>影视的声音在固定的时间线上，游戏要按玩家的行动实时触发和混合，常用 Wwise、FMOD 这类中间件，按游戏状态（走在草地还是石板上、战斗开始了没有）切换声音。</p>
+  </article>
+  <article class="card">
+    <h3 data-n="14">AI 声音现在做到哪</h3>
+    <p class="one"><b class="tag">一句话</b>语音合成已经很强，音效和整体的声音设计还没有好用的一体化工具。</p>
+    <p><b class="tag t-more">展开</b>ElevenLabs 的语音被不少人认为领先一代。通用大模型自己生成的音效，常被说不好用。难点有两个：音效要对准画面里每一个动作；而好的音效素材按上面的分工细分得很细，能做到这种粒度的公开样本不多，音效又常是最不被重视的部门。如果能把这些细分全部组合起来，会是一个目前还没有的工具。这是一位做过游戏和影视音频的人的看法。</p>
+    <p><b class="tag t-lim">限制</b>这个领域变得很快，ElevenLabs、Suno 这类服务也在加音效和音乐功能。我没有逐个测试。</p>
+  </article>
+</section>
+
+<!-- ============ 15 人物 ============ -->
+<section class="chapter" data-title="人物与引文" data-caption="<b>图 15</b>一条时间线上，一张张纸牌依次立起来：1936，1945，1948，1962，1970，1985，2012，2017">
+  <header class="chead"><div class="plate">
+    <span class="cnum">15</span>
+    <h2>人物、学派和被传错的话</h2>
+    <p class="csub">计算机和 AI 的几条脉络</p>
+    <p class="clead">下面这些人名常被一起提起。先把年份排清楚。</p>
+  </div></header>
+  <article class="card">
+    <h3 data-n="15">信息时代的七个人</h3>
+    <ul>
+      <li><b>图灵</b>：1936 年证明存在一台通用机器，能模拟任何别的计算机器；1950 年提出模仿游戏（图灵测试）。</li>
+      <li><b>冯·诺依曼</b>：1945 年 EDVAC 报告草稿里写下「程序和数据放在同一个存储里」的设计，报告只署了他一个人的名字，Eckert 和 Mauchly 的贡献因此被淡化。1958 年遗作《计算机与人脑》。</li>
+      <li><b>香农</b>：见第 1 章。</li>
+      <li><b>维纳</b>：1948 年《控制论》，核心是反馈回路：测量输出，和目标比较，再修正输入。</li>
+      <li><b>司马贺</b>：有限理性，1978 年诺贝尔经济学奖，1971 年写下「信息的丰富造成注意力的贫乏」。</li>
+      <li><b>恩格尔巴特</b>：1962 年报告《增强人类智力》，主张计算机是用来增强人，不是替代人。1968 年的演示首次公开展示鼠标、超链接和视频协作。</li>
+      <li><b>艾伦·凯</b>：Smalltalk 之父，取名「面向对象」，想法是把程序拆成一群互相发消息、各管各状态的小细胞。Dynabook 是个人电脑的原型构想。</li>
+    </ul>
+    <p><b class="tag t-fix">更正</b>「今天所有电脑都是冯·诺依曼结构」说过头了。现代 CPU 的一级缓存里，指令和数据是分开的（改良哈佛结构），很多单片机和数字信号处理器直接用哈佛结构。「Java 里那套继承层级是后人加的」也不准：类和继承在 Simula（1967）里就有，Smalltalk-76 也有继承。凯的贡献是取了名字、强调消息传递。</p>
+    <p class="src">来源：von Neumann (1945). First Draft of a Report on the EDVAC; Engelbart (1962). Augmenting Human Intellect: A Conceptual Framework.</p>
+  </article>
+  <article class="card">
+    <h3 data-n="15">联结主义和符号主义</h3>
+    <p class="one"><b class="tag">一句话</b>AI 里两大路线：符号主义靠人写的规则和逻辑，联结主义靠神经网络从数据里学。</p>
+    <p><b class="tag t-more">展开</b>时间线：1956 年达特茅斯会议，AI 这个词出现；1958 年罗森布拉特的感知机；1969 年 Minsky 和 Papert 指出单层感知机的局限，神经网络研究降温；1986 年 Rumelhart、Hinton、Williams 推广反向传播；2012 年 AlexNet 在 ImageNet 上大胜；2017 年 Transformer。</p>
+    <p>有人说：「LLM 不是线性的发展历史，以联结主义为主，也在拿着符号派打下的江山（现代计算机网络）。」前半句对。</p>
+    <p><b class="tag t-fix">更正</b>后半句混了两件事。计算机和网络的基础（图灵、冯·诺依曼、ARPANET）不是符号主义这个 AI 流派的成果。说深度学习跑在通用计算机上是对的，但那是硬件和软件基础设施。今天确实也有把神经网络和符号推理结合的「神经符号」研究。</p>
+  </article>
+  <article class="card">
+    <h3 data-n="15">施乐 PARC</h3>
+    <p class="one"><b class="tag">一句话</b>施乐 PARC 做出了图形界面、以太网、激光打印机和 Alto 个人电脑，苹果后来做出 Macintosh。</p>
+    <p><b class="tag t-more">展开</b>PARC 1970 年成立，Alto 是 1973 年的原型机，艾伦·凯的 Smalltalk 也出在这里。1979 年乔布斯参观 PARC，交换条件是施乐获准在苹果上市前认购一部分股份。</p>
+    <p><b class="tag t-fix">更正</b>常见说法是「施乐几乎没把这些变成生意」。不对：激光打印机是施乐的大生意，以太网后来由 3Com 等公司商业化，1981 年施乐也推出了商用的 Star 工作站，图形界面完整，只是单台售价约 1.6 万美元，卖得不好。比较公平的说法是：施乐把一部分变成了生意，没有把个人电脑做成。发明和创新是两件事，PARC 擅长前者。</p>
+    <p class="src">来源：Hiltzik, M. (1999). Dealers of Lightning: Xerox PARC and the Dawn of the Computer Age.</p>
+  </article>
+  <article class="card">
+    <h3 data-n="15">SICP</h3>
+    <p class="one"><b class="tag">一句话</b>MIT 的编程入门教材，教的是怎么用抽象控制复杂度，不是某个语言。</p>
+    <p><b class="tag t-more">展开</b>《Structure and Interpretation of Computer Programs》，Abelson 和 Sussman 写，初版 1985 年，用 Scheme。三个核心：抽象屏障（每一层只露接口、藏实现，上层不用知道下层怎么做）；过程即数据（函数可以当参数传、当结果返回）；元语言抽象（自己写解释器来理解语言）。名句：「程序首先是写给人读的，其次才是给机器执行的。」最省力的入门是看 1986 年的 MIT 视频课第一讲，或只读书的 1.1 节和 2.1 节。</p>
+    <p><b class="tag t-lim">限制</b>MIT 在 2008 年左右把入门课改成了 Python。批评者认为 SICP 对初学者偏难；支持者看重它对抽象的训练。街边包子店一个笔记本记账就够，要同时管一百台云主机才需要这套思路，规模决定要不要。</p>
+    <p class="src">来源：Abelson & Sussman (1996). Structure and Interpretation of Computer Programs, 2nd ed.</p>
+  </article>
+  <article class="card">
+    <h3 data-n="15">哈耶克：知识是分散的</h3>
+    <p class="one"><b class="tag">一句话</b>一个经济体要用的知识零散地分布在无数人脑子里，没有中心能收齐。价格是把它压缩成信号传给所有人的办法。</p>
+    <p><b class="tag t-more">展开</b>哈耶克 1945 年的《知识在社会中的运用》，1974 年诺贝尔经济学奖。很多知识是「当时当地」的：哪里缺什么，谁会做什么。中央计划者永远拿不全。</p>
+    <p class="src">来源：Hayek, F. (1945). The Use of Knowledge in Society. American Economic Review.</p>
+  </article>
+  <article class="card">
+    <h3 data-n="15">被传错的话</h3>
+    <table>
+      <tr><th>说法</th><th>核对</th></tr>
+      <tr><td>「文化把战略当早餐吃」</td><td>常归于德鲁克，查不到德鲁克的原始出处。福特的 Mark Fields 在 2000 年代中期用这句话让它流行。</td></tr>
+      <tr><td>「认识你自己」</td><td>刻在德尔斐的阿波罗神庙，不是雅典的帕特农神庙。</td></tr>
+      <tr><td>「观自在」</td><td>《心经》开头的「观自在菩萨」是菩萨的名字（Avalokiteśvara）。把它读成「自己观察自己」是一种解释，不是通行译注。「般若」是智慧，「般若波罗蜜多」是到彼岸的智慧。</td></tr>
+      <tr><td>知行合一</td><td>《传习录》：「知而不行，只是未知。」说的是知和行是一回事，不是内省。</td></tr>
+      <tr><td>「龙蛇之变」</td><td>《庄子·山木》。山里的树因为没用活下来，主人家的鹅因为不会叫被杀。庄子先说处在材与不材之间，接着自己否定：还是免不了受累，不如「一龙一蛇，与时俱化」。</td></tr>
+      <tr><td>「找到很湿的雪和很长的坡」</td><td>巴菲特的话，出自传记《滚雪球》（Schroeder 2008）。</td></tr>
+      <tr><td>鲶鱼效应</td><td>出处不可考。</td></tr>
+      <tr><td>「砌墙还是建教堂」</td><td>三个石匠的寓言，出处不明。</td></tr>
+      <tr><td>「砸人饭碗，犹如杀人父母」</td><td>俗语，原话多作「断人财路，如杀人父母」。</td></tr>
+      <tr><td>「知止而后有定」</td><td>《大学》：「知止而后有定，定而后能静，静而后能安，安而后能虑，虑而后能得。」</td></tr>
+      <tr><td>「治人者与受治于人者」</td><td>《孟子·滕文公上》：「劳心者治人，劳力者治于人。」</td></tr>
+      <tr><td>等待戈多</td><td>贝克特的剧，1953 年在巴黎首演：两个人在路边等一个始终没来的人。</td></tr>
+      <tr><td>波普尔的三个世界</td><td>《客观知识》（1972）：物理世界、心理世界，以及理论、书本这类人造但独立存在的知识。</td></tr>
+    </table>
   </article>
 </section>
 
 <section class="ending">
-  <p class="q">峰留给人，<br>谷交给 Agent。</p>
-  <p class="fine">本页只以《Ronin 对话补课清单》为主材料（2026-09-06 至 10-09，七批，74 条），按主线重新分章、重写文案；原笔记未改动。私人对话保留，因为这是写给 Coco 自己读的版本。推断与未核实处沿用原笔记的标注；标「延伸」的卡片为另行查证的补充，出处写在卡片底部。<br>视觉向 <a href="https://github.com/iamtechartist" rel="noopener">Techartist</a> 的「书」那一路作品学习（立体书 Fold、给学生的物理课本 Every Joule）：每章从书页上弹起一个讲概念的纸模型。Three.js r169 · 2026</p>
+  <p class="fine">图中的纸模型是示意，不是数据图。全部说法的出处写在各卡片底部；标「未核实」的，我没能查到原始来源。</p>
 </section>
 
-</main>
 <script type="module" src="./main.js"></script>
 </body>
 </html>

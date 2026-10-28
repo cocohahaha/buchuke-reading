@@ -131,41 +131,38 @@ function mk(width = 12, cam = { pos: [0, 9.5, 13.5], look: [0, 1.4, 0] }) {
   S.push(s); return s;
 }
 
-/* ---- 0 · prologue: two people pass notes; the notes pile up into this booklet */
+
+/* ---- 0 · cards pile up into a little stack */
 {
   const s = mk(11);
-  const coco = person(s.root, C.rose, -3.6, 0.6, 1.5, 0.5);
-  const ronin = person(s.root, C.navy, 3.6, 0.6, 1.5, -0.5);
-  tag(s, 'Coco', new V3(-3.6, 2.6, 0.6)); tag(s, 'Ronin', new V3(3.6, 2.6, 0.6));
   const NOTES = 34, stack = [];
   for (let i = 0; i < NOTES; i++) {
-    const m = box(s.root, 1.7, 0.05, 1.2, i % 5 === 0 ? C.cream : C.paper, 0, i * 0.055, 0.4);
+    const m = box(s.root, 2.6, 0.06, 1.8, i % 5 === 0 ? C.cream : C.paper, 0, i * 0.07, 0.4);
     m.rotation.y = (rnd() - 0.5) * 0.35; stack.push(m);
   }
-  const cover = box(s.root, 1.85, 0.08, 1.32, C.brick, 0, 0, 0.4);
-  const fly = [0, 1, 2].map(() => box(s.root, 0.9, 0.04, 0.65, C.paper, 0, 0, 0));
-  const count = tag(s, '0 条', new V3(0, 3.6, 0.4), { size: 0.5, sub: '九月初到十月初' });
+  const cover = box(s.root, 2.8, 0.1, 1.95, C.brick, 0, 0, 0.4);
+  const fly = [0, 1, 2].map(() => box(s.root, 1.1, 0.04, 0.8, C.paper, 0, 0, 0));
+  const count = tag(s, '0 张', new V3(0, 3.6, 0.4), { size: 0.5, sub: '卡片' });
   let shown = '';
   s.update = (t, p) => {
     const n = Math.round(4 + smooth(0, 0.7, p) * (NOTES - 4));
     stack.forEach((m, i) => (m.visible = i < n));
-    const h = n * 0.055;
+    const h = n * 0.07;
     const shut = smooth(0.72, 0.9, p);
     cover.visible = shut > 0.01; cover.position.y = h + 0.02 + (1 - shut) * 1.5; cover.rotation.z = (1 - shut) * 1.2;
     fly.forEach((m, k) => {
       const ph = (t * 0.45 + k / 3) % 1, fromLeft = Math.floor(t * 0.45 + k / 3) % 2 === 0;
-      const x0 = fromLeft ? -3.2 : 3.2;
-      m.position.set(mix(x0, 0, ph), 1.6 + Math.sin(ph * Math.PI) * 1.6 - ph * (1.6 - h), mix(0.6, 0.4, ph));
+      const x0 = fromLeft ? -4 : 4;
+      m.position.set(mix(x0, 0, ph), 1.8 + Math.sin(ph * Math.PI) * 1.6 - ph * (1.8 - h), mix(0.6, 0.4, ph));
       m.rotation.set(Math.sin(t * 3 + k) * 0.3, t * 2 + k, Math.sin(ph * Math.PI) * 0.4);
       m.visible = shut < 0.5;
     });
-    coco.children[1].position.y = 1.08 + Math.max(0, Math.sin(t * 2.8)) * 0.08;
-    ronin.children[1].position.y = 1.08 + Math.max(0, Math.sin(t * 2.8 + Math.PI)) * 0.08;
-    const label = shut > 0.6 ? '订成一本' : `${Math.round(smooth(0, 0.7, p) * 2600)} 条`;
-    if (label !== shown) { count.set(label, shut > 0.6 ? '十二章，一口气读完' : '九月初到十月初'); shown = label; }
+    const label = shut > 0.6 ? '十五个主题' : `${Math.round(smooth(0, 0.7, p) * 60)} 张`;
+    if (label !== shown) { count.set(label, shut > 0.6 ? '往下读' : '卡片'); shown = label; }
     count.position.y = h + 1.6;
   };
 }
+
 
 /* ---- 1 · information: 8 cups, 1 ball, each yes/no question lifts half the cups */
 {
@@ -228,7 +225,7 @@ function mk(width = 12, cam = { pos: [0, 9.5, 13.5], look: [0, 1.4, 0] }) {
   const bird = new THREE.Group(); bird.position.set(3.7, 1.0, 1.2); s.root.add(bird);
   ball(bird, 0.26, 0xf3c83c, 0, 0.26, 0); ball(bird, 0.17, 0xf3c83c, 0.16, 0.56, 0);
   const beak = put(new THREE.Mesh(new THREE.ConeGeometry(0.06, 0.16, 6), M(C.red)), bird, 0.34, 0.56, 0); beak.rotation.z = -Math.PI / 2;
-  const chirp = tag(s, '哥！', new V3(3.6, 2.3, 1.2), { size: 0.36 });
+  const chirp = tag(s, '金丝雀', new V3(3.6, 2.3, 1.2), { size: 0.36 });
   tag(s, '这一次的上下文', new V3(-1.4, 0.4, 3.4), { size: 0.38 });
   tag(s, '纸外的记忆', new V3(3.1, 2.2, -1.6), { size: 0.38, sub: 'CLAUDE.md · skills' });
   const note = tag(s, '每次都从白纸开始', new V3(-1.4, 3.2, -1), { size: 0.44 });
@@ -293,42 +290,35 @@ function mk(width = 12, cam = { pos: [0, 9.5, 13.5], look: [0, 1.4, 0] }) {
   s.fade = [bad];
 }
 
-/* ---- 4 · intelligence goes industrial: robots multiply, the middle row of apps sinks */
-const agentHud = { n: 0 };
+/* ---- 6 · walls: a paper plane carries your data; each app is a wall with a door */
 {
-  const s = mk(13, { pos: [0, 9.5, 12.5], look: [0, 0.8, 0] });
-  const N = MOBILE ? 600 : 1200, cols = 40;
-  const rob = new THREE.InstancedMesh(new THREE.BoxGeometry(0.1, 0.16, 0.1), M(0xffffff), N);
-  rob.castShadow = true; rob.receiveShadow = true;
-  const mtx = new THREE.Matrix4(), col = new THREE.Color();
-  for (let i = 0; i < N; i++) {
-    const x = -5.6 + (i % cols) * 0.085, z = -3.4 + Math.floor(i / cols) * 0.21;
-    mtx.makeTranslation(x + (Math.floor(i / cols) % 2) * 0.04, 0.08, z); rob.setMatrixAt(i, mtx);
-    rob.setColorAt(i, col.set([C.sky, C.mustard, C.sage, C.navy][i % 4]));
-  }
-  rob.count = 0; s.root.add(rob);
-  box(s.root, 3.8, 0.06, 6.9, C.cream, -3.9, 0, 0).castShadow = false;
-  // the middle: little app shops
-  const shops = [];
-  for (let i = 0; i < 6; i++) {
-    const g = new THREE.Group(); g.position.set(-0.3 + (i % 2) * 1.3, 0, -2.4 + Math.floor(i / 2) * 2.0); s.root.add(g);
-    box(g, 1.0, 0.8, 0.9, [C.rose, C.sky, C.sage, C.mustard, C.paper, C.rose][i], 0, 0, 0);
-    const roof = put(new THREE.Mesh(new THREE.ConeGeometry(0.78, 0.5, 4), M(C.brick)), g, 0, 1.05, 0); roof.rotation.y = Math.PI / 4;
-    shops.push(g);
-  }
-  // right end: one person serving another
-  person(s.root, C.rose, 3.6, 0.4, 1.3, -1.2); person(s.root, C.navy, 4.7, 0.0, 1.3, 1.9);
-  box(s.root, 0.9, 0.55, 0.6, C.wood, 4.15, 0, 0.2);
-  tag(s, '模型公司', new V3(-3.9, 1.5, -3.9), { size: 0.4, sub: '一万个 agent 一起干' });
-  const mid = tag(s, '做一个 App', new V3(0.35, 2.3, -3.6), { size: 0.4, sub: '中间这一层' });
-  tag(s, '人对人的服务', new V3(4.2, 2.4, -1.4), { size: 0.4, sub: '需要人在场' });
+  const s = mk(11, { pos: [7.5, 6.5, 10.5], look: [0, 1.2, -0.5] });
+  const Z = [3.0, 1.4, -0.2, -1.8, -3.4], names = ['聊天记录', '网页', '会议', '笔记', '记忆库'];
+  const doors = [];
+  Z.forEach((z, i) => {
+    const c = [C.sky, C.sage, C.mustard, C.rose, C.navy][i];
+    box(s.root, 2.0, 2.4, 0.12, c, -2.0, 0, z); box(s.root, 2.0, 2.4, 0.12, c, 2.0, 0, z);
+    box(s.root, 2.0, 0.9, 0.12, c, 0, 1.5, z);
+    const d = new THREE.Group(); d.position.set(-1.0, 0, z); s.root.add(d);
+    box(d, 2.0, 1.5, 0.08, c, 1.0, 0, 0).material = M(c, { roughness: 0.7 });
+    doors.push(d);
+    tag(s, names[i], new V3(-3.3, 2.75, z), { size: 0.3 });
+  });
+  const plane = new THREE.Group(); s.root.add(plane);
+  const pg = new THREE.BufferGeometry();
+  pg.setAttribute('position', new THREE.Float32BufferAttribute([0, 0, -0.55, -0.42, 0.04, 0.4, 0, -0.05, 0.4, 0, 0, -0.55, 0, -0.05, 0.4, 0.42, 0.04, 0.4], 3));
+  pg.computeVertexNormals();
+  put(new THREE.Mesh(pg, new THREE.MeshStandardMaterial({ color: 0xffffff, side: THREE.DoubleSide, flatShading: true, roughness: 0.8 })), plane);
+  const head = tag(s, '能打穿几层？', new V3(0, 3.9, 0), { size: 0.44, sub: '多数工具只穿得过一两层' });
   s.update = (t, p) => {
-    const g = smooth(0.0, 0.42, p);
-    rob.count = Math.max(1, Math.round(g * N)); agentHud.n = Math.max(1, Math.round(Math.pow(g, 1.6) * 10000));
-    const sink = smooth(0.5, 0.75, p);
-    shops.forEach((sh, i) => { const k = clamp(sink * 1.4 - i * 0.07, 0, 1); sh.position.y = -k * 1.2; sh.scale.y = Math.max(0.01, 1 - k); sh.rotation.z = k * (i % 2 ? 0.3 : -0.3); sh.visible = k < 0.99; });
-    mid.set(sink > 0.6 ? '中间塌掉' : '做一个 App', sink > 0.6 ? '两头留下' : '中间这一层');
-    rob.position.y = Math.sin(t * 6) * 0.01;
+    const open = 1 + Math.floor(smooth(0.1, 0.85, p) * 4.99);
+    doors.forEach((d, i) => { const k = i < open ? 1 : 0; d.rotation.y += ((k ? -1.35 : 0) - d.rotation.y) * 0.08; });
+    const T = 4.2, ph = (t % T) / T, stopZ = (open < 5 ? Z[open] : -5.2) + 0.45;
+    const startZ = 5.2, zz = mix(startZ, stopZ, smooth(0, 0.7, ph));
+    const bounce = smooth(0.7, 1, ph) * (open < 5 ? 1 : 0);
+    plane.position.set(Math.sin(ph * 9) * 0.15, 0.75 + Math.sin(ph * TAU) * 0.15 - bounce * 0.6, zz + bounce * 0.9);
+    plane.rotation.set(-0.1 + bounce * 0.9, 0, Math.sin(ph * 9) * 0.25 + bounce * 1.4);
+    head.set(`穿过 ${open} 层`, open < 5 ? `第 ${open + 1} 道门关着：「${names[open]}」` : '全打穿了：这样的工具很少');
   };
 }
 
@@ -373,37 +363,65 @@ const agentHud = { n: 0 };
   };
 }
 
-/* ---- 6 · walls: a paper plane carries your data; each app is a wall with a door */
+/* ---- 6 · many agents: robots multiply; three coin towers = token use (chat 1, agent 4, multi-agent 15) */
+const agentHud = { n: 0 };
 {
-  const s = mk(11, { pos: [7.5, 6.5, 10.5], look: [0, 1.2, -0.5] });
-  const Z = [3.0, 1.4, -0.2, -1.8, -3.4], names = ['聊天记录', '浏览器', '会议', '笔记', '你的记忆'];
-  const doors = [];
-  Z.forEach((z, i) => {
-    const c = [C.sky, C.sage, C.mustard, C.rose, C.navy][i];
-    box(s.root, 2.0, 2.4, 0.12, c, -2.0, 0, z); box(s.root, 2.0, 2.4, 0.12, c, 2.0, 0, z);
-    box(s.root, 2.0, 0.9, 0.12, c, 0, 1.5, z);
-    const d = new THREE.Group(); d.position.set(-1.0, 0, z); s.root.add(d);
-    box(d, 2.0, 1.5, 0.08, c, 1.0, 0, 0).material = M(c, { roughness: 0.7 });
-    doors.push(d);
-    tag(s, names[i], new V3(-3.3, 2.75, z), { size: 0.3 });
+  const s = mk(13, { pos: [0, 9.5, 12.5], look: [0, 0.8, 0] });
+  const N = MOBILE ? 600 : 1200, cols = 40;
+  const rob = new THREE.InstancedMesh(new THREE.BoxGeometry(0.1, 0.16, 0.1), M(0xffffff), N);
+  rob.castShadow = true; rob.receiveShadow = true;
+  const mtx = new THREE.Matrix4(), col = new THREE.Color();
+  for (let i = 0; i < N; i++) {
+    const x = -5.6 + (i % cols) * 0.085, z = -3.4 + Math.floor(i / cols) * 0.21;
+    mtx.makeTranslation(x + (Math.floor(i / cols) % 2) * 0.04, 0.08, z); rob.setMatrixAt(i, mtx);
+    rob.setColorAt(i, col.set([C.sky, C.mustard, C.sage, C.navy][i % 4]));
+  }
+  rob.count = 0; s.root.add(rob);
+  box(s.root, 3.8, 0.06, 6.9, C.cream, -3.9, 0, 0).castShadow = false;
+  const towers = [[1, 0.2, '聊天', '1×'], [4, 1.8, '单个 agent', '约 4×'], [15, 3.4, '多个 agent', '约 15×']];
+  const stacks = towers.map(([n, x, name, sub]) => {
+    const coins = [];
+    for (let i = 0; i < n; i++) coins.push(cyl(s.root, 0.5, 0.5, 0.16, C.mustard, x + 1.2, i * 0.17, 0, 20));
+    tag(s, name, new V3(x + 1.2, 0.5 + n * 0.17 + 0.9, 0), { size: 0.3, sub });
+    return coins;
   });
-  const plane = new THREE.Group(); s.root.add(plane);
-  const pg = new THREE.BufferGeometry();
-  pg.setAttribute('position', new THREE.Float32BufferAttribute([0, 0, -0.55, -0.42, 0.04, 0.4, 0, -0.05, 0.4, 0, 0, -0.55, 0, -0.05, 0.4, 0.42, 0.04, 0.4], 3));
-  pg.computeVertexNormals();
-  put(new THREE.Mesh(pg, new THREE.MeshStandardMaterial({ color: 0xffffff, side: THREE.DoubleSide, flatShading: true, roughness: 0.8 })), plane);
-  const head = tag(s, '能打穿几层？', new V3(0, 3.9, 0), { size: 0.44, sub: '大多数工具只穿得过一两层' });
+  tag(s, '同时在跑的 agent', new V3(-3.9, 1.5, -3.9), { size: 0.4, sub: 'OpenAI 自述，未独立验证' });
+  tag(s, 'token 用量', new V3(3.4, 5.6, -1.4), { size: 0.4, sub: 'Anthropic 自己的数据' });
   s.update = (t, p) => {
-    const open = 1 + Math.floor(smooth(0.1, 0.85, p) * 4.99);
-    doors.forEach((d, i) => { const k = i < open ? 1 : 0; d.rotation.y += ((k ? -1.35 : 0) - d.rotation.y) * 0.08; });
-    const T = 4.2, ph = (t % T) / T, stopZ = (open < 5 ? Z[open] : -5.2) + 0.45;
-    const startZ = 5.2, zz = mix(startZ, stopZ, smooth(0, 0.7, ph));
-    const bounce = smooth(0.7, 1, ph) * (open < 5 ? 1 : 0);
-    plane.position.set(Math.sin(ph * 9) * 0.15, 0.75 + Math.sin(ph * TAU) * 0.15 - bounce * 0.6, zz + bounce * 0.9);
-    plane.rotation.set(-0.1 + bounce * 0.9, 0, Math.sin(ph * 9) * 0.25 + bounce * 1.4);
-    head.set(`穿过 ${open} 层`, open < 5 ? `第 ${open + 1} 道门关着：「${names[open]}」` : '全打穿了：这样的工具还没出现');
+    const g = smooth(0.0, 0.42, p);
+    rob.count = Math.max(1, Math.round(g * N)); agentHud.n = Math.max(1, Math.round(Math.pow(g, 1.6) * 10000));
+    const up = smooth(0.35, 0.9, p);
+    stacks.forEach((cs, k) => cs.forEach((c, i) => { const f = clamp(up * 1.6 - k * 0.3 - i * 0.01, 0, 1); c.visible = f > 0 || k === 0; c.scale.y = k === 0 ? 1 : Math.max(0.01, f); }));
+    rob.position.y = Math.sin(t * 6) * 0.01;
   };
 }
+
+
+/* ---- 7 · good enough: a climbing staircase (what tech can do) vs a gentler slope (what customers need) */
+{
+  const s = mk(12, { pos: [0, 6.5, 12], look: [0, 1.8, 0] });
+  const STEPS = 12, steps = [], slope = [];
+  for (let i = 0; i < STEPS; i++) {
+    const x = -4.8 + i * 0.85;
+    steps.push(box(s.root, 0.8, 0.25 + i * 0.4, 1.0, C.sky, x, 0, -0.9));
+    slope.push(box(s.root, 0.8, 0.12, 0.7, C.mustard, x, 1.1 + i * 0.12, 0.8));
+  }
+  const cross = 5;
+  box(s.root, 0.04, 4.8, 0.04, C.red, -4.8 + cross * 0.85 + 0.4, 0, 0.2).castShadow = false;
+  tag(s, '技术能做到的', new V3(3.4, 5.2, -0.9), { size: 0.34 });
+  tag(s, '客户觉得够用的', new V3(-3.6, 2.9, 0.8), { size: 0.34 });
+  const head = tag(s, '性能不够', new V3(0, 6.2, 0), { size: 0.44, sub: '整合者赢：部件紧密配合' });
+  let shown = '';
+  s.update = (t, p) => {
+    const g = smooth(0.05, 0.75, p);
+    steps.forEach((m, i) => { const k = clamp(g * STEPS * 1.1 - i, 0, 1); m.visible = k > 0; m.scale.y = Math.max(0.01, k); });
+    slope.forEach((m, i) => (m.visible = true));
+    const past = g * STEPS > cross + 1;
+    const key = past ? 'b' : 'a';
+    if (key !== shown) { shown = key; head.set(past ? '性能过剩' : '性能不够', past ? '模块化者赢：谁便宜谁赢' : '整合者赢：部件紧密配合'); }
+  };
+}
+
 
 /* ---- 7 · fast brain, slow brain: an alarm bell vs. clockwork, with a pressure gauge */
 {
@@ -449,7 +467,7 @@ const agentHud = { n: 0 };
   const board = new THREE.Group(); board.position.set(0, 0, -0.8); board.rotation.x = -0.12; s.root.add(board);
   box(board, 9.2, 6.2, 0.25, C.wood, 0, 0.1, 0);
   box(board, 8.7, 5.7, 0.28, C.cork, 0, 0.35, 0.02);
-  const words = ['香农', '熵', '压缩', '交叉熵', '记忆', '重建', '概念图', '人味', 'ontology', '影关英语', '图示', '系统一'];
+  const words = ['记忆', '重建', '加工深度', '概念图', '语义网络', '词向量', 'ontology', '最近发展区', 'i+1', '课程学习', '语块', '多口音'];
   const P = [[-3.4, 4.9], [-1.6, 5.4], [-0.2, 4.2], [-3.2, 3.2], [1.6, 2.4], [3.4, 3.4], [0.6, 5.3], [-1.6, 1.4], [3.2, 5.2], [3.3, 1.2], [-3.5, 1.3], [0.4, 0.9]];
   const E = [[0, 1], [1, 2], [1, 3], [2, 4], [2, 7], [4, 5], [6, 4], [6, 8], [6, 2], [5, 9], [4, 9], [7, 2], [10, 6], [11, 4], [11, 5], [8, 3], [6, 11], [10, 7]];
   const pins = P.map(([x, y], i) => {
@@ -494,41 +512,72 @@ const agentHud = { n: 0 };
   };
 }
 
-/* ---- 10 · a thousand people who need you */
-const needHud = { n: 0 };
+/* ---- 11 · zip and unzip: a tight little block unfolds into pages with examples */
 {
-  const s = mk(12, { pos: [0, 11, 11], look: [0, 0.6, 0] });
-  const hill = put(new THREE.Mesh(new THREE.SphereGeometry(1.7, 24, 12, 0, TAU, 0, Math.PI / 2), M(C.sage)), s.root, 0, -0.3, 0);
-  hill.scale.y = 0.75;
-  const me = person(s.root, C.rose, 0, 0, 1.2); me.position.y = 0.9;
-  const lamp = ball(s.root, 0.2, C.mustard, 0.45, 2.35, 0, { emissive: C.mustard, emissiveIntensity: 0.4 });
-  tag(s, '你', new V3(0, 3.0, 0), { size: 0.42 });
-  const N = 1000, geo = new THREE.ConeGeometry(0.07, 0.24, 6); geo.translate(0, 0.12, 0);
-  const crowd = new THREE.InstancedMesh(geo, M(0xffffff), N); crowd.castShadow = true;
-  const mtx = new THREE.Matrix4(), col = new THREE.Color(), order = [];
-  for (let i = 0; i < N; i++) {
-    let x, z; do { x = (rnd() * 2 - 1) * 6.6; z = (rnd() * 2 - 1) * 4.6; } while (x * x / 4 + z * z / 4 < 1.3);
-    mtx.makeTranslation(x, 0, z); crowd.setMatrixAt(i, mtx); crowd.setColorAt(i, col.set(C.grey));
-    order.push([Math.hypot(x, z) + rnd() * 2.5, i]);
+  const s = mk(10, { pos: [0, 8, 10], look: [0, 0.6, 0] });
+  const zip = box(s.root, 1.2, 1.2, 1.2, C.navy, -3.6, 0, 0);
+  const stripe = box(s.root, 0.12, 1.22, 1.22, C.mustard, -3.6, 0, 0);
+  const PG = 7, pages = [];
+  for (let i = 0; i < PG; i++) {
+    const m = box(s.root, 1.5, 0.05, 2.0, i % 2 ? C.paper : C.cream, -3.6, 0, 0);
+    for (let k = 0; k < 4; k++) { const ln = box(m, 1.1 - k * 0.15, 0.01, 0.06, C.ink, 0, 0.05, -0.55 + k * 0.3); ln.castShadow = false; }
+    pages.push(m);
   }
-  order.sort((a, b) => a[0] - b[0]);
-  s.root.add(crowd);
-  let lit = 0; const on = new THREE.Color(), cs = [C.mustard, C.red, C.sky, C.rose];
+  tag(s, '压缩后', new V3(-3.6, 2.4, 0), { size: 0.36, sub: '读者得自己解压' });
+  const lab = tag(s, '解压后', new V3(2.2, 3.0, 0), { size: 0.36, sub: '例子 · 语气 · 背景' });
   s.update = (t, p) => {
-    const n = Math.round(smooth(0.05, 0.8, p) * N);
-    if (n !== lit) {
-      for (let k = Math.min(n, lit); k < Math.max(n, lit); k++) { const i = order[k][1]; crowd.setColorAt(i, k < n ? on.set(cs[i % 4]) : on.set(C.grey)); }
-      crowd.instanceColor.needsUpdate = true; lit = n;
-    }
-    needHud.n = n;
-    lamp.material.emissiveIntensity = 0.3 + (n / N) * 1.2 + Math.sin(t * 2) * 0.1;
+    const k = smooth(0.15, 0.75, p);
+    zip.scale.setScalar(1 - k * 0.6); stripe.scale.setScalar(1 - k * 0.6); zip.position.y = 0; stripe.position.y = 0;
+    pages.forEach((m, i) => {
+      const f = clamp(k * 1.5 - i * 0.12, 0, 1);
+      m.visible = f > 0.01;
+      m.position.set(mix(-3.6, -1.6 + i * 0.7, back(f)), 0.1 + i * 0.02, mix(0, (i % 2 ? 0.5 : -0.5), f));
+      m.rotation.y = (1 - f) * 1.2 + (i % 2 ? 0.08 : -0.08);
+    });
+    lab.material.opacity = smooth(0.4, 0.7, p) * s.pop.scale.y;
+  };
+  s.fade = [lab];
+}
+
+
+/* ---- 12 · robot arm: the big model gives the direction, a small loop fixes the last millimetre */
+{
+  const s = mk(10, { pos: [0, 6, 11], look: [0, 1.8, 0] });
+  box(s.root, 3.0, 0.2, 2.2, C.navy, -1.5, 0, 0);
+  const base = new THREE.Group(); base.position.set(-1.5, 0.2, 0); s.root.add(base);
+  const seg1 = new THREE.Group(); base.add(seg1);
+  box(seg1, 0.5, 2.0, 0.5, C.sky, 0, 0, 0);
+  const seg2 = new THREE.Group(); seg2.position.y = 2.0; seg1.add(seg2);
+  ball(seg2, 0.3, C.ink, 0, 0, 0);
+  box(seg2, 0.4, 1.8, 0.4, C.sage, 0, 0, 0);
+  const seg3 = new THREE.Group(); seg3.position.y = 1.8; seg2.add(seg3);
+  ball(seg3, 0.24, C.ink, 0, 0, 0);
+  box(seg3, 0.3, 0.8, 0.3, C.mustard, 0, 0, 0);
+  const bit = box(seg3, 0.08, 0.5, 0.08, C.red, 0, 0.8, 0);
+  // the screw
+  box(s.root, 1.4, 0.4, 1.4, C.wood, 2.4, 0.2, 0);
+  const screw = cyl(s.root, 0.08, 0.08, 0.35, C.grey, 2.4, 0.6, 0, 8);
+  const bar = box(s.root, 0.3, 0.1, 0.3, C.sky, 4.6, 0, 0);
+  tag(s, '大模型：大方向', new V3(-1.5, 5.6, 0), { size: 0.34 });
+  const lab = tag(s, '小网络：最后一毫米', new V3(2.4, 2.4, 0), { size: 0.34, sub: '试 0 次' });
+  tag(s, '真实数据', new V3(4.6, 0.8, 0), { size: 0.3 });
+  let shown = -1;
+  s.update = (t, p) => {
+    const k = smooth(0.1, 0.9, p);
+    const wob = (1 - k) * Math.sin(t * 5) * 0.18;
+    seg1.rotation.z = -0.55 + wob * 0.4; seg2.rotation.z = -0.5 - wob; seg3.rotation.z = -0.35 + wob * 1.6;
+    screw.position.y = 0.6 + 0.3 * (1 - k) * Math.abs(Math.sin(t * 2)) ;
+    bar.scale.set(1, 1, 1); bar.geometry.dispose(); bar.geometry = new THREE.BoxGeometry(0.3, 0.1 + k * 3.6, 0.3); bar.position.y = (0.1 + k * 3.6) / 2;
+    const n = Math.round(k * 40);
+    if (n !== shown) { shown = n; lab.set('小网络：最后一毫米', `试 ${n} 次`); }
   };
 }
+
 
 /* ---- 11 · pull yourself out: threads between you and your people; the camera climbs to n+1 */
 {
   const s = mk(9, { pos: [0, 3.2, 10], look: [0, 1.2, 0] });
-  const ppl = [['你', C.rose, 0, 0.4], ['Ronin', C.navy, -2.9, -1.6], ['老板', C.brick, 3.0, -1.4], ['同事', C.sky, 3.2, 2.0], ['爸妈', C.sage, -3.0, 2.2], ['钱鹏飞', C.mustard, 0.2, -3.2]];
+  const ppl = [['你', C.rose, 0, 0.4], ['同事甲', C.navy, -2.9, -1.6], ['上级', C.brick, 3.0, -1.4], ['同事乙', C.sky, 3.2, 2.0], ['家人', C.sage, -3.0, 2.2], ['客户', C.mustard, 0.2, -3.2]];
   const P = ppl.map(([n, c, x, z]) => { const f = person(s.root, c, x, z, n === '你' ? 1.4 : 1.15); f.rotation.y = Math.atan2(-x, -z); tag(s, n, new V3(x, 2.2, z), { size: 0.36 }); return new V3(x, 0.9, z); });
   const seg = []; [[0, 1], [0, 2], [0, 3], [0, 4], [0, 5], [2, 3], [1, 5], [3, 4]].forEach(([a, b]) => seg.push(...P[a].toArray(), ...P[b].toArray()));
   const lg = new THREE.BufferGeometry(); lg.setAttribute('position', new THREE.Float32BufferAttribute(seg, 3));
@@ -537,8 +586,8 @@ const needHud = { n: 0 };
   const layer = new THREE.Mesh(new THREE.BoxGeometry(8.6, 0.03, 7.2), new THREE.MeshStandardMaterial({ color: 0xffffff, transparent: true, opacity: 0.35, roughness: 1 }));
   layer.position.y = 4.4; s.root.add(layer);
   const ghost = person(s.root, C.rose, 2.6, 2.4, 0.8); ghost.position.y = 4.42;
-  const lt = tag(s, 'n+1 层', new V3(3.5, 5.4, 2.4), { size: 0.38, sub: '能看见自己的那一层' });
-  const q = tag(s, '谁受益？谁受损？谁授权的？', new V3(0, 3.0, 0.4), { size: 0.34, color: '#9a3b2a' });
+  const lt = tag(s, 'n+1 层', new V3(3.5, 5.4, 2.4), { size: 0.38, sub: '能看见整个局面的那一层' });
+  const q = tag(s, '谁授权？谁受益？谁受损？', new V3(0, 3.0, 0.4), { size: 0.34, color: '#9a3b2a' });
   s.cam = (p, t) => {
     const k = smooth(0.1, 0.85, p), a = 0.4 + k * 1.1 + t * 0.02;
     return { pos: new V3(Math.sin(a) * mix(9.5, 3.5, k), mix(3.0, 12.5, k), Math.cos(a) * mix(9.5, 3.5, k)), look: new V3(0, mix(1.2, 0.2, k), 0) };
@@ -551,24 +600,51 @@ const needHud = { n: 0 };
   s.fade = [lt, q];
 }
 
-/* ---- 12 · paper lanterns drift up: the questions left for next time */
+/* ---- 14 · a mixing desk: five faders come up one by one */
 {
-  const s = mk(10, { pos: [0, 4.5, 13], look: [0, 3.4, 0] });
-  const lmat = new THREE.MeshStandardMaterial({ color: 0xf6c56a, emissive: 0xe89a3a, emissiveIntensity: 0.55, roughness: 0.9, flatShading: true });
-  const L = [];
-  for (let i = 0; i < 9; i++) {
-    const g = new THREE.Group(); s.root.add(g);
-    const body = put(new THREE.Mesh(new THREE.CylinderGeometry(0.32, 0.38, 0.75, 10), lmat), g); body.castShadow = false;
-    put(new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.2, 0.08, 10), M(C.brick)), g, 0, 0.42, 0);
-    put(new THREE.Mesh(new THREE.CylinderGeometry(0.22, 0.22, 0.08, 10), M(C.brick)), g, 0, -0.42, 0);
-    L.push({ g, x: (rnd() * 2 - 1) * 4.5, z: (rnd() * 2 - 1) * 2.5, o: rnd(), sp: 0.07 + rnd() * 0.05 });
-    if (i % 3 === 0) tag(s, '？', new V3(0, 0.9, 0), { size: 0.4, parent: g, bg: null, color: '#9a3b2a' });
-  }
-  tag(s, '下次见面问他', new V3(0, 0.6, 3.6), { size: 0.4 });
-  s.update = (t) => {
-    L.forEach((o) => { const ph = (o.o + t * o.sp) % 1; o.g.position.set(o.x + Math.sin(t * 0.7 + o.o * 9) * 0.3, 0.4 + ph * 7.5, o.z); o.g.rotation.y = t * 0.3 + o.o; o.g.scale.setScalar(Math.min(1, ph * 8, (1 - ph) * 6)); });
+  const s = mk(10, { pos: [0, 7, 9], look: [0, 0.4, 0] });
+  box(s.root, 8.6, 0.5, 3.4, C.navy, 0, 0, 0);
+  box(s.root, 8.2, 0.05, 3.0, C.ink, 0, 0.5, 0);
+  const names = ['对白', '环境音', '特殊音效', '拟声', '音乐'], cols = [C.rose, C.sage, C.sky, C.mustard, C.red];
+  const caps = names.map((n, i) => {
+    const x = -3.2 + i * 1.6;
+    box(s.root, 0.12, 0.04, 2.2, C.grey, x, 0.55, 0);
+    const cap = box(s.root, 0.55, 0.3, 0.4, cols[i], x, 0.55, 0.9);
+    tag(s, n, new V3(x, 1.5, 0.2), { size: 0.3 });
+    return cap;
+  });
+  const lights = names.map((n, i) => ball(s.root, 0.12, cols[i], -3.2 + i * 1.6, 0.7, -1.3, { emissive: cols[i], emissiveIntensity: 0.1 }));
+  s.update = (t, p) => {
+    caps.forEach((c, i) => {
+      const k = smooth(0.1 + i * 0.13, 0.28 + i * 0.13, p);
+      const wob = Math.sin(t * (2 + i * 0.7) + i) * 0.35 * k;
+      c.position.z = mix(0.9, -0.5, k) + wob * 0.5;
+      lights[i].material.emissiveIntensity = 0.1 + k * (0.6 + 0.4 * Math.sin(t * 6 + i));
+    });
   };
 }
+
+
+/* ---- 15 · timeline: paper cards stand up along a line */
+{
+  const s = mk(13, { pos: [0, 5.5, 13], look: [0, 1.4, 0] });
+  box(s.root, 12, 0.1, 0.3, C.brick, 0, 0, 0.6);
+  const ev = [['1936', '图灵'], ['1945', '冯·诺依曼'], ['1948', '香农 · 维纳'], ['1962', '恩格尔巴特'], ['1970', '施乐 PARC'], ['1985', 'SICP'], ['2012', 'AlexNet'], ['2017', 'Transformer']];
+  const cards = ev.map(([y, n], i) => {
+    const x = -5.1 + i * 1.46, g = new THREE.Group(); g.position.set(x, 0.05, 0.6); s.root.add(g);
+    box(g, 1.2, 1.5 + (i % 2) * 0.6, 0.08, [C.cream, C.paper][i % 2], 0, 0, 0);
+    tag(s, y, new V3(0, 2.1 + (i % 2) * 0.6, 0.2), { size: 0.3, parent: g, font: SANS });
+    tag(s, n, new V3(0, 1.0, 0.2), { size: 0.24, parent: g, bg: null });
+    return g;
+  });
+  s.update = (t, p) => {
+    cards.forEach((g, i) => {
+      const k = back(clamp(smooth(0.08, 0.85, p) * (ev.length + 1) - i, 0, 1));
+      g.rotation.x = (1 - k) * -1.45; g.visible = k > 0.01;
+    });
+  };
+}
+
 
 /* -------------------------------------------------------------- layout */
 let W = 1, Hh = 1;
@@ -638,6 +714,7 @@ function frame() {
 }
 setTimeout(() => requestAnimationFrame(frame), REDUCED ? 0 : 1600);
 
+
 /* ------------------------------------------------------------- chrome */
 function setupChrome() {
   const nav = $('#nav');
@@ -656,7 +733,7 @@ function onChapter(i) {
   const el = sections[i];
   document.querySelectorAll('#nav a').forEach((a, j) => a.classList.toggle('on', j === i));
   $('#caption').innerHTML = el.dataset.caption || '';
-  $('#where').textContent = i ? `第 ${i} 课 · ${el.dataset.title}` : el.dataset.title;
+  $('#where').textContent = i ? `第 ${i} 章 · ${el.dataset.title}` : el.dataset.title;
 }
 const hud = $('#hud'), ha = $('#hud-a'), hb = $('#hud-b'), hc = $('#hud-c');
 let hudKey = '';
@@ -665,10 +742,7 @@ function updateHud() {
   let key = '', show = false;
   if (kind === 'agents' && s.w > 0.5) {
     show = true; key = `a${agentHud.n}`;
-    if (key !== hudKey) { ha.textContent = '同时在跑的 agent'; hb.textContent = agentHud.n.toLocaleString('en-US'); hc.textContent = agentHud.n >= 10000 ? '88 小时 · 约 490 万条消息' : '规模按题目配'; }
-  } else if (kind === 'need' && s.w > 0.5) {
-    show = true; key = `n${needHud.n}`;
-    if (key !== hudKey) { ha.textContent = '需要你的人'; hb.textContent = `${needHud.n}`; hc.textContent = needHud.n >= 1000 ? '你就成功了' : '还差两个条件：非你不可、能分发'; }
+    if (key !== hudKey) { ha.textContent = '同时在跑的 agent'; hb.textContent = agentHud.n.toLocaleString('en-US'); hc.textContent = agentHud.n >= 10000 ? 'OpenAI 自述 · 未独立验证' : '按 OpenAI 的说法'; }
   }
   hudKey = key; hud.classList.toggle('on', show);
 }
