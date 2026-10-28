@@ -3,109 +3,137 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#06070b">
-<title>补课 · AI 时代的底层常识</title>
-<meta name="description" content="一份沉浸式科普读本：从香农的信息论到 token、注意力、采样、状态、循环、图谱、工作台，再到人这一侧。由几份补课笔记消化而成。">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2306070b'/%3E%3Ccircle cx='16' cy='16' r='7' fill='none' stroke='%23E8875F' stroke-width='2.4'/%3E%3Ccircle cx='16' cy='16' r='2.4' fill='%23F0EEE6'/%3E%3C/svg%3E">
+<meta name="theme-color" content="#efe4cc">
+<title>补课 · 和 Ronin 聊过的东西</title>
+<meta name="description" content="Coco 的私人补课本：把和 Ronin 一个多月的对话，拆成一口气读得完的十二章。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23fbf6ea'/%3E%3Ccircle cx='16' cy='16' r='7' fill='none' stroke='%23E8875F' stroke-width='2.4'/%3E%3Ccircle cx='16' cy='16' r='2.4' fill='%23F0EEE6'/%3E%3C/svg%3E">
 <style>
 :root{
-  --bg:#06070b; --ink:#ECE8DE; --ink2:rgba(236,232,222,.68); --ink3:rgba(236,232,222,.45);
-  --orange:#E8875F; --blue:#7FB0E0; --green:#9BBF77; --gold:#D9B26A;
+  --desk:#e7d8bb; --paper:#fbf6ea; --paper2:#f4ecda; --rule:#e6dac2;
+  --ink:#1c2433; --ink2:rgba(28,36,51,.72); --ink3:rgba(28,36,51,.5);
+  --brick:#9a3b2a; --red:#cf553a; --mustard:#e2a83a; --hl:rgba(242,196,82,.5);
+  --sage:#5d8a5b; --sky:#3f74a8; --rose:#c46b77;
   --serif:"Songti SC","STSong","Noto Serif SC","Source Han Serif SC","Source Han Serif CN",serif;
   --sans:"PingFang SC","Hiragino Sans GB","Noto Sans SC","Source Han Sans SC","Microsoft YaHei",system-ui,sans-serif;
-  --colw:min(500px,40vw);
+  --colw:min(540px,42vw);
 }
 *{box-sizing:border-box}
-html{background:var(--bg);-webkit-text-size-adjust:100%}
-body{margin:0;color:var(--ink);font:400 16.5px/1.9 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+html{background:var(--desk);-webkit-text-size-adjust:100%}
+body{margin:0;color:var(--ink);font:400 16.5px/1.9 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden;
+  background:radial-gradient(ellipse 90% 70% at 66% 42%,#f3e9d4 0%,#e6d5b6 62%,#d7c19b 100%) fixed}
+/* paper grain over the 3D book, under the text */
+body::after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.32;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .55  0 0 0 0 .45  0 0 0 0 .32  0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E")}
 #gl{position:fixed;inset:0;width:100%;height:100%;display:block;z-index:0;touch-action:pan-y}
 body.nogl #gl{display:none}
-body.nogl{background:radial-gradient(ellipse at 70% 30%,#1a1410 0%,#06070b 60%) fixed}
 main{position:relative;z-index:1}
 
-/* loader */
-#loader{position:fixed;inset:0;z-index:20;display:grid;place-items:center;background:radial-gradient(ellipse at 50% 46%,#12100e 0%,#06070b 70%);transition:opacity 1.1s ease,visibility 1.1s}
-body.ready #loader{opacity:0;visibility:hidden}
-#loader .mark{display:flex;gap:.08em;font:700 clamp(72px,16vw,150px)/1 var(--serif);letter-spacing:.04em}
-#loader .mark span{display:inline-block;clip-path:inset(0 0 100% 0);animation:ink .9s cubic-bezier(.6,0,.2,1) forwards;text-shadow:0 0 40px rgba(232,135,95,.35)}
-#loader .mark span:nth-child(2){animation-delay:.35s}
-#loader .dot{width:9px;height:9px;border-radius:50%;background:var(--orange);box-shadow:0 0 18px 4px rgba(232,135,95,.6);margin:22px auto 0;opacity:0;animation:fade .6s 1.1s forwards,pulse 1.6s 1.7s ease-in-out infinite}
-#loader p{margin:18px 0 0;text-align:center;font:400 14px/1.6 var(--sans);letter-spacing:.3em;color:var(--ink2);opacity:0;animation:fade .8s 1.3s forwards}
-@keyframes ink{to{clip-path:inset(0 0 0 0)}}
+#loader{position:fixed;inset:0;z-index:20;display:grid;place-items:center;background:radial-gradient(ellipse at 50% 44%,#fbf6ea 0%,#efe6d3 58%,#ddd1b9 100%);transition:opacity .9s ease,visibility .9s}
+body.ready #loader,body.nogl #loader{opacity:0;visibility:hidden}
+#loader .mark{display:flex;gap:.06em;font:700 clamp(72px,16vw,140px)/1 var(--serif);letter-spacing:.04em;color:var(--ink);position:relative}
+#loader .mark span{display:inline-block;clip-path:inset(-10% 100% -10% 0);animation:write .8s cubic-bezier(.6,0,.3,1) forwards}
+#loader .mark span:nth-child(2){animation-delay:.45s}
+#loader .ul{display:block;width:clamp(120px,24vw,230px);height:14px;margin:4px auto 0;overflow:visible}
+#loader .ul path{fill:none;stroke:var(--brick);stroke-width:2.2;stroke-linecap:round;stroke-dasharray:260;stroke-dashoffset:260;animation:dash .6s 1.1s ease forwards}
+#loader .drop{width:12px;height:12px;border-radius:50%;background:var(--mustard);margin:14px auto 0;opacity:0;animation:fade .4s 1.4s forwards,bob 1.4s 1.8s ease-in-out infinite}
+#loader p{margin:16px 0 0;text-align:center;font:400 14px/1.6 var(--serif);letter-spacing:.3em;color:var(--ink2);opacity:0;animation:fade .8s 1.4s forwards}
+@keyframes write{to{clip-path:inset(-10% 0 -10% 0)}}
+@keyframes dash{to{stroke-dashoffset:0}}
 @keyframes fade{to{opacity:1}}
-@keyframes pulse{50%{transform:scale(1.6);opacity:.5}}
+@keyframes bob{50%{transform:translateY(-6px)}}
 
-/* top progress + nav */
-#bar{position:fixed;left:0;top:0;height:2px;width:100%;transform-origin:0 50%;transform:scaleX(0);background:linear-gradient(90deg,var(--orange),var(--gold));z-index:6;box-shadow:0 0 10px rgba(232,135,95,.6)}
-#nav{position:fixed;right:22px;top:50%;transform:translateY(-50%);z-index:6;display:flex;flex-direction:column;gap:14px}
-#nav a{display:flex;align-items:center;justify-content:flex-end;gap:10px;color:var(--ink3);text-decoration:none;font-size:12px;letter-spacing:.12em}
-#nav a span{opacity:0;transform:translateX(6px);transition:.3s}
-#nav a i{width:7px;height:7px;border-radius:50%;border:1px solid var(--ink3);transition:.3s}
-#nav a:hover span,#nav a.on span{opacity:1;transform:none}
-#nav a.on{color:var(--ink)}
-#nav a.on i{background:var(--orange);border-color:var(--orange);box-shadow:0 0 10px var(--orange)}
-#where{display:none;position:fixed;left:0;right:0;top:0;z-index:5;padding:calc(env(safe-area-inset-top) + 10px) 16px 8px;font-size:12px;letter-spacing:.2em;color:var(--ink2);background:linear-gradient(#06070bf2 55%,#06070b00)}
-#caption{position:fixed;right:22px;bottom:calc(env(safe-area-inset-bottom) + 18px);z-index:5;max-width:min(360px,60vw);text-align:right;font:400 12.5px/1.6 var(--sans);color:var(--ink3);letter-spacing:.06em;transition:opacity .5s}
-#caption b{color:var(--ink2);font-weight:500}
-#hud{position:fixed;right:22px;top:calc(env(safe-area-inset-top) + 22px);z-index:5;padding:12px 16px;border-radius:12px;background:rgba(8,10,16,.6);border:1px solid rgba(232,135,95,.35);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);font:500 13px/1.6 var(--sans);opacity:0;transition:opacity .4s;pointer-events:none;min-width:190px}
+#bar{position:fixed;left:0;top:0;height:3px;width:100%;transform-origin:0 50%;transform:scaleX(0);background:var(--brick);z-index:6}
+/* chapter tabs, like index tabs sticking out of a book */
+#nav{position:fixed;right:0;top:50%;transform:translateY(-50%);z-index:6;display:flex;flex-direction:column;gap:5px}
+#nav a{display:flex;align-items:center;justify-content:flex-end;gap:8px;text-decoration:none;color:var(--ink2);font:500 12px/1 var(--sans);letter-spacing:.1em}
+#nav a span{opacity:0;transform:translateX(6px);transition:.25s;white-space:nowrap;background:var(--paper);padding:5px 8px;border-radius:4px;box-shadow:0 2px 8px rgba(70,45,20,.15)}
+#nav a i{width:14px;height:20px;border-radius:4px 0 0 4px;background:rgba(251,246,234,.75);border:1px solid var(--rule);border-right:0;transition:.25s;flex:none}
+#nav:hover a span,#nav a.on span{opacity:1;transform:none}
+#nav a.on i{width:22px;background:var(--brick);border-color:var(--brick)}
+#where{display:none;position:fixed;left:0;right:0;top:0;z-index:5;padding:calc(env(safe-area-inset-top) + 9px) 16px 7px;font:500 12px/1.4 var(--sans);letter-spacing:.16em;color:var(--brick);background:rgba(251,246,234,.92);border-bottom:1px solid var(--rule)}
+#caption{position:fixed;right:44px;bottom:calc(env(safe-area-inset-bottom) + 20px);z-index:5;max-width:min(400px,46vw);padding:9px 14px;border-radius:4px;background:rgba(251,246,234,.86);box-shadow:0 6px 20px -10px rgba(70,45,20,.4);font:400 13px/1.65 var(--serif);color:var(--ink2);letter-spacing:.02em;transition:opacity .4s}
+#caption:empty{opacity:0}
+#caption b{color:var(--brick);font:600 12px/1 var(--sans);letter-spacing:.14em;margin-right:.4em}
+#hud{position:fixed;right:44px;top:calc(env(safe-area-inset-top) + 26px);z-index:5;padding:12px 16px 10px;background:#fbefbf;box-shadow:0 10px 24px -12px rgba(70,45,20,.5);transform:rotate(1.2deg);font:500 13px/1.6 var(--sans);opacity:0;transition:opacity .4s;pointer-events:none;min-width:180px}
 #hud.on{opacity:1}
-#hud .big{display:block;font:700 26px/1.2 var(--serif);color:var(--orange);font-variant-numeric:tabular-nums}
+#hud span{display:block}
+#hud .big{font:700 28px/1.2 var(--serif);color:var(--brick);font-variant-numeric:tabular-nums}
 #hud .small{color:var(--ink2);font-size:12px}
 
-/* hero */
-.hero{min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding:0 6vw;position:relative}
-.hero .kicker{font-size:13px;letter-spacing:.42em;color:var(--orange)}
-.hero h1{margin:.2em 0 .1em;font:700 clamp(64px,13vw,168px)/1 var(--serif);letter-spacing:.06em;text-shadow:0 0 60px rgba(232,135,95,.25)}
-.hero .sub{font:400 clamp(17px,2.2vw,24px)/1.6 var(--serif);color:var(--ink);max-width:640px;margin:0}
-.hero .scroll{position:absolute;left:6vw;bottom:calc(env(safe-area-inset-bottom) + 32px);font-size:12px;letter-spacing:.3em;color:var(--ink3);display:flex;align-items:center;gap:12px}
-.hero .scroll i{display:block;width:1px;height:42px;background:linear-gradient(var(--orange),transparent);animation:drip 2s ease-in-out infinite}
-@keyframes drip{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+.hero{min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding:0 6vw;position:relative;max-width:calc(var(--colw) + 18vw)}
+.hero .kicker{align-self:flex-start;font:600 13px/1 var(--sans);letter-spacing:.3em;color:var(--paper);background:var(--brick);padding:7px 10px 7px 12px;border-radius:3px}
+.hero h1{margin:.25em 0 .15em;font:700 clamp(68px,12vw,156px)/1 var(--serif);letter-spacing:.06em;background:linear-gradient(transparent 62%,var(--hl) 62%,var(--hl) 88%,transparent 88%);align-self:flex-start;padding:0 .08em}
+.hero .sub{font:400 clamp(17px,2vw,22px)/1.8 var(--serif);color:var(--ink);max-width:620px;margin:0}
+.hero .scroll{position:absolute;left:6vw;bottom:calc(env(safe-area-inset-bottom) + 30px);font:500 12px/1 var(--sans);letter-spacing:.3em;color:var(--ink2);display:flex;align-items:center;gap:12px}
+.hero .scroll i{display:block;width:16px;height:16px;border-right:2px solid var(--brick);border-bottom:2px solid var(--brick);transform:rotate(45deg);animation:nudge 1.6s ease-in-out infinite}
+@keyframes nudge{50%{transform:translateY(6px) rotate(45deg)}}
 
-/* chapters */
-.chapter{position:relative;padding:0 0 30vh}
+.chapter{position:relative;padding:0 0 30vh;counter-reset:card}
 .chead{min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding:0 6vw;max-width:calc(var(--colw) + 12vw)}
-.cnum{font:700 15px/1 var(--sans);letter-spacing:.4em;color:var(--orange)}
-.cnum::after{content:"";display:inline-block;width:48px;height:1px;background:var(--orange);vertical-align:middle;margin-left:14px;opacity:.6}
-.chead h2{margin:.35em 0 .15em;font:700 clamp(42px,6vw,78px)/1.1 var(--serif);letter-spacing:.04em}
-.chead .csub{margin:0;font:400 clamp(18px,2vw,23px)/1.5 var(--serif);color:var(--ink2)}
-.chead .clead{margin:1.6em 0 0;padding-left:16px;border-left:2px solid var(--orange);font:400 17px/1.85 var(--serif);color:var(--ink);max-width:30em}
+.plate{position:relative;padding:30px 30px 26px;background:var(--paper);border-radius:4px;box-shadow:0 1px 0 var(--rule),0 24px 50px -24px rgba(70,45,20,.45)}
+.plate::before{content:"";position:absolute;left:0;right:0;top:0;height:5px;background:var(--brick);border-radius:4px 4px 0 0}
+.cnum{display:inline-block;font:600 13px/1 var(--sans);letter-spacing:.24em;color:var(--brick)}
+.cnum::before{content:"第 "}
+.cnum::after{content:" 课"}
+.chead h2{margin:.4em 0 .2em;font:700 clamp(36px,4.6vw,60px)/1.2 var(--serif);letter-spacing:.03em}
+.chead .csub{margin:0;font:400 clamp(17px,1.8vw,21px)/1.55 var(--serif);color:var(--ink2)}
+.chead .clead{margin:1.3em 0 0;padding:12px 14px;background:var(--paper2);border-radius:3px;font:400 16.5px/1.85 var(--serif);color:var(--ink)}
+.chead .from{margin-top:1em;font-size:12.5px;color:var(--ink3);letter-spacing:.04em}
+.chead .figcap{display:none;margin:1em 0 0;font:400 13.5px/1.7 var(--serif);color:var(--ink2)}
+.chead .figcap b{font:600 11.5px/1 var(--sans);letter-spacing:.14em;color:var(--brick);margin-right:.5em}
 
-.card{width:var(--colw);margin:0 0 62vh 6vw;padding:24px 26px 20px;border-radius:16px;background:rgba(9,11,17,.62);border:1px solid rgba(255,255,255,.075);backdrop-filter:blur(16px) saturate(1.25);-webkit-backdrop-filter:blur(16px) saturate(1.25);box-shadow:0 30px 80px rgba(0,0,0,.35);opacity:.0;transform:translateY(28px);transition:opacity .9s ease,transform .9s cubic-bezier(.2,.7,.2,1)}
+.card{position:relative;width:var(--colw);margin:0 0 56vh 6vw;padding:26px 28px 22px;border-radius:4px;background:var(--paper);border:1px solid var(--rule);
+  box-shadow:0 1px 0 #e9dfca,0 22px 44px -22px rgba(70,45,20,.42);opacity:0;transform:translateY(26px) rotate(-.4deg);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.7,.2,1)}
+.card::after{content:"";position:absolute;right:-1px;top:-1px;width:22px;height:22px;background:linear-gradient(225deg,var(--desk) 50%,#e9dcc2 50%);border-bottom-left-radius:3px;box-shadow:-2px 2px 3px rgba(70,45,20,.12)}
 .card.in,body.nogl .card,body.nojs .card{opacity:1;transform:none}
-.card h3{margin:0 0 .7em;font:700 22px/1.35 var(--serif);letter-spacing:.02em}
+.card h3{margin:0 0 .7em;font:700 22px/1.4 var(--serif);letter-spacing:.02em;padding-right:20px}
+.card h3[data-n]::before{counter-increment:card;content:attr(data-n) "." counter(card);display:block;font:600 12px/1 var(--sans);letter-spacing:.18em;color:var(--brick);margin-bottom:.7em}
+.card h3 small{display:block;margin-top:.25em;font:400 12.5px/1.5 var(--sans);color:var(--ink3);letter-spacing:.06em}
 .card p{margin:.75em 0;color:var(--ink)}
-.card p.one{font:500 17.5px/1.8 var(--serif)}
-.card ul{margin:.5em 0;padding-left:1.2em}
-.card li{margin:.35em 0}
-.card li::marker{color:var(--orange)}
-.card b.tag{display:inline-block;margin-right:.6em;padding:0 .55em;border-radius:5px;font:600 11.5px/1.75 var(--sans);letter-spacing:.12em;vertical-align:.12em;color:#06070b;background:var(--orange)}
-.card b.t-more{background:rgba(236,232,222,.85)}
-.card b.t-you{background:var(--green)}
-.card b.t-ext{background:transparent;color:var(--blue);border:1px dashed var(--blue)}
-.card.ext{border-color:rgba(127,176,224,.35)}
-.card p.src{margin-top:1.1em;padding-top:.8em;border-top:1px solid rgba(255,255,255,.08);font-size:12.5px;line-height:1.7;color:var(--ink3)}
-.card em{font-style:normal;color:var(--gold)}
-.card strong{color:#fff;font-weight:600}
-.card .note{color:var(--ink3);font-size:13.5px}
+.card p.one{font:600 17.5px/1.8 var(--serif);padding:10px 12px;margin:.4em -12px .9em;background:#fbf0cf;border-radius:3px}
+.card ul,.card ol{margin:.5em 0;padding-left:1.3em}
+.card li{margin:.4em 0}
+.card li::marker{color:var(--brick)}
+.card b.tag{display:inline-block;margin-right:.6em;padding:0 .55em;border-radius:3px;font:600 11.5px/1.8 var(--sans);letter-spacing:.1em;vertical-align:.12em;color:var(--paper);background:var(--brick)}
+.card p.one b.tag{background:var(--ink)}
+.card b.t-more{background:transparent;color:var(--sky);border:1px solid currentColor;line-height:1.65}
+.card b.t-you{background:var(--sage)}
+.card b.t-ext{background:transparent;color:var(--sky);border:1px dashed var(--sky);line-height:1.65}
+.card .flag{display:inline-block;margin:0 .2em;padding:0 .45em;border-radius:3px;font:500 11px/1.7 var(--sans);letter-spacing:.06em;color:var(--brick);border:1px solid rgba(154,59,42,.45);background:#fff;vertical-align:.1em}
+.card.ext{background:#f6f3e6;border-style:dashed;border-color:#b9c7d4}
+.card.private::before{content:"只写给你";position:absolute;right:28px;top:-12px;padding:3px 10px;background:#f3c9cc;color:#6e2f37;font:600 11px/1.5 var(--sans);letter-spacing:.14em;transform:rotate(2deg);box-shadow:0 3px 8px -4px rgba(70,45,20,.4)}
+.card p.src{margin-top:1.1em;padding-top:.8em;border-top:1px dashed var(--rule);font-size:12.5px;line-height:1.7;color:var(--ink3)}
+.card p.src a{color:var(--sky)}
+.card em{font-style:normal;background:linear-gradient(transparent 58%,var(--hl) 58%);padding:0 .1em}
+.card strong{color:var(--ink);font-weight:700}
+.card blockquote{margin:.8em 0;padding:.5em 14px;border-left:3px solid var(--rose);background:var(--paper2);color:var(--ink);font:400 15.5px/1.85 var(--serif)}
+.card .note{color:var(--ink2);font-size:13.5px}
 .card table{width:100%;border-collapse:collapse;font-size:14px;margin:.6em 0}
-.card td,.card th{padding:.45em .4em;border-bottom:1px solid rgba(255,255,255,.08);text-align:left;vertical-align:top}
-.card th{color:var(--ink2);font-weight:500}
+.card td,.card th{padding:.45em .4em;border-bottom:1px solid var(--rule);text-align:left;vertical-align:top}
+.card th{color:var(--ink2);font-weight:600;border-bottom:2px solid var(--ink)}
+.card .goto{color:var(--brick);font-size:13px;white-space:nowrap}
+.card sup{font-size:.7em}
 .ending{min-height:80svh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:0 8vw 14vh}
-.ending .q{font:700 clamp(26px,4vw,46px)/1.5 var(--serif);letter-spacing:.06em;text-shadow:0 0 40px rgba(232,135,95,.3)}
-.ending .fine{margin-top:2.4em;font-size:12.5px;color:var(--ink3);max-width:620px;line-height:1.9}
-.ending .fine a{color:var(--ink2)}
+.ending .q{font:700 clamp(28px,4vw,48px)/1.55 var(--serif);letter-spacing:.06em;padding:24px 36px;background:var(--paper);box-shadow:0 24px 50px -24px rgba(70,45,20,.45)}
+.ending .fine{margin-top:2.4em;font-size:12.5px;color:var(--ink2);max-width:640px;line-height:1.9}
+.ending .fine a{color:var(--sky)}
 
 @media (max-width:760px){
   body{font-size:16px;line-height:1.85}
   :root{--colw:auto}
   #nav,#caption{display:none}
   #where{display:block}
-  #hud{right:12px;top:calc(env(safe-area-inset-top) + 40px);min-width:0;padding:9px 12px}
-  #hud .big{font-size:21px}
-  .chead{padding:0 22px;max-width:none}
-  .card{margin:0 14px 58vh;padding:20px 18px 16px;background:rgba(9,11,17,.74)}
+  #hud{right:12px;top:calc(env(safe-area-inset-top) + 44px);min-width:0;padding:9px 12px 8px}
+  #hud .big{font-size:22px}
+  .chead{padding:0 14px calc(env(safe-area-inset-bottom) + 22px);max-width:none;justify-content:flex-end}
+  .plate{padding:22px 20px 18px;background:rgba(251,246,234,.95)}
+  .chead .figcap{display:block}
+  .card{margin:0 14px 46vh;padding:22px 18px 16px}
   .card h3{font-size:20px}
-  .hero{padding:0 22px}
+  .card p.one{margin-left:-8px;margin-right:-8px;padding:9px 8px}
+  .card table{font-size:13px}
+  .hero{padding:0 22px calc(env(safe-area-inset-bottom) + 90px);justify-content:flex-end}
+  .hero .sub{background:rgba(251,246,234,.9);padding:12px 14px;border-radius:4px}
   .hero .scroll{left:22px}
 }
 @media (prefers-reduced-motion:reduce){
@@ -124,8 +152,9 @@ body.ready #loader{opacity:0;visibility:hidden}
 <div id="loader" role="status" aria-live="polite">
   <div>
     <div class="mark" aria-label="补课"><span>补</span><span>课</span></div>
-    <div class="dot"></div>
-    <p>AI 时代的底层常识 · 正在点亮</p>
+    <svg class="ul" viewBox="0 0 230 14" aria-hidden="true"><path d="M4 9 C 60 3, 120 13, 226 6"/></svg>
+    <div class="drop"></div>
+    <p>和 Ronin 聊过的东西 · 正在翻开</p>
   </div>
 </div>
 
@@ -138,440 +167,912 @@ body.ready #loader{opacity:0;visibility:hidden}
 <main>
 
 <!-- ============ 0 序 ============ -->
-<section class="chapter" data-title="序" data-caption="<b>序</b> · 一团散乱的粒子，慢慢聚成一个环">
+<section class="chapter" data-title="序" data-caption="<b>图 0</b>两个人一来一回，纸条越摞越高，最后订成这本小册子">
   <div class="hero">
-    <span class="kicker">一份沉浸式读本</span>
+    <span class="kicker">写给 Coco 的补课本</span>
     <h1>补课</h1>
-    <p class="sub">模型是一台把文本切成小块、按概率往下猜的机器。<br>这本小册子只讲这一句话的九个切面。</p>
+    <p class="sub">九月初到十月初，你和 Ronin 在微信上聊了两千六百条。<br>他说过的东西看着散，其实是一条线。<br>这里把它拆成十二章，一口气读得完。</p>
     <div class="scroll"><i></i>向下滚动</div>
   </div>
   <article class="card">
-    <h3>这是什么</h3>
-    <p>它来自几份写给自己的「补课清单」：和一位做 AI 产品的朋友聊了一个多月，聊天记录里散着信息论、状态、循环、产品和人；再加上 AI 助手三个月共事后整理的观察，和一份湾区博客导读。</p>
-    <p>原笔记的体例是：每个概念先给<b class="tag">一句话</b>，再<b class="tag t-more">展开</b>几句，最后说<b class="tag t-you">跟你的关系</b>。这里照搬。</p>
-    <p>原笔记之外补的比喻、简史和生活例子，标成<b class="tag t-ext">延伸</b>，都查过出处。</p>
+    <h3>为什么是这个样子</h3>
+    <p>你在对话里说过两句话。</p>
+    <p>一句是：「我现在的脑力只吃得进去优秀之人已经消化过一遍的总结版。」另一句是嫌他「表达精准但不易读」。</p>
+    <p>所以这本册子按第一句挑内容，按第二句写字。每张卡片三段：</p>
+    <ul>
+      <li><b class="tag">一句话</b>只读这一行也能拿走大意。</li>
+      <li><b class="tag t-more">展开</b>用生活里的东西打个比方，再讲来龙去脉。</li>
+      <li><b class="tag t-you">跟你的关系</b>落回你的工作、你的项目、你自己。</li>
+    </ul>
+    <p>原笔记里拿不准的地方，这里照样标<span class="flag">未核实</span>或<span class="flag">推断</span>。笔记之外另查的补充，标<b class="tag t-ext" style="margin:0 .2em">延伸</b>，出处写在卡片底部。</p>
   </article>
   <article class="card">
-    <h3>一条主线</h3>
-    <p>信息怎么被定义 → 文字怎么被切碎 → 模型怎么「看」 → 它为什么每次答得不一样 → 思考的状态放在哪 → 循环卡在哪一环 → 意义从哪来 → 模型外面那座「教堂」 → 最后回到人。</p>
-    <p class="note">读法：只读每张卡的第一句，也能拿走大意。想看细节再往下读。</p>
+    <h3>一条线</h3>
+    <p class="one">信息怎么被定义 → 机器怎么记事 → 思考放在哪 → 一万个 agent 怎么配合 → 循环卡在哪 → 落回人这一侧 → 意义从哪来 → 怎么讲明白 → 你站在哪 → 你和身边的人。</p>
+    <p>前半本是机器，后半本是人。Ronin 自己就是这么讲的：机器那一侧越跑越便宜，最后卡住的总是人。</p>
+    <p class="note">跳过了你已经会的：Gallup 报告、Anthropic 的 AI-Native SDLC、Bitter Lesson、FDE 这个词本身、冯·诺依曼《计算机与人脑》。</p>
+  </article>
+  <article class="card">
+    <h3>如果只有一个晚上</h3>
+    <p>原清单分七批，每批都标了「先学这几个」。合在一起是下面这些，按章节排：</p>
+    <table>
+      <tr><th>先学</th><th>为什么</th><th></th></tr>
+      <tr><td>香农与信息的四张脸</td><td>看懂「LLM 是语言模型」为什么是重点</td><td class="goto">第 1 章</td></tr>
+      <tr><td>模型不记得你、上下文税、「叫我哥」</td><td>直接决定你每天怎么用 Claude Code</td><td class="goto">第 2 章</td></tr>
+      <tr><td>状态的三次搬家</td><td>他整份文档的骨架</td><td class="goto">第 3 章</td></tr>
+      <tr><td>一万个 agent 解题、RSI</td><td>看懂这阵子的新闻和他的赌注</td><td class="goto">第 4 章</td></tr>
+      <tr><td>loop 卡在人、同一盏灯、BP 机、Agent<sup>n</sup></td><td>一个人干六个人的活，先优化哪一步</td><td class="goto">第 5 章</td></tr>
+      <tr><td>用户不需要那么好的油</td><td>选模型先问够不够用</td><td class="goto">第 4 章</td></tr>
+      <tr><td>快脑与慢脑</td><td>决定你怎么读同事</td><td class="goto">第 7 章</td></tr>
+      <tr><td>过度压缩与人味、概念图、记忆是重建</td><td>给机器写和给人写，各用一套规矩</td><td class="goto">第 8 章</td></tr>
+      <tr><td>价值传递、钱鹏飞那一刀、GEO 对标</td><td>游戏、课程、DLG 交付物第一屏放什么</td><td class="goto">第 9 章</td></tr>
+      <tr><td>Delta 与 Echo、SICP、1000 个人</td><td>你的职业定位</td><td class="goto">第 10 章</td></tr>
+      <tr><td>砌墙还是建教堂</td><td>同事说「AI 答得不好」，多半是没给它工作台</td><td class="goto">第 2 章</td></tr>
+    </table>
   </article>
 </section>
 
 <!-- ============ 1 信息 ============ -->
-<section class="chapter" data-title="信息" data-caption="<b>场景</b> · 一团噪声里，粒子一颗颗锁进同一条波：不确定性被一点点消除">
-  <header class="chead">
+<section class="chapter" data-title="信息" data-caption="<b>图 1</b>8 个杯子里藏着 1 颗球。每问一个「是不是」，就能掀掉一半。问 3 次找到它，这就是 3 bit">
+  <header class="chead"><div class="plate">
     <span class="cnum">01</span>
-    <h2>信息</h2>
-    <p class="csub">消除了多少不确定性</p>
-    <p class="clead">一切的起点是 1948 年的一篇论文。今天说「大模型在预测下一个词」，这句话的祖宗就在这里。</p>
-  </header>
+    <h2>一切从香农开始</h2>
+    <p class="csub">信息，是消除了多少不确定性</p>
+    <p class="clead">Ronin 说香农「到处都有他」。这不是客气话。你今天用的每一个大模型，训练时盯着的那个分数，都是香农 1948 年那篇论文的后代。</p>
+  </div></header>
   <article class="card">
-    <h3>香农与信息论</h3>
-    <p class="one"><b class="tag">一句话</b>信息就是「消除了多少不确定性」，单位是 bit。</p>
-    <p><b class="tag t-more">展开</b>1948 年，香农在《通信的数学理论》里给信息下了一个<strong>和「意义」无关</strong>的定义：一条消息越出乎意料，携带的信息越多。他由此定义了熵（平均不确定性）、信道容量（一条线路每秒最多能可靠传多少 bit），并证明了压缩和纠错的理论极限。所有数字通信、压缩格式、纠错码都建在这上面。</p>
-    <p class="src">来源：Shannon, C. E. (1948). A Mathematical Theory of Communication. Bell System Technical Journal.</p>
-  </article>
-  <article class="card ext">
-    <h3>比香农早一百年的直觉</h3>
-    <p><b class="tag t-ext">延伸 · 生活例子</b>摩尔斯电码给最常见的字母 E 只分配了一个点，生僻的 Z、Q 要四个符号。据说设计者是去印刷厂数了铅字盒里每个字母备了多少块，才定下这套长短。</p>
-    <p>常见的事不值得多说，意外的事才值得多花符号。这就是香农熵的直觉：一个符号该用多长的编码，取决于它有多「意外」。香农把它变成了可以算的公式。</p>
-    <p class="src">延伸来源：MIT 18.310 讲义「Coding for Efficiency」；John D. Cook 对摩尔斯电码效率的分析。</p>
+    <h3 data-n="1">香农与信息论</h3>
+    <p class="one"><b class="tag">一句话</b>一条消息越出乎意料，带的信息越多。信息的单位叫 bit。</p>
+    <p><b class="tag t-more">展开</b>在沙漠里听到「明天晴」，你几乎什么都没学到，本来就是晴。听到「明天下雪」，你吓一跳，这条消息信息量很大。</p>
+    <p>1948 年，香农在《通信的数学理论》里把这个直觉变成了公式。他故意不管「意义」，只算「意外」。由此他定义了<strong>熵</strong>（平均有多意外），算出一条线路每秒最多能可靠地传多少 bit，也证明了压缩和纠错的极限。今天所有数字通信、压缩包、纠错码都建在这上面。</p>
+    <p><b class="tag t-more">和大模型</b>语言模型训练时有一个分数叫<strong>交叉熵</strong>，说人话就是「猜下一个词猜错了多少」。它是香农熵的直系后代。AI 圈有一条核心信念：<em>猜得准 = 压得小 = 看懂了结构</em>。源头就是香农。</p>
+    <p><b class="tag t-you">跟你的关系</b>你做 GEO 时看到的 perplexity（困惑度）就是熵换了个写法（2 的熵次方）。数字越小，说明模型读这段文字越「不意外」。</p>
+    <p class="src">来源：Shannon (1948). A Mathematical Theory of Communication. Bell System Technical Journal.</p>
   </article>
   <article class="card">
-    <h3>和大模型的关系</h3>
-    <p class="one"><b class="tag">一句话</b>大模型训练时最小化的「交叉熵」，是香农熵的直系后代。</p>
-    <p><b class="tag t-more">展开</b>模型做的事是「预测下一个 token 的概率分布」，训练就是让这个分布和真实语言的分布之间的差距最小。所以 AI 圈有一条核心信念：<em>预测得好 = 压缩得好 = 理解了结构</em>。它的源头是香农。</p>
-    <p><b class="tag t-you">跟你的关系</b>你会在各种 AI 工具里看到 perplexity（困惑度），它就是熵换了个写法（2 的熵次方）：数字越小，模型对这段文字越「不意外」。</p>
-  </article>
-  <article class="card">
-    <h3>「信息」有四张脸</h3>
-    <p class="one"><b class="tag">一句话</b>「信息」这个词在科学里至少有四种互不等同的意思，混用会出错。</p>
-    <p><b class="tag t-more">展开</b>2026 年 8 月 Nature Reviews Physics 上一篇观点文章列了四张脸：</p>
+    <h3 data-n="1">「信息」有四张脸</h3>
+    <p class="one"><b class="tag">一句话</b>同一个词「信息」，在科学里至少有四种互不相同的意思。混着用，就会说错话。</p>
+    <p><b class="tag t-more">展开</b>他发给你的那篇 Nature Reviews Physics 文章（Rosas、Mediano、Carroll，2026 年 8 月）列了四张脸：</p>
     <ul>
-      <li><strong>工程的</strong>：香农那一种，一条信道能传多少。</li>
-      <li><strong>统计的</strong>：知道 A，能让你对 B 少猜多少（互信息）。</li>
-      <li><strong>热力学的</strong>：信息是物理量，擦掉一个 bit 要付能量（Landauer 1961）。</li>
-      <li><strong>本体论的</strong>：惠勒的 it from bit，信息是构成实在的基本单位。</li>
+      <li><strong>工程的</strong>：香农那种，一根线能传多少。</li>
+      <li><strong>统计的</strong>：知道 A，能让你对 B 少猜多少。比如知道今天阴天，你对「会不会下雨」就少猜一点。</li>
+      <li><strong>热力学的</strong>：信息是实打实的物理量，擦掉一个 bit 要花能量（Landauer 1961）。</li>
+      <li><strong>本体论的</strong>：物理学家惠勒的说法，世界本身就是由信息构成的（it from bit）。</li>
     </ul>
-    <p>论文的立场是多元论：不找统一定义，四种并存。</p>
-    <p><b class="tag t-you">跟你的关系</b>大模型学到的是第二张脸：token 和 token 之间的统计依赖，不是意义本身。下次听到「模型理解了」，记得它是在哪张脸上理解的。所谓「LLM 是语言模型」，重点就在这里。</p>
-    <p class="src">来源：Rosas, Mediano &amp; Carroll (2026). Four faces of information in natural systems. Nature Reviews Physics。四张脸的名字来自摘要，每张的解释按术语通常含义给出（正文有付费墙）。</p>
+    <p>文章不打算选出一个正确答案。四种都对，各管各的地盘。<span class="flag">正文有付费墙，每张脸的解释按术语通常含义给出</span></p>
+    <p><b class="tag t-you">为什么发给你</b>他自己说：「澄清了一个符号背后的若干表征。」「信息」是一个符号，背后有四种东西。大模型也是一个符号系统，它学到的是第二张脸：词和词之间谁常跟着谁。它学到的不是意义本身。这就是他那句「因为 LLM 是语言模型」的意思。</p>
+    <p class="src">来源：Rosas, Mediano & Carroll (2026). Four faces of information in natural systems. Nature Reviews Physics.</p>
   </article>
   <article class="card">
-    <h3>香农自己的目标函数</h3>
-    <p><b class="tag t-more">展开</b>香农爱吹单簧管、玩杂耍、骑独轮车。1950 年他做了一只能在迷宫里试错、记住路线的机械老鼠 Theseus，是最早的机器学习装置之一；他和数学家 Ed Thorp 做过一台预测轮盘赌的可穿戴计算机，1961 年两对夫妻一起去拉斯维加斯实测；他还做过一台唯一功能是把自己关掉的「终极机器」。</p>
-    <p>「目标函数」是机器学习的词，指训练时要优化的那个量。说一个人「有自己的目标函数」，是说他优化的不是别人以为的名利。</p>
-    <p class="note">据报道，Claude 这个名字是向香农致敬，但没找到 Anthropic 的官方说法。</p>
-    <p class="src">来源：Soni &amp; Goodman (2017). A Mind at Play。</p>
+    <h3 data-n="1">香农有自己的目标函数</h3>
+    <p class="one"><b class="tag">一句话</b>你搜到香农爱吹单簧管、带妻子去赌场，Ronin 说：「他有自己的目标函数。」</p>
+    <p><b class="tag t-more">展开</b>「目标函数」是机器学习的词：训练时模型拼命去优化的那一个分数，它的一切行为都朝那里长。说一个人有自己的目标函数，是说他真正在追的东西，不是别人以为的名和利。</p>
+    <p>传记《A Mind at Play》里香农的样子：</p>
+    <ul>
+      <li>1950 年做了一只机械老鼠「忒修斯」，会在迷宫里试错、记住路线，是最早的机器学习装置之一。</li>
+      <li>和数学家 Thorp 做了一台藏在身上的小电脑预测轮盘赌：脚趾按开关，耳机听结果。1961 年两对夫妻去拉斯维加斯实测。下注的思路叫凯利公式，是他的同事用信息论推出来的：你掌握的信息优势有多大，就押多少。</li>
+      <li>杂耍、骑独轮车，还做了一台唯一功能是「把自己关掉」的机器。</li>
+    </ul>
+    <p>你问 Claude 的名字是不是致敬他，Ronin 说答对了。<span class="flag">据媒体转引纽约时报，未见 Anthropic 官方说法</span></p>
+    <p><b class="tag t-you">跟你的关系</b>一个人优化什么，决定他长期能做成什么。这个问题第 11 章还会回来。</p>
+    <p class="src">来源：Soni & Goodman (2017). A Mind at Play；作者 2017 年 Reddit AMA；Bridge Michigan 报道。</p>
+  </article>
+  <article class="card">
+    <h3 data-n="1">信息时代七人组</h3>
+    <p class="one"><b class="tag">一句话</b>他说你「会在不经意间遇到他们」。七个人分两派：一派定义了机器，一派研究人和机器怎么配合。</p>
+    <p><strong>定义机器的</strong></p>
+    <ul>
+      <li><strong>图灵</strong>：1936 年证明有一台「万能机器」，能扮演任何别的计算机器。他划出了「什么能被算」的边界。图灵测试也是他提的。</li>
+      <li><strong>冯·诺依曼</strong>：1945 年定下「程序和数据放在同一个抽屉里」，今天所有电脑都长这样。</li>
+      <li><strong>香农</strong>：就是上面那位。</li>
+    </ul>
+    <p><strong>研究人机配合的</strong></p>
+    <ul>
+      <li><strong>维纳</strong>：1948 年《控制论》。核心是反馈回路：做一下、看结果、和目标比、再调。今天 agent「执行、观察、修正」那一圈就是它。</li>
+      <li><strong>司马贺</strong>：人不找最好的答案，找够用的答案。1971 年他写下「信息的丰富造成注意力的贫乏」，「注意力经济」从这里来。</li>
+      <li><strong>恩格尔巴特</strong>：1962 年主张计算机是用来<em>增强</em>人，不是替代人。1968 年第一次公开演示鼠标和超链接。</li>
+      <li><strong>艾伦·凯</strong>：面向对象编程的原始提出者。他的原意是把程序拆成一群互相发消息、各管各的小细胞。Java 课本里那套层层继承，是后人加的。</li>
+    </ul>
+    <p><b class="tag t-you">跟你的关系</b>Ronin 明显偏后一派，你的 Gallup 结构（读人、读技术、自己能交付）也在后一派。你在 DLG 做的 AI adoption，职业上的祖师爷是恩格尔巴特。当年 Java 课上让你死去活来的 OOP，凯本人的版本其实简单得多。</p>
   </article>
 </section>
 
-<!-- ============ 2 Token ============ -->
-<section class="chapter" data-title="Token" data-caption="<b>场景</b> · 两个词由粒子组成，按 token 裂开又拼回。切分是示意，不是真实词表">
-  <header class="chead">
+<!-- ============ 2 白纸 ============ -->
+<section class="chapter" data-title="白纸" data-caption="<b>图 2</b>模型像一张白纸，写满就擦。能留下的只有旁边那盒卡片，每次开工先递上去。小黄鸟是那只「叫我哥」的金丝雀：纸快写满，它就不叫了">
+  <header class="chead"><div class="plate">
     <span class="cnum">02</span>
-    <h2>Token</h2>
-    <p class="csub">一句话，先被切成碎片</p>
-    <p class="clead">模型不认字。它看到的世界，是几万种固定形状的碎片。</p>
-  </header>
+    <h2>它每次都不记得你</h2>
+    <p class="csub">模型是一张白纸，记忆都在纸外面</p>
+    <p class="clead">这是「先学这五个」里的第一个。它直接决定你每天怎么用 Claude Code：为什么窗口会满，为什么要写 CLAUDE.md，什么时候该重开。</p>
+  </div></header>
   <article class="card">
-    <h3>Token 与分词：为什么中文更贵</h3>
-    <p class="one"><b class="tag">一句话</b>模型认的是 token。一段文字先被切成几万种固定的碎片，中文通常切得更碎，所以同样的意思，中文花的 token 更多。</p>
-    <p><b class="tag t-more">展开</b>切法叫 BPE（字节对编码），2016 年被引进机器翻译。原理是统计语料里哪些字节串最常连在一起，把它们合并成一个 token，词表通常几万到二十几万。英文常用词多半是一个 token；汉字在多数词表里一个字常常对应一到两个 token。具体比例每家模型不同，<strong>别记数字，记结论</strong>。</p>
-    <p class="src">来源：Sennrich, Haddow &amp; Birch (2016). Neural Machine Translation of Rare Words with Subword Units. ACL。</p>
+    <h3 data-n="2">模型是无状态的</h3>
+    <p class="one"><b class="tag">一句话</b>每次调用模型，它都是一张白纸，不记得上一次。所谓「记忆」，是你这一次把前情重新递给它。</p>
+    <p><b class="tag t-more">展开</b>想象一位极聪明的实习生，每天早上醒来都忘了昨天。聊天窗口看起来连贯，是因为每说一句，软件都把整段聊天记录从头递给他一遍。</p>
+    <p>所以「上下文窗口快满了」不是模型累了，是递过去的那一沓纸太厚了。CLAUDE.md、memory 文件、项目索引，全都是同一种东西：<strong>把状态放在模型外面</strong>，替它记事。</p>
+    <p><b class="tag t-you">跟你的关系</b>你现在的习惯是：窗口满了就开新窗口，口头重讲一遍，让它重新扫一遍代码。每一次，都在为「它不记得」付全价。</p>
+    <p class="note">这是你 09-13 记下的三个主题之一。</p>
+  </article>
+  <article class="card">
+    <h3 data-n="2">模型也是一台计算机</h3>
+    <p class="one"><b class="tag">一句话</b>你说「模型也是计算机」，他接了一句「Karpathy 说的 Software 3.0」。</p>
+    <p><b class="tag t-more">展开</b>写程序的方式换了三次：1.0 是人一行行写代码；2.0 是训练出来的神经网络；3.0 是用大白话写的 prompt，大模型就是执行它的那台电脑。</p>
+    <p>Karpathy 2025 年 6 月的演讲里有个比方：模型是 CPU，上下文窗口是内存，prompt 是程序。现在就像 1960 年代：电脑贵，放在机房，大家排队分时间用。</p>
+    <p>演讲里和你最相关的一段：好用的 AI 产品都给你一个「自主度滑杆」，AI 先做，人来验，产品的本事在于让「做一验一」这一圈转得快。第 5 章会接着讲。</p>
+    <p><b class="tag t-you">跟你的关系</b>把它当电脑看就好懂了：一台每次开机都清空内存的电脑。CLAUDE.md 和 memory 文件，是它的硬盘。</p>
+    <p class="src">来源：Karpathy, Software Is Changing (Again)，YC AI Startup School，2025-06；对话 09-15。</p>
+  </article>
+  <article class="card">
+    <h3 data-n="2">上下文税</h3>
+    <p class="one"><b class="tag">一句话</b>每开一个新会话就让它重读整个项目，是在一遍遍交税。办法不是不做索引，是把索引做成能读、能维护的样子。</p>
+    <p><b class="tag t-more">展开</b>你说试过让 Claude 把项目整理成一份 Markdown 索引，不满意：人读着累，重点也抓歪了。Ronin 的回答很短：那是索引写得不可维护，不是索引没用，「那就设置规则」。</p>
+    <p>规则可以是一张固定的表，让它填空，而不是自由发挥。比如六栏，每栏最多三行：</p>
+    <ol>
+      <li>这个项目要解决什么</li>
+      <li>入口文件在哪</li>
+      <li>数据怎么流</li>
+      <li>已经拍板的决定</li>
+      <li>还没决定的事</li>
+      <li>最近三次改了什么</li>
+    </ol>
+    <p><b class="tag t-you">跟你的关系</b>你已经有一个 /handoff 命令在做类似的事。差的两步：把它变成固定模板；在每次会话结束时自动跑（用 hook）。下一个会话读的就是一页纸，不是整个代码库。</p>
+  </article>
+  <article class="card">
+    <h3 data-n="2">codegraph：给代码画一张地图</h3>
+    <p class="one"><b class="tag">一句话</b>他问你：「那你为什么不装一个 codegraph？」它把代码库预先画成一张地图，agent 查地图，不用一条街一条街走。</p>
+    <p><b class="tag t-more">展开</b>常被提到的是 GitHub 上的 maxmilian/codegraph：把代码拆成「谁定义了什么、谁调用了谁」的关系，存进本地数据库，再通过 MCP 交给 Claude Code。文件一保存就自动更新。它是按语法规则拆的，不是让大模型总结，所以不会「抓错重点」。</p>
+    <p>作者自报：工具调用少 88%，token 少 62%。<span class="flag">厂商自测数字，你的仓库要自己量</span></p>
+    <p><b class="tag t-you">跟你的关系</b>你觉得「让 cc 读一遍代码最直观」。读地图比读代码便宜得多，也不靠某一次总结的质量。可以先在 joran-LiveTranslate 或 coco 上试一个。</p>
+  </article>
+  <article class="card">
+    <h3 data-n="2">fan-out，和散会后的白板</h3>
+    <p class="one"><b class="tag">一句话</b>你截图里那套「一个主 agent 派活给一群子 agent」叫 fan-out。它解决一次会话里的并行，解决不了「散会以后还记得」。</p>
+    <p><b class="tag t-more">展开</b>像一场会里分了五个小组讨论，每组写满一块白板。散会时白板全擦掉。他问的正是这个：「你这里就是一个 fanout 模式，但是跨 session 乃至跨 project 呢？」</p>
+    <p>想让东西活过一次会话，只有三条路：写进文件（索引、memory、CLAUDE.md）；写进地图（codegraph）；或者等第 3 章说的「一直开着的机器」。</p>
+  </article>
+  <article class="card">
+    <h3 data-n="2">skill 该放哪：先弄清什么叫「项目」</h3>
+    <p class="one"><b class="tag">一句话</b>项目是有终点的事。「我怎么读书」「我怎么写文案」不是项目，是管着所有项目的习惯。</p>
+    <p><b class="tag t-more">展开</b>他说把 skill 绑在项目里能减少「skill 爆炸」。你举了反例：微信读书 skill 没法放进某个项目。他补了一个定义：项目是「为了一个独特成果而做的临时性工作」，有头有尾。「读一本书并画出来」是项目；「我怎么读书」是更高一层的东西，天然属于全局。</p>
+    <p>一个好用的分法：</p>
+    <ul>
+      <li>有终点、只服务这一个仓库的 → 放项目里的 .claude/</li>
+      <li>跨项目反复用的能力 → 放全局 ~/.claude</li>
+      <li>连能力都不算，只是你的偏好和背景 → 放 memory</li>
+    </ul>
+    <p><b class="tag t-more">他顺手说的两句</b>「划线等于你的偏好权重标注」：你划的每一道线，都是在告诉自己「这个重要」，和给模型做偏好标注是一回事。「被转移的那部分已经被编码了」：你截图、存进笔记的那个动作，本身就是在记，所以不划线也没丢。</p>
+  </article>
+  <article class="card">
+    <h3 data-n="2">上下文脏了，就重开</h3>
+    <p class="one"><b class="tag">一句话</b>一个错的前提一旦写进上下文，后面每一步都会被带偏，而且退不回去。最省事的办法是开新会话。</p>
+    <p><b class="tag t-more">展开</b>像一滴墨滴进一杯水，你没法把它挑出来。钱鹏飞在 9.9 那场会上说：「注入了错误的上下文……它不会把它回滚掉，这东西一直会在。」Ronin 的解法：「你不如直接重新开一个 session。」</p>
+    <p>这里要分清两种情况：</p>
+    <ul>
+      <li>窗口<strong>满了</strong>：该做的是把状态放到外面（索引、memory、handoff），别让它重读。</li>
+      <li>窗口<strong>脏了</strong>：早先一个错的假设已经在里面。这时重开是对的，不是浪费。重开时只带「已经确认的结论」，不带过程。</li>
+    </ul>
+    <p><b class="tag t-you">跟你的关系</b>判断信号很简单：你发现自己在<strong>第三次</strong>纠正同一个误解，这个会话就脏了。</p>
+  </article>
+  <article class="card">
+    <h3 data-n="2">「叫我哥」：一只金丝雀</h3>
+    <p class="one"><b class="tag">一句话</b>他让 agent 每次都叫他「哥」。哪天它不叫了，他就知道上下文已经炸了，前面的规矩它跟不住了。</p>
+    <p><b class="tag t-more">展开</b>以前矿工下井会带一只金丝雀，它先倒下，人就知道空气有毒。「叫哥」这条指令本身没用，但它和你真正在乎的规矩（格式、语气、不许做的事）写在同一个地方。它先掉，说明那些也快掉了。</p>
+    <p>为什么会掉：对话越长，模型对开头那些话越不上心。2023 年一篇叫「Lost in the Middle」的研究发现，长长一段上下文里，中间的信息最容易被忽略。</p>
+    <p>现成的类比：摇滚乐队 Van Halen 的巡演合同里有一条「后台不许有棕色 M&M 豆」。主唱后来解释，他们的舞台设备很重，合同里有一堆安全条款；碗里只要出现棕色豆子，就说明主办方没细读合同，所有安全项都得重查。</p>
+    <p><b class="tag t-you">跟你的关系</b>你现在是「窗口快满了就停」，看的是容量。金丝雀看的是质量：窗口没满，规矩也可能已经掉了。今天就能在一个项目的 CLAUDE.md 里试：让它固定用某个词开头，看大概聊多长它开始漏。</p>
+    <p class="src">来源：对话 09-27；Liu et al. (2023). Lost in the Middle；David Lee Roth (1997). Crazy from the Heat。</p>
+  </article>
+  <article class="card">
+    <h3 data-n="2">砌墙还是建教堂</h3>
+    <p class="one"><b class="tag">一句话</b>他这阵子反复说：模型已经差不多了，拉开差距的是模型外面那一整套工程。Claude 的那一套「设计得非常美」。</p>
+    <p><b class="tag t-more">展开</b>同一位厨师，给他一间设备齐全、刀具摆好、菜谱贴墙的厨房，和给他一口锅，做出来的菜不是一个水平。模型就是那位厨师，外面那套工程（工具、规则、上下文的组织）就是厨房。业内叫它 harness。</p>
+    <p>他的原话：「模型已经达到均线了，但是各家的 harness 惨不忍睹。」「Anthropic 非常耐心地给 Claude 这个模型准备好了它的工作台。」「LLM 只能吐 token，决定最终渲染效果的是一套复杂工程。」他说自己已经部分复现了「用 GPT 做出 Claude 的输出质量」，感觉是 GPT 的工程拖累了它的模型。还说「光是交互，Claude 就做了 39 个」。<span class="flag">39 这个数是他看到的，未核实</span></p>
+    <p>「你是在砌墙还是在建造教堂」，是他转来和博庸聊天时的一句。</p>
+    <p><b class="tag t-you">跟你的关系</b>你在 DLG 教同事用 AI，最常听到「它答得不好」。更准的诊断是：多数时候不是模型不行，是没给它工作台（文件、工具、规则、上下文）。你自己的 skill、MCP、CLAUDE.md，就是在搭工作台。</p>
   </article>
   <article class="card ext">
-    <h3>像拼乐高</h3>
-    <p><b class="tag t-ext">延伸 · 比喻</b>词表像一盒乐高：常见的组合有现成的大块（英文高频词往往一块就够），少见的只能拿小块一点点拼。拼同一个造型，小块用得越多，越贵，也越占地方。</p>
-    <p>中文在多数词表里像是被分到了更多小块，所以同一段意思，中文那半往往更「重」。</p>
-  </article>
-  <article class="card">
-    <h3>一切限制都以 token 计</h3>
-    <p><b class="tag t-more">展开</b>上下文窗口是 token 数，计费是 token 数，速度是每秒 token 数。「这段话有多长」，在模型眼里的答案和你眼里的不同。</p>
-    <p><b class="tag t-you">跟你的关系</b>三件事从这里推出来：中文对话比英文更快耗完窗口；让 AI 读一份 PDF 或截图，比读同样内容的 Markdown 贵；给 AI 的材料，能用纯文本就用纯文本。想知道自己的比例，用你常用模型的 tokenizer 计数器量一下，别背网上的数。</p>
+    <h3 data-n="2">三个石匠</h3>
+    <p><b class="tag t-ext">延伸 · 出处</b>原笔记说「砌墙还是建教堂」出自一个流传很广的寓言，出处不可考。补一点：这个寓言最常被归到管理学家德鲁克 1954 年的《管理的实践》。有人问三个石匠在干什么，第一个说「在挣钱糊口」，第二个说「在做全国最好的石匠活」，第三个说「在建一座大教堂」。</p>
+    <p>有意思的是，据转述，德鲁克担心的恰恰是第二个：只顾把自己的手艺做到极致，忘了整座建筑要什么。放回 Ronin 的话里：把单个模型调到最强是第二个石匠，把工作台搭好、让模型为整件事服务，才是第三个。</p>
+    <p class="src">延伸来源：Drucker (1954). The Practice of Management（多见于二手引述，原书页码与更早出处未核实）；<a href="https://www.hrexchangenetwork.com/hr-management/columns/drucker-on-the-danger-of-professionalism-and-its-c" rel="noopener">HR Exchange Network: Drucker on the Danger of Professionalism</a>。</p>
   </article>
 </section>
 
-<!-- ============ 3 注意力 ============ -->
-<section class="chapter" data-title="注意力" data-caption="<b>场景</b> · 最右边是正在生成的 token，光束回头扫过整个窗口；越往后，中间那段越暗">
-  <header class="chead">
+<!-- ============ 3 搬家 ============ -->
+<section class="chapter" data-title="三次搬家" data-caption="<b>图 3</b>一个四层书架。红球是「想到一半的东西」：从草稿纸，搬到出门查资料，再收回脑子里绕圈；最底层那台机器一直亮着">
+  <header class="chead"><div class="plate">
     <span class="cnum">03</span>
-    <h2>注意力</h2>
-    <p class="csub">光束扫过，中间变暗</p>
-    <p class="clead">「一百万 token 的窗口」不等于「一百万都好用」。</p>
-  </header>
-  <article class="card">
-    <h3>注意力与上下文窗口：为什么塞得越多越笨</h3>
-    <p class="one"><b class="tag">一句话</b>模型生成每一个新 token 时，都要回头看一遍窗口里的全部内容。看得越多越贵，而且中间那段看得最不仔细。</p>
-    <p><b class="tag t-more">展开</b>2017 年的 Transformer 论文把这个「回头看」叫注意力。它的计算量随窗口长度的平方增长：<strong>窗口翻倍，注意力的计算量翻四倍</strong>。这是长上下文贵的物理原因。</p>
-    <p>另一个问题来自 2023 年 Liu 等人的实验：把关键信息放在长上下文的开头或结尾，模型答得好；放在中间，准确率明显掉下去。论文标题就叫 <em>Lost in the Middle</em>。</p>
-    <p class="src">来源：Vaswani et al. (2017). Attention Is All You Need；Liu et al. (2024). Lost in the Middle: How Language Models Use Long Contexts. TACL。</p>
-  </article>
-  <article class="card ext">
-    <h3>鸡尾酒会上的聚光灯</h3>
-    <p><b class="tag t-ext">延伸 · 生活例子</b>嘈杂的聚会里，你能只听清对面那个人，别的声音几乎没进脑子。1953 年 Colin Cherry 系统研究了这件事，叫它「鸡尾酒会问题」。他的出发点是空管员：很多飞行员的话从同一个喇叭里出来，空管员得在脑子里把要听的那一路挑出来。</p>
-    <p>人的注意力是一盏聚光灯，模型的注意力也是。区别是模型的灯更容易漏掉中间。</p>
-    <p class="src">延伸来源：Wikipedia「Cocktail party effect」；Cherry, E. C. (1953). Journal of the Acoustical Society of America。</p>
-  </article>
-  <article class="card">
-    <h3>「叫我哥」：一只金丝雀</h3>
-    <p class="one"><b class="tag">一句话</b>让 AI 每次回复都先叫你一声「哥」。哪天它不叫了，说明开头那些指令它已经跟不住了。</p>
-    <p><b class="tag t-more">展开</b>「叫哥」这条指令本身没用，但它和你真正在乎的规矩（格式、语气、禁区）放在同一个地方。它先掉，说明那些规矩也快掉了。现成的类比：Van Halen 乐队的巡演合同里有一条「后台不许有棕色 M&amp;M 豆」。只要碗里出现棕色的，就说明主办方没细读合同，舞台的安全项要全部重查。</p>
-    <p><b class="tag t-you">跟你的关系</b>最重要的规矩放开头或结尾，中间放可以丢的。窗口没满，规矩也可能已经掉了：看容量不如看金丝雀。</p>
-    <p class="src">来源：Roth, D. L. (1997). Crazy from the Heat；Liu et al. (2023/2024)。</p>
-  </article>
-</section>
-
-<!-- ============ 4 抽签 ============ -->
-<section class="chapter" data-title="抽签" data-hud="galton" data-caption="<b>场景</b> · 高尔顿板。每颗球是一次提问；你往下滚，问的次数 n 就在涨">
-  <header class="chead">
-    <span class="cnum">04</span>
-    <h2>抽签</h2>
-    <p class="csub">一次提问不是一次测量</p>
-    <p class="clead">同一个问题问两遍，答案不同。这不是 bug，是设计。</p>
-  </header>
-  <article class="card">
-    <h3>采样与随机性</h3>
-    <p class="one"><b class="tag">一句话</b>模型每一步都在一个概率分布里抽签。所以你想知道「AI 回答里提到某个品牌的比例」，问一次只是一个样本，不是一个数。</p>
-    <p><b class="tag t-more">展开</b>模型算出下一个 token 的概率分布后，不一定选最大的那个。<strong>temperature</strong> 控制抽签的随意程度：设 0 接近每次都选最大（也不保证完全一致，服务端的批处理会带来微小差异），设高了答案更多样。<strong>top-p</strong> 是另一个旋钮：只在概率累计到 p 的那批候选里抽。没有随机性，模型写十次开头都一样。</p>
-  </article>
-  <article class="card ext">
-    <h3>高尔顿板</h3>
-    <p><b class="tag t-ext">延伸 · 简史</b>1874 年，高尔顿为英国皇家研究院的一次演讲做了一块板子：小球从顶上落下，穿过一排排钉子，每碰一颗就随机往左或往右。单颗球落在哪，没法预测；几百颗球堆出来，却总是一口钟。</p>
-    <p>你现在看到的就是它。右上角的 n 是落下的球数，也就是你提问的次数。</p>
-    <p class="src">延伸来源：Wikipedia「Galton board」；arXiv 2603.07742（高尔顿板 150 周年的历史回顾）。</p>
-  </article>
-  <article class="card">
-    <h3>要问多少次才算数</h3>
-    <p><b class="tag t-more">展开</b>后果是统计学的。估一个比例，想要误差在正负 10 个百分点以内（95% 置信），大约要问 <strong>100 次</strong>；要正负 5 个百分点，大约 <strong>400 次</strong>。公式是：</p>
-    <p style="text-align:center;font-family:var(--serif);font-size:18px">误差 ≈ 1.96 × √( p(1−p) ÷ n )</p>
-    <p>p 取 0.5 时最保守。看右上角：<strong>误差每缩小一半，要多问四倍。</strong></p>
-    <p><b class="tag t-you">跟你的关系</b>看到「AI 提到了我们」或「AI 没提我们」的截图，先问一句：n 是多少？问一次得出的两个结论，都不成立。自己做监测时，把「重复 n 次、报比例和区间、写清模型版本和时间段」做成默认。</p>
-  </article>
-</section>
-
-<!-- ============ 5 状态 ============ -->
-<section class="chapter" data-title="状态" data-caption="<b>场景</b> · 四层舞台。光球是「思考的状态」，一层层往下搬：纸面、纸面加世界、模型体内，最底下那层还是虚影">
-  <header class="chead">
-    <span class="cnum">05</span>
     <h2>状态的三次搬家</h2>
-    <p class="csub">第四次还没发生</p>
-    <p class="clead">过去四年，模型的每一次形态更替，说到底只动了一个变量：思考过程中的状态，被放在哪儿。</p>
-  </header>
+    <p class="csub">思考到一半的东西，放在哪里</p>
+    <p class="clead">这是他那篇署名文章《基础模式：第三次更替》的骨架。过去四年模型的每次换代，表面上眼花缭乱，其实只动了一个变量。</p>
+  </div></header>
   <article class="card">
-    <h3>先打底：模型是无状态的</h3>
-    <p class="one"><b class="tag">一句话</b>每次调用模型都是一张白纸，它不记得上一次。所有「记忆」，都是你这一次把上下文重新塞给它。</p>
-    <p><b class="tag t-more">展开</b>一次请求进去、一段文本出来，服务端不保存任何东西。聊天窗口看起来连贯，是客户端每次把整段历史重发一遍。所以「上下文快满了」的本质不是模型累了，是重发的历史太长。</p>
-    <p>Karpathy 有个比方叫 Software 3.0：把模型当一台计算机，模型是 CPU，上下文窗口是内存，prompt 是程序。那它就是一台<strong>每次开机都清空内存的电脑</strong>，你写给它的说明文件、记忆文件，是它的硬盘。</p>
-    <p class="src">来源：Karpathy (2025). Software Is Changing (Again)，YC AI Startup School。</p>
-  </article>
-  <article class="card">
-    <h3>三次搬家</h3>
+    <h3 data-n="3">四次搬家</h3>
+    <p class="one"><b class="tag">一句话</b>模型每次换形态，动的都是同一件事：「想到一半的东西」放在哪。</p>
+    <p><b class="tag t-more">展开</b>拿做一道难题来比：</p>
     <ul>
-      <li><strong>① 纸面上（CoT，思维链）</strong>：模型把想法吐成 token。好处是吐出来以后，模型内部就不必再维持那些中间状态；坏处是写下来就改不了。</li>
-      <li><strong>② 纸面＋外部世界（ReAct，边想边做）</strong>：想一步，调一个工具，看结果，再想。今天的编程 agent 都长在这一格。</li>
-      <li><strong>③ 模型体内（深度循环）</strong>：同一组参数反复转 N 圈，不吐字，转完才开口。圈与圈之间，内部状态可以被覆盖。<strong>这是第一次出现「回头路」。</strong></li>
-      <li><strong>④ 一台一直开着的机器</strong>：状态不清零。还没发生，是一个赌注。</li>
+      <li><strong>第一次，写在草稿纸上。</strong>模型把想法一个字一个字写出来（叫「思维链」，CoT）。好处是不用在脑子里硬记；坏处是写下就擦不掉，第三步的「有可能」到第十步就变成了「就是」。</li>
+      <li><strong>第二次，草稿纸加出门查资料。</strong>模型可以调工具、看结果、再决定下一步（叫 ReAct，也就是今天的 agent）。Cursor、Claude Code、Codex 都长在这一格。</li>
+      <li><strong>第三次，收回脑子里。</strong>同一个脑子把问题闭着眼过好几遍，不说话，想完才开口。每过一遍都能推翻上一遍。这是第一次有了「回头路」。他称为「第三个基础模式」。</li>
+      <li><strong>第四次（他的赌注）：一台一直开着的机器。</strong>状态从不清零。</li>
     </ul>
-    <p>每一次搬家都换来一次能力跃升，也都是一笔交易：换来什么，就要付出什么。</p>
-    <p class="src">来源：Ronin《状态换了三次地方，第四次还没发生》（2026.09）。深度循环对应的研究线：Universal Transformers (2018)、Geiping et al. (2025) Recurrent Depth、Meta 的 Coconut (2024)。</p>
+    <p>他举的例子：问投资人「26 年还值得买苹果吗」，脱口而出是「不如买英伟达」；闭眼多想几遍，会改口。用的是同一个脑子，只是多转了几圈。</p>
   </article>
   <article class="card">
-    <h3>闭目沉思：同一个脑子，过了几遍</h3>
-    <p><b class="tag t-more">展开</b>随口问一位做投资的朋友：26 年还值得买苹果吗？他本能会给一个答案：不如买英伟达。这是转一圈。给他时间闭目沉思，一遍又一遍过同一个问题，他会走到之前没走过的路径：组织、份额、对手、盈利结构。然后他改口了。</p>
-    <p>两次用的是同一个脑子、同一批经历。变的只有一件事：在心里过了几遍。这也是为什么小模型多转几圈，可以接近一个更大的模型。</p>
-    <p class="note">两处要分开看：循环圈数是预先配置的，不是模型自己决定想多深（作者自己更正过这一点）；「某个新模型用了深度循环」是推断，外面没人能证实。</p>
+    <h3 data-n="3">第三次搬家，哪些是真的</h3>
+    <p class="one"><b class="tag">一句话</b>「模型在脑子里绕圈」这条研究路线是真的；「GPT-6 Astra 用了它」是他的推断。</p>
+    <p><b class="tag t-more">展开</b>研究里叫 latent reasoning 或 recurrent depth。代表作：Meta 2024 年底的 Coconut（让模型在内部推理，不把每一步写成字），和 2025 年初的 Huginn（同一块网络循环任意次，用圈数换深度）。</p>
+    <p>Ronin 自己在文档里分得很清：「这条路线存在」是观察，「Astra 用了它」是推断，「没有人在外面能证实」。<span class="flag">推断</span>你读的时候也分开。</p>
+    <p><b class="tag t-more">Astra 博客说了什么</b>这部分核实过。OpenAI 开发者博客讲怎么给 GPT-6 Astra 写 skill 和 prompt：</p>
+    <ul>
+      <li>skill 的描述越短越好，只说清「什么时候用」。skill 本身变成一个「指路牌」，指向该读的文档。</li>
+      <li>「过于具体的指导，现在可能反而拖累结果。」</li>
+      <li>AGENTS.md 别再写「每次改代码前先读全部文档」，改成按场景给链接。</li>
+      <li>模型对「什么时候该停」更犹豫了，所以完成标准要你事先写清。</li>
+    </ul>
+    <p><b class="tag t-you">跟你的关系</b>这直接反驳了你「与其设计索引，不如口头重讲一遍」的习惯。方向变了：给 agent 的不是更多说明，是更短、更准的指路牌。你的 CLAUDE.md 和 skills 可以按这个标准做一次减法。</p>
+    <p class="src">来源：OpenAI 开发者博客 Rethinking skills and prompts for GPT-6 Astra；Hao et al. (2024) Coconut；Geiping et al. (2025) Huginn。</p>
   </article>
   <article class="card">
-    <h3>前馈即命运</h3>
-    <p class="one"><b class="tag">一句话</b>上一步锁死下一步。第三步掺进来的一个「有可能」，到第十步已经变成了「就是」，而且退不回去。</p>
-    <p><b class="tag t-more">展开</b>可选项一步步在减少：16 → 8 → 4 → 2 → 1。一刀切错，对的答案就在外面了。这个形状在三个尺度上一样：一个 token、一次 agent 运行、一个人的一段人生。</p>
-    <p><b class="tag t-you">跟你的关系</b>分清两种情况。窗口<strong>满了</strong>：别让它重读一遍，把状态放到外面（一页纸的项目说明、交接笔记）。窗口<strong>脏了</strong>（一个错的假设已经在里面）：直接开新会话，只带「已经确认的结论」，不带过程。判断信号：你在第三次纠正同一个误解。</p>
+    <h3 data-n="3">第四格属于谁</h3>
+    <p class="one"><b class="tag">一句话</b>你问电脑上跑的 cc、agy、pi、hermes 谁会先进化到第四格，他答：「最强的玩家最先拿到结果，有云服务的模型公司。」</p>
+    <p><b class="tag t-more">展开</b>一台一直开着、从不清零的机器，要同时握着三样东西：模型本身、24 小时不关的算力、离模型足够近的记忆仓库。你电脑上那些都是外壳，笔记本一合，状态就停了。<span class="flag">这一段是按他的回答做的推演</span></p>
+    <p>你转「苹果重返服务器市场」，他只回一句：「这里的重点是模型公司。」有服务器、没有自己的前沿模型，进不了这一局。</p>
+    <p><b class="tag t-you">跟你的关系</b>不用花精力押「哪个本地 agent 会赢」。本地工具的价值是让你现在就能用，不是押未来。</p>
   </article>
   <article class="card">
-    <h3>系统一和系统二，是同一个旋钮的两档</h3>
-    <p><b class="tag t-more">展开</b>系统一是快的、自动的模式识别，系统二是慢的、费力的逻辑推理（Stanovich &amp; West 2000 提出，卡尼曼《思考，快与慢》普及）。早期大模型只有系统一：模式识别超人，长链推理够不着。推理模型接上了系统二，却出现新病：长思维链到第三四步，把「有可能」当成「就是」。两头本来都是同一套内部状态跑出来的，差别只在「转几圈」。</p>
+    <h3 data-n="3">ChatGPT Pro 不是一个更强的模型</h3>
+    <p class="one"><b class="tag">一句话</b>Pro 是一套跑在云上的 agent 工程：同时开很多路会话，再把结果对齐。</p>
+    <p><b class="tag t-more">展开</b>他说 Pro「类似 deep research」，可以把你的 GitHub 仓库交给它分析，「主要是用多路并行的 session 来实现一致性」。然后补了四个字：test time scaling。说人话：不是把模型练得更大，而是在答题的时候多花算力，多想几路，再挑出一致的答案。</p>
+    <p><b class="tag t-you">跟你的关系</b>你 09-11 说过「一个项目跑了 245 个子 agent」。跑的是同一个思路，只是规模小得多。</p>
+  </article>
+  <article class="card">
+    <h3 data-n="3">价格阶梯：$20 → $200 → $2000</h3>
+    <p class="one"><b class="tag">一句话</b>他的看法是，每贵十倍，卖的就换了一种东西：$20 卖对话，$200 卖 agent 工程，$2000 卖一台一直开着的机器。</p>
+    <p><b class="tag t-more">展开</b>他转来一篇「ChatGPT 要卖 500 美元套餐」的文章，只说了一句：「2000 美元档位留给 ultra。」9.9 那场会上他推演过：Plus $20，Pro $200，2027 年可能出 Ultra $2000。<span class="flag">推测与群聊传闻</span></p>
+    <p><b class="tag t-you">跟你的关系</b>以后评估 DLG 该买哪一档，先问一句：这一档卖的是更强的模型，还是更长的运行时间？大多数任务，前者就够。</p>
+  </article>
+  <article class="card">
+    <h3 data-n="3">人人都需要一个 Jarvis</h3>
+    <p class="one"><b class="tag">一句话</b>云算力谁都有了，缺的是让 AI 自己一直跑下去的工程：给它一个目标，它 24 小时在云上干活、检查自己、改进自己。</p>
+    <p><b class="tag t-more">展开</b>你说 Claude 送了你 250 美元云电脑额度还没试，他说「现在都有云服务，但是缺乏工程」。你反问「不是人人都要 7×24 做开发」，他答：「人人都需要一个 Jarvis」，「只需要读取你的历史对话就知道你的欲望，你的理想，你的愤怒，你的悔恨」。还有一句：「ASI 的雏形就是 550W，简称 Moss。」</p>
+    <p>Jarvis 是《钢铁侠》里的 AI 管家。550W 是《流浪地球 2》里的量子计算机，这串字转 180 度就是 MOSS。</p>
+    <p>你问在点上：「记忆问题还没有解决。」他说的「读取你的历史对话」，就是第 6 章的「开卷考试」（RAG）。这本册子本身就是这么做出来的：读你们的聊天记录，提炼出你该知道的东西。</p>
+    <p><b class="tag t-you">跟你的关系</b>群里有人抱怨这笔额度「花几个小时配好环境，修一个 bug，额度没了」。要试就挑一件需要反复跑的事，才看得出「一直跑」值不值。DLG 客户的数据别拿去试，得先过公司的模型白名单。</p>
   </article>
 </section>
 
-<!-- ============ 6 Loop ============ -->
-<section class="chapter" data-title="循环" data-hud="loop" data-caption="<b>场景</b> · 粒子沿环流动，在顶端「人」这一节点放慢、堆积。越往下，环越多，全都要经过你">
-  <header class="chead">
-    <span class="cnum">06</span>
-    <h2>Loop</h2>
-    <p class="csub">一圈循环，卡在哪一环</p>
-    <p class="clead">机器那一侧越转越便宜。最慢的那一环，是人。</p>
-  </header>
+<!-- ============ 4 工业化 ============ -->
+<section class="chapter" data-title="智力工业化" data-hud="agents" data-caption="<b>图 4</b>左边的小机器人越来越多，一直数到一万；往下滚，中间那排「做一个 App」的小店沉下去，只剩两头">
+  <header class="chead"><div class="plate">
+    <span class="cnum">04</span>
+    <h2>智力工业化</h2>
+    <p class="csub">一万个 agent，和留下来的两头</p>
+    <p class="clead">九月的大新闻：一道百年数学题，被一万个 AI 协作几天给出了解答。Ronin 看的不是题，是「配合没出问题」。接着的问题是：如果智力可以批量生产，普通人站在哪？</p>
+  </div></header>
+  <article class="card">
+    <h3 data-n="4">一万个 agent，解一道百年难题</h3>
+    <p class="one"><b class="tag">一句话</b>描述水怎么流的 Navier-Stokes 方程，被约一万个 AI agent 协作找到了一个答案。<span class="flag">尚待独立验证</span></p>
+    <p><b class="tag t-more">题目是什么</b>搅一杯水，水流一开始是顺滑的。问题是：在三维空间里，它会不会永远顺滑下去？还是会在某个瞬间某个点上，速度「炸」成无穷大？2000 年这被列为七个千禧年难题之一，悬赏 100 万美元。</p>
+    <p><b class="tag t-more">发生了什么</b>2026-09-08，OpenAI 宣布它的内部系统找到了「会炸」的例子：一个不停往里转、越拉越细的漩涡。同时公布了论文和机器可检查的证明。到九月中旬，克雷研究所还没确认。另有优先权争议：NYU 的 Buckmaster 说 OpenAI 借用了他们的方法，OpenAI 否认。</p>
+    <table>
+      <tr><td>同时在跑的 agent</td><td>约 10,000</td></tr>
+      <tr><td>时长</td><td>88 小时</td></tr>
+      <tr><td>消息 / 输出 token</td><td>约 490 万条 / 约 3000 亿</td></tr>
+      <tr><td>成本</td><td>纽约时报估「数百万美元」</td></tr>
+    </table>
+    <p><b class="tag t-more">他为什么说「智力工业化」</b>重点不是题解出来了，是一万个 agent 零摩擦地配合完成一件极抽象的事。他的原话：「人类文明里没有任何一个组织做到过。」而且规模按题目配：同一套系统做一道相关的题，只用了约 100 个 agent、50 小时。</p>
+    <p><b class="tag t-you">跟你的关系</b>你当时不知道 NS 是什么，却随口说「平行宇宙里 OAI 和 A/ 联合开记者会」。你准确感觉到了：这条新闻的戏，在优先权之争，不在数学。</p>
+    <p class="src">来源：Wikipedia「Navier–Stokes existence and smoothness」2026 年 9 月版（转引 OpenAI 与纽约时报）。</p>
+  </article>
+  <article class="card">
+    <h3 data-n="4">RSI：会自己变聪明的机器</h3>
+    <p class="one"><b class="tag">一句话</b>AI 改进自己，改进后的版本更快地改进下一版。英文叫 Recursive Self-Improvement。</p>
+    <p><b class="tag t-more">展开</b>像一个学生自己出题、自己批改、自己升级学习方法，每一轮都比上一轮学得快。1965 年就有人以「智能爆炸」的名字提出过。今天的弱版本已经在发生：模型写代码训练下一代、自己造训练数据、自己做考试。</p>
+    <p>投资人朋友有一句：「lab API + RSI 基本上没有普通人的位置。」意思是能力都在实验室手里，实验室又能自我加速，中间做应用的人攒不下护城河。</p>
+    <p><b class="tag t-more">Ronin 不完全同意</b>他给了两个出口：一是硬件，「模型打开了硬件的空间」；二是平台，「application 撮合功能，platform 撮合人；AI 能凭空生成前者，生不出后者」。他文档里叫「两头留下，中间塌掉」：最后剩下模型公司，和人对人的服务；塌掉的是「做一个 App」。</p>
+    <p><b class="tag t-you">跟你的关系</b>你说「模型是上游，我进不去上游，所以来了中下游」。按他的地图，中下游还分「塌掉的中间」和「留下的两头」。你现在帮一家人对人服务的公司装上模型能力，站在带子边缘。往哪边挪，是你的选择。</p>
+  </article>
+  <article class="card">
+    <h3 data-n="4">「工作只有两种类型」</h3>
+    <p class="one"><b class="tag">一句话</b>你 09-13 只记了这个标题，没记内容。</p>
+    <p><b class="tag t-more">展开</b>他当面说的原话还原不了。他文档里最接近的，就是上一张卡的「两头」：一种工作智力密度极高（模型公司那一头），一种需要人的身体在场（人对人服务那一头）。不高不低、又不需要人在场的，会塌。<span class="flag">可能是，也可能不是，要拿去和他核对</span></p>
+  </article>
+  <article class="card">
+    <h3 data-n="4">用户不需要那么好的油</h3>
+    <p class="one"><b class="tag">一句话</b>他转来一句：「原来炼油厂被取代并不是炼油技术不够好，而是用户并不需要那么好的油。」</p>
+    <p><b class="tag t-more">展开</b>手机拍照早就超过大多数人发朋友圈的需要了，再好十倍，你也不会多付十倍的钱。商学院管这叫「性能过剩」（克里斯坦森《创新者的窘境》，1997）：产品好到超过多数人用得上的程度，竞争就转向价格、方便和「够用」。</p>
+    <p>他配的图把这件事画成两段：性能不够时，模型和外壳绑死的「一体派」赢；性能过剩以后，外壳可以随便换模型的「拼装派」赢。参考文章是 Stratechery 的《Frontier Overhangs》和 Dario Amodei 的《We Must Pace the Frontier》。炼油厂这个比喻是 Ronin 自己的概括，原文里没有。</p>
+    <p><b class="tag t-you">跟你的关系</b>选模型、选工具，先问「这个活够不够用」，不问「哪个最强」。你之前做的那张「Claude Code 选火山方舟还是百炼」的对比图，就是这类判断。对客户也一样：多数奢侈品品牌的内容需求，用不上最前沿的模型。</p>
+    <p class="src">来源：Thompson (2026-09-21). Frontier Overhangs；Amodei (2026-09). We Must Pace the Frontier；Christensen (1997, 2003)。</p>
+  </article>
+  <article class="card">
+    <h3 data-n="4">模型是「工业碱」</h3>
+    <p class="one"><b class="tag">一句话</b>他认为大模型会像烧碱一样，变成便宜的基础原料。只卖模型能力的公司，会在下一阶段死掉。</p>
+    <p><b class="tag t-more">展开</b>烧碱是工业里最基础的原料之一，几乎什么都要用，但没人记得是谁家产的。他的原话：「大模型就是现代工业碱，现在是中国模型主动开源以降低模型价格」，「如果模型厂只是纯卖能力，这家公司会在第二阶段到来时死亡」。</p>
+    <p>他还说靠「蒸馏」追赶有致命问题。蒸馏就是让小模型抄大模型的答案。他的说法是，学到的变成了「一个模型对另一个模型的理解」，二手的。研究里有个方向相近的发现：模型一代代吃模型造的数据，会逐渐丢掉原始世界里那些少见的细节，叫「模型崩溃」（Nature，2024）。</p>
+    <p>「Kimi 和 GLM 都会死」是他的预测，记进最后一章的「判断表」。<span class="flag">预测</span></p>
+    <p><b class="tag t-you">跟你的关系</b>油便宜了，赚钱的是炼油之后的加工：工程、产品、分发。DLG 给客户做的东西，都在加工这一层。</p>
+  </article>
+  <article class="card">
+    <h3 data-n="4">Jev 和「后训练大爆发」</h3>
+    <p class="one"><b class="tag">一句话</b>他说「Jev 是真耐用」「1 美分」，又预测「未来 6 个月会冒出新的 Jev，我们马上要进入一个后训练大爆发时代」。</p>
+    <p><b class="tag t-more">展开</b>Jev 是一个专做快速判断的小模型，像第 7 章说的「快脑」。「后训练」是模型练好之后，再针对具体用途调教的那一步。你 09-26 说过「jev 的技术思路往上再走走会给 LLM 锦上大大大添花」，和他是同一个方向。「1 美分」是一次调用、一个任务还是一天，他没说。</p>
+    <p><b class="tag t-you">跟你的关系</b>记进判断表：2026-10-08 说的，6 个月，2027 年 4 月前后回来对照。</p>
+  </article>
+  <article class="card">
+    <h3 data-n="4">身体那一头：逃不掉的边界，和到处缺的数据</h3>
+    <p class="one"><b class="tag">一句话</b>他的赌注之一：机器有没有「身体」，不看接了几个摄像头，看它有没有一个逃不掉的边界。</p>
+    <p><b class="tag t-more">展开</b>多装几个摄像头和麦克风，不算有身体。只有碰到绕不开的物理约束（会摔、会坏、时间不能倒回）才算。这个问题他隔七个月给过两个答案，自己也没合上。</p>
+    <p>你转来一段群聊，他回了一句「其实大家都缺数据」。三个领域各一个例子：</p>
+    <ul>
+      <li><strong>语言模型</strong>：公开的人类文字估计约 300 万亿 token，按现在的速度，2026 到 2032 年之间会用完（Epoch AI）。</li>
+      <li><strong>机器人</strong>：网上没有现成的「动作」数据，只能靠人遥控演示或真机试错，一条条攒。几十个实验室拼起来的一百多万条，在这一行已经算大。</li>
+      <li><strong>情绪识别</strong>：同一张脸，不同人判断成不同情绪；人脸和声音又是法律上的敏感个人信息，要单独同意。</li>
+    </ul>
+    <p><b class="tag t-you">跟你的关系</b>他说年底以后可能回深圳做具身智能，这三类里最缺数据的一类，多半也是他眼下在想的事。反过来读：缺数据的年代，手里有别人拿不到的数据，就有位置。你入职时说想「每天晚上研究一点硬件」，至今没开始。这条不急，先知道他为什么把硬件当出口。</p>
+    <p class="src">来源：Villalobos et al. (2024). Will we run out of data?；Open X-Embodiment (2023)；《个人信息保护法》第二十八条。</p>
+  </article>
+  <article class="card">
+    <h3 data-n="4">机器人的「关节」</h3>
+    <p class="one"><b class="tag">一句话</b>你看了他的「AI 概念扫描」图，猜日本会因为机器人关节受益；他说宇树做的就是「关节」。</p>
+    <p><b class="tag t-more">展开</b>大模型决定机器人「做什么」，关节决定「做得准不准、扛不扛得住」。每个关节是电机、减速器、驱动器、传感器装在一起。宇树起家靠的就是自己做关节电机，这是它能把价格压下来的原因之一。日本在精密减速器上长期领先，这是你那句判断的依据。</p>
+    <p><b class="tag t-more">一处更正</b>群里有人说「波音是被星球大战计划补贴烧出来的」。论点成立，例子时间对不上：星球大战计划是 1983 年的，那时波音早就是头号民航飞机商。更准的是更早那段：轰炸机攒下的喷气技术，加上空军大批订的加油机，一起养出了 707。经济学家 Mazzucato 的《创业型国家》讲的就是这类事：iPhone 里的 GPS、互联网、触摸屏，源头都是政府出钱的研究。</p>
+    <p><b class="tag t-you">跟你的关系</b>你以前觉得机器人是诈骗，听他讲完改了看法。一个区分标准：做关节、减速器、传感器这些硬底子的，和只做演示视频、讲大模型故事的，是两类公司。长期留下来的，更可能是前一类。</p>
+  </article>
+</section>
+
+<!-- ============ 5 灯 ============ -->
+<section class="chapter" data-title="同一盏灯" data-caption="<b>图 5</b>一圈循环四个站。AI 那三站越跑越快，弹珠全堵在「人审」门口，像火锅店只有一个收银台">
+  <header class="chead"><div class="plate">
+    <span class="cnum">05</span>
+    <h2>同一盏灯</h2>
+    <p class="csub">一圈循环，最慢的总是人</p>
+    <p class="clead">他这一个多月讲得最多的一个词是 loop：做一下、看结果、再改。AI 那一段越跑越快，整圈的速度就越来越取决于另一段：你审得过来吗？</p>
+  </div></header>
+  <article class="card">
+    <h3 data-n="5">loop 的四格，和「限制在人」</h3>
+    <p class="one"><b class="tag">一句话</b>他发过一张四格图：一圈循环由什么组成、每一段交给谁、为什么要循环、以及人机循环的限制在人。</p>
+    <p><b class="tag t-more">展开</b>原图当时没读到，按他说过的话推测每一格：<span class="flag">推断</span></p>
+    <ul>
+      <li><strong>组成</strong>：看、想、做、看结果、修正。就是维纳那个反馈回路。</li>
+      <li><strong>分配</strong>：哪一段交给大模型，哪一段交给小模型或工具，哪一段留给人。</li>
+      <li><strong>为什么要循环</strong>：他说过「用循环的次数换窗口的长度」。一次想不清的事，拆成好几圈，每圈只带必要的东西。</li>
+      <li><strong>限制在人</strong>：这一格对得上一条老定律。</li>
+    </ul>
+    <p><b class="tag t-more">阿姆达尔定律</b>一件事里不能加速的那一段，决定了整件事最多能快多少。比如人工那一段占整圈时间的 20%，AI 那部分就算快到零，整圈最多也只能快 5 倍。</p>
+    <p><b class="tag t-you">跟你的关系</b>你一个人干六个人的活。瓶颈多半不在 agent 跑得慢，在你审产出、给反馈这一步。两个提速办法：事先把验收标准写清，让 agent 自己先查一遍；让产出变成一眼能审的样子（对比表、改动高亮），少读长文。</p>
+  </article>
   <article class="card ext">
-    <h3>反馈回路，两百多年的老东西</h3>
-    <p><b class="tag t-ext">延伸 · 简史</b>1788 年，瓦特给蒸汽机装了一个离心调速器：机器转快了，两颗飞球被甩开，带动阀门关小；转慢了，飞球落下，阀门开大。测量、比较、修正，全在一个装置里。1868 年麦克斯韦写了《论调速器》，第一次用数学分析它为什么会稳、为什么会抖。1948 年维纳出版《控制论》，给这门学问起了名字。</p>
-    <p>今天 agent 的「执行 → 观察 → 修正」，就是同一个回路。</p>
-    <p class="src">延伸来源：Wikipedia「Feedback」；UIUC ECE 486 控制系统讲义；Clerk Maxwell Foundation「On Governors」导读。</p>
+    <h3 data-n="5">火锅店的收银台</h3>
+    <p><b class="tag t-ext">延伸 · 比喻与公式</b>一家火锅店，后厨从 2 个厨师加到 20 个，上菜快多了。但收银台只有一个，结账的队排在门口，翻台率还是上不去。加再多厨师，也快不过收银台那一步。</p>
+    <p>写成公式：如果不能并行的那一段占比是 s，并行的那段分给 N 个人，整体最多快 1 ÷ (s + (1−s) ÷ N) 倍。N 再大，也顶不过 1 ÷ s。你的「收银台」就是你自己审稿的那一步。</p>
+    <p class="src">延伸来源：<a href="https://thinkinsights.net/strategy/amdahls-law" rel="noopener">Think Insights: Amdahl's Law</a>；Amdahl (1967). AFIPS Conference Proceedings。火锅店比喻为本页自拟。</p>
   </article>
   <article class="card">
-    <h3>人机 loop 的限制在人</h3>
-    <p class="one"><b class="tag">一句话</b>一个循环里不能加速的那部分，决定了整圈最多能快多少倍。</p>
-    <p><b class="tag t-more">展开</b>这叫阿姆达尔定律（1967）。举例：人工环节占一圈时间的 20%，AI 那部分就算快到零，整圈最多快 5 倍。Karpathy 说做 AI 产品要「让验证变快」，针对的就是这 20%。</p>
-    <p><b class="tag t-you">跟你的关系</b>你一个人带好几个 AI 干活时，瓶颈多半不在它跑得慢，在你审产出、给反馈这一步。两个提速办法：把验收标准事先写清，让它自己先检一遍；让产出变成一眼能审的样子（对比表、改动高亮），少读长文。</p>
+    <h3 data-n="5">探照灯与事件线</h3>
+    <p class="one"><b class="tag">一句话</b>Chat、Co-pilot、Agent 是同一盏灯，区别只有一个：你手里的线有多长。</p>
+    <p><b class="tag t-more">展开</b>起因是你给 DLG 培训做的开场视频。他看完说：「形态那里可以用 event line 来可视化，然后 AI 是一个雷达。」</p>
+    <ul>
+      <li><strong>Chat</strong>：只扫到想法，给你方案，路你自己走。尺度是秒到分钟。</li>
+      <li><strong>Co-pilot</strong>：扫到你工作里的几个节点，替你做几段，你随时喊停。尺度是小时到天。</li>
+      <li><strong>Agent</strong>：扫到更大的业务，你只握两端：给目标、做验收。尺度是周到月。</li>
+    </ul>
+    <p>当晚他把它做成了 60 秒的视频《同一盏灯》，论证是这样走的：</p>
+    <ol>
+      <li>直觉以为 Agent 是「更大的圆」，其实是「更低的灯」。离世界越近，光越窄、越硬。</li>
+      <li>只有碰到世界才有回波。峰是人在想，谷是 AI 在做，触地的地方弹回一个绿色方块。</li>
+      <li>世界越会反光，线才能放得越长。测试、编译器是<strong>镜面</strong>，回波又多又清楚，可以放心交出去；战略、品味是<strong>黑绒布</strong>，光被吞掉，没有回波。</li>
+      <li>AI 能干的活大约几个月翻一倍，你能审的活一天不变。两条线撞上的地方，他叫「验证墙」。</li>
+      <li>峰留给人，谷交给 Agent。模型决定活多大，验证决定你吞多少。</li>
+    </ol>
+    <p>视频里写的是「METR，2024 年以来约 89 天翻倍」。能核实到的是 METR 2025 年 3 月的论文：大约每 7 个月翻一倍，2024 年以后更快，约 4 个月。<span class="flag">89 天未核实</span></p>
+    <p><b class="tag t-you">跟你的关系</b>你十月底前要教同事用 AI，这张图可以原样当课的骨架。每个部门问自己两个问题：我手里哪一段有回波（能写成清单、能跑测试、能对数）？哪一段是黑绒布（客户关系、审美、战略）？有回波的先交出去。DLG 的月报管线就是有回波的活：数字对不对，能自动对账。</p>
   </article>
   <article class="card">
-    <h3>同一盏灯：Chat、Co-pilot、Agent</h3>
-    <p class="one"><b class="tag">一句话</b>三种形态只差一件事：你手里的线有多长。</p>
-    <p><b class="tag t-more">展开</b>Chat 给方案，路你自己走（秒到分钟）；Co-pilot 替你做几段，你随时喊停（小时到天）；Agent 你只握两端，给目标、做验收（周到月）。</p>
-    <p>只有碰到世界才有<strong>回波</strong>。测试、编译器、对账是镜面，回波又多又清楚，可以放心委托；战略、品味、客户关系是黑绒布，光被吞掉，没有回波。AI 能完成的任务长度在快速翻倍（METR 2025：2019 年以来约每 7 个月翻一倍，2024 年后约 4 个月），而你能审的活一天不变。两条线撞上的地方，叫<strong>验证墙</strong>。</p>
-    <p><b class="tag t-you">跟你的关系</b>拿自己的活问两个问题：哪一段有回波（能写成检查清单、能跑测试、能对数）？哪一段是黑绒布？前者先交出去，后者留在手里。</p>
-    <p class="src">来源：Kwa, T. et al. (2025). Measuring AI Ability to Complete Long Tasks. METR。</p>
+    <h3 data-n="5">BP 机比麦克风更适合这个时代</h3>
+    <p class="one"><b class="tag">一句话</b>agent 跑得够快以后，一圈里最慢的是人坐在电脑前等着拍板。他的设想是一个像 BP 机的东西：agent 把进度和三个选项推给你，你按一下就行。</p>
+    <p><b class="tag t-more">展开</b>你讲了一位朋友做的硬件语音输入。他说：「也许，bp 机比麦克风更适合这个时代。」「Agent 状态的同步，解放人类必须在桌面前等待。」「三个选项或者发一条短讯回复。」「驾驭工程，把控制还给人类。」</p>
+    <p>麦克风解决的是「人怎么更快地把话说给机器」。可现在卡住的是另一头：机器干完一段，等人确认。BP 机只收消息、只回短句，形状正好对上。「驾驭工程」应该是 harness engineering 的译法，就是上一章说的「工作台」。</p>
+    <p><b class="tag t-you">跟你的关系</b>Claude Code 已经有这个形态的零件：手机上能跟进会话，要你拍板时给选项。你自己设计流程时（coco、月报），把「需要人决定」的点做成<strong>选择题</strong>，不是问答题；验收标准事先写好，人一眼就能按。</p>
   </article>
   <article class="card">
-    <h3>BP 机和三个选项</h3>
-    <p><b class="tag t-more">展开</b>麦克风解决的是「人怎么更快地把话说给机器」。现在的瓶颈在另一头：机器干完一段，等人拍板。一个设想是像 BP 机那样的东西：AI 把进度和三个选项推给你，你按一下或回一句就行，不用坐在电脑前等。</p>
-    <p><b class="tag t-you">跟你的关系</b>自己设计 AI 流程时，把「需要人决定」的点做成选择题，不做成开放题。</p>
+    <h3 data-n="5">human × Agent<sup>n</sup></h3>
+    <p class="one"><b class="tag">一句话</b>他认为衡量一个人的核心指标，是能同时驾驭多少个 agent。</p>
+    <p><b class="tag t-more">展开</b>他和小马聊天时说：「Agent 的驾驭数量是衡量一个人的核心指标。」「human * Agent ^n。」「这个是 24 年底的共识，各个行业都需要一个 Cursor。」</p>
+    <p>但要和他自己那支视频对着看：AI 能干的活几个月翻一倍，你能审的一天不变。n 能不能往上加，取决于这些 agent 的活能不能<strong>自动验收</strong>。不能自动验收的部分，n 再大也堵在你身上。还是火锅店那个收银台。</p>
+    <p><b class="tag t-you">跟你的关系</b>你 09-11 那个「野蛮解决方案」（多开会话）已经是 n 大于 1 了。下一步不是再多开几个，是给每一路配上能自动检查的东西（测试、对账、清单），再往上加。</p>
   </article>
   <article class="card">
-    <h3>human × Agent<sup>n</sup></h3>
-    <p class="one"><b class="tag">一句话</b>有人说，衡量一个人的新指标，是能同时驾驭多少个 agent。</p>
-    <p><b class="tag t-more">展开</b>把它和上面的验证墙放在一起看：n 能不能往上加，取决于每一路的活能不能<strong>自动验收</strong>。不能自动验收的部分，n 再大也会堵在你身上。场景里那些环全都挤过同一个点，就是这个意思。</p>
-    <p><b class="tag t-you">跟你的关系</b>多开会话之前，先给每一路配上能自动检查的东西（测试、对账、清单）。</p>
+    <h3 data-n="5">机器人在真实世界里跑 loop</h3>
+    <p class="one"><b class="tag">一句话</b>一家机器人公司让机器人在现场试错，只用约 15 分钟的真实数据，就把拧螺丝、插网线这种毫米级动作练熟了。</p>
+    <p><b class="tag t-more">展开</b>Physical Intelligence 的 RLT。背景是：大的机器人模型什么都会一点，但最后一毫米不准；拿整个大模型现场练又太慢太贵。他们的办法像「师傅带徒弟」：大模型给方向，一个很小的网络在现场一圈圈地微调，只管修正最后那一点。</p>
+    <p>结果：电动螺丝刀拧小螺丝，从每 10 分钟约 5 次提到约 15 次。算上复位，总共练了约两小时。插网线那个任务，最后有一半的尝试比任何一次人类遥控都快。</p>
+    <p><b class="tag t-you">为什么在这一章</b>这是 loop 放进了物理世界。螺丝拧歪了就是歪了，这种「回波」只能在真实世界里拿到，也就是上一章说的「逃不掉的边界」。</p>
+    <p class="src">来源：Physical Intelligence, Precise Manipulation with Efficient Online RL（2026-03-19）。</p>
   </article>
   <article class="card">
-    <h3>一万个 agent，配合没出问题</h3>
-    <p><b class="tag t-more">展开</b>2026 年 9 月，OpenAI 宣布其内部系统用约一万个并发 agent、88 小时，给出了 Navier–Stokes 方程 blow-up 的反例（千禧年七大难题之一），并附 Lean 形式化证明，期间约 490 万条消息。截至 9 月中旬，克雷数学研究所尚未独立验证，另有优先权争议。</p>
-    <p>值得注意的不是数量。调动一万个不难，难的是一万个零摩擦地合作完成一件超抽象的事，而且规模按题目配：同一批系统做欧拉方程的反例，只用了约 100 个 agent、50 小时。有人把这叫「智力工业化」：人不再是解法的来源，只是目标的来源。</p>
-    <p class="src">来源：Wikipedia「Navier–Stokes existence and smoothness」（2026 年 9 月版，转引 OpenAI 官网与纽约时报）。</p>
+    <h3 data-n="5">小模型学会「什么时候该求助」</h3>
+    <p class="one"><b class="tag">一句话</b>先让小模型答，它没把握时才转给大模型。成本大降，准确率不降。</p>
+    <p><b class="tag t-more">展开</b>像医院的分诊台：常见病护士就处理了，拿不准的才转给专家。这类方法叫「模型级联」。关键在那一步：小模型怎么知道自己没把握？常见做法是看它多答几次是否一致、它自己报的把握有多大。已发表的结果里，有的在保持 GPT-4 准确率的同时省了最多 98% 的成本。他发的那篇文章标题里的「96%、性能反超」没找到原论文。<span class="flag">未核实</span></p>
+    <p><b class="tag t-you">跟你的关系</b>你问「typeless 背后算小模型吧」，他说是 Sonnet，你说那并不小，他同意。这个来回本身就是级联思路：语音输入这种活，Sonnet 已经是「专家」那一档了。</p>
+  </article>
+  <article class="card">
+    <h3 data-n="5">指标变成目的</h3>
+    <p class="one"><b class="tag">一句话</b>你讲初中化学老师第一节课只问「谁是月考前十」，之后只盯那几个人。他说：「名校的代价。」「指标变成目的。」</p>
+    <p><b class="tag t-more">展开</b>这叫古德哈特定律。流传最广的版本是：「当一个指标变成目标，它就不再是好指标。」老师要的本来是学生学会化学，排名只是一个温度计；后来大家开始盯着温度计本身。</p>
+    <p><b class="tag t-you">跟你的关系</b>你在 DLG 做培训也有指标：参训人数、用量、满意度。只看用量，大家会为了用量而用，不是为了把活干好。验证墙也能这么看：能自动验收的活才适合交出去，因为只有在那里，指标和目的是一回事。</p>
   </article>
 </section>
 
-<!-- ============ 7 图 ============ -->
-<section class="chapter" data-title="关系" data-caption="<b>场景</b> · 一堆散点各自漂着，没有意义；它们找到彼此的相对位置，连成网，意义才出现">
-  <header class="chead">
+<!-- ============ 6 工具箱 ============ -->
+<section class="chapter" data-title="一层层的墙" data-caption="<b>图 6</b>一架纸飞机想把你的数据带过去，可每个 App 都是一道墙：门开着的能穿过，关着的就撞回来">
+  <header class="chead"><div class="plate">
+    <span class="cnum">06</span>
+    <h2>一层层的墙</h2>
+    <p class="csub">工具箱：爬行类和哺乳类</p>
+    <p class="clead">信息从产生到被 agent 用上，要穿过好几道墙。这一章是你手边的工具：它们各自在哪一层，哪一层还凿不通。</p>
+  </div></header>
+  <article class="card">
+    <h3 data-n="6">CLI / MCP / Web / App</h3>
+    <p class="one"><b class="tag">一句话</b>你把 connector 拆成 CLI 和 MCP 两类，被人喷「太技术了」。他花四十分钟拆成四格，最后给了一句最好记的：<strong>CLI 是爬行类，MCP 是哺乳类。</strong></p>
+    <p><b class="tag t-more">用一家餐厅来比</b></p>
+    <ul>
+      <li><strong>CLI（命令行）</strong>：你自己进厨房，照着菜谱做。东西在你本地算。他的例子：「你说给我做饭，然后程序就给你做饭。」</li>
+      <li><strong>MCP</strong>：餐厅给服务员一本带说明的菜单：有哪些菜、每道怎么点。agent 看了说 ok，一句「老样子」就能上菜。它是一种<strong>协议</strong>，计算放在服务器那头，所以能控制隐私和安全。</li>
+      <li><strong>Web（网页）</strong>：你打开别人的一份文档，其实是把整份内容搬到你电脑上，再在你这儿显示出来。他说：「网页对于你而言是一个裸体，因为你已经拿到了数据。」</li>
+      <li><strong>App</strong>：菜在后厨做，你只看到端上来的成品。</li>
+    </ul>
+    <p>你的总结是「app = MCP，web = CLI」。他的总结是爬行类和哺乳类：CLI 更底层、管执行；MCP 带着意思，适合 agent。「你可以直接比划来点餐，也能一句『老样子』让 agent 给你上菜。」</p>
+    <p>他还补了一句：connector 一般在远端（比如 Notion 的服务器），本地的是 CLI 那一格。</p>
+    <p><b class="tag t-you">跟你的关系</b>你拆成 CLI/MCP，方向没错，缺的是中间两格。你给同事那句「传统软件能不能被 agent 用，就看它有没有开放 CLI 和 MCP」仍然成立，可以加一句：网页类的东西（文档、看板、内容库）走的是 web 那一格，目前 connector 覆盖最差。同事「从公众号里摘文字发给客户」，卡的就是这一格。</p>
+    <p>你自嘲「一知半解地出去误人子弟了」。挺准：你对这套东西的感觉是对的，但还没到能讲给别人的程度。他说「需要先建立心智模型才能理解」。</p>
+  </article>
+  <article class="card">
+    <h3 data-n="6">记忆层，和「打穿多层」</h3>
+    <p class="one"><b class="tag">一句话</b>他推荐 nowledge mem，说它「核心就是一个剪藏 session 工具 + RAG」；又说上下文层和信息捕获层还没见到好用的 App，「都没办法打穿多层」。</p>
+    <p><b class="tag t-more">RAG 是什么</b>开卷考试。模型回答前，先去资料库里翻出相关的几页，夹进这一次的题目里，再作答。它是「模型不记得你」的标准补丁：不记得，就每次现查现给。英文叫检索增强生成（Retrieval-Augmented Generation）。</p>
+    <p><b class="tag t-more">nowledge mem 自己说能做什么</b>本地优先；在 Claude Code、Cursor 里「保存记忆」，存下对话，提炼出决定和理由；用知识图谱把记忆串起来，新证据会更新旧结论；不同 agent 能读同一份。<span class="flag">官网自述</span></p>
+    <p><b class="tag t-more">「打穿多层」</b>信息要过好几道墙：捕获（公众号、微信、网页）→ 存储 → 检索 → 进入上下文。每一层都有 App 把数据关在自己墙里。整理这份清单时就撞上过：他发的图在微信本地缓存里是加密的，导出只剩「[图片]」。你用微信 MCP、opencli 抓数据，做的都是凿墙。</p>
+    <p><b class="tag t-you">跟你的关系</b>你已经有一个记忆层：Obsidian 加 Claude Code 的 memory 文件。nowledge mem 能补的是「跨 agent」。装之前先看数据存哪：DLG 的客户材料只能进公司批准的工具，不能进第三方云。</p>
+  </article>
+  <article class="card">
+    <h3 data-n="6">AI 浏览器要的权限</h3>
+    <p class="one"><b class="tag">一句话</b>他分享 AI 浏览器 Aside 时提醒了两次：「要注意你的隐私」「这个 AI 浏览器会请求很多权限」。</p>
+    <p><b class="tag t-more">展开</b>这类浏览器能在你登录过的网站上替你操作：发消息、付钱、用公司内部工具。风险有两层：</p>
+    <ul>
+      <li><strong>权限</strong>：它能看到你登录的所有网站。</li>
+      <li><strong>提示注入</strong>：网页里藏一张写给 AI 的小纸条（白底白字、图片里的字），AI 读到就可能照做，比如把你邮箱里的东西发出去。2025 年就有人公开过别家 AI 浏览器的这类漏洞。</li>
+    </ul>
+    <p>数据存在本地，能缓解第一层，解决不了第二层。</p>
+    <p><b class="tag t-you">跟你的关系</b>DLG 规则里「邮件只能读，不能触发动作」那一条，防的就是第二层。工作电脑上别装会自动操作已登录网站的浏览器。想试，就在个人电脑上、用不重要的账号试。</p>
+  </article>
+  <article class="card">
+    <h3 data-n="6">你的 Mac 自带一个小模型</h3>
+    <p class="one"><b class="tag">一句话</b>群里有人发现 MacBook 自带一个本机模型，做分类很好用；他说「可以去 Apple developer 里让他把所有的 API 梳理一遍」。</p>
+    <p><b class="tag t-more">展开</b>能确认的：Apple 2025 年开放了 Foundation Models 框架，开发者能直接调用本机模型，当时公开的规模约 3B。群里说的「20b」<span class="flag">未核实</span>。Apple Intelligence 在中国大陆没开放，国行机器大概率用不了。</p>
+    <p>不过 macOS 本来就带一批免费、不联网的本事：认图里的字（Vision）、语音转文字（Speech）、分词和识别语种（NaturalLanguage）。</p>
+    <p><b class="tag t-you">跟你的关系</b>微信 MCP 读不到图片和表情包里的字。下一步可以接 macOS 自带的 Vision 做识别，本机跑，不出网。他回答这个问题时画的那张「设备端 / 云服务 / 网页」三栏图，见第 8 章「图示不是图表」。</p>
+  </article>
+  <article class="card">
+    <h3 data-n="6">谛听：他的会议 agent</h3>
+    <p class="one"><b class="tag">一句话</b>他中午发来一个叫「谛听」的工具首页，说是「会议 agent」，你回了自己的 coco 仓库。首页写着「晚上好，Ronin」，所以你才说「哪里是晚上了！」</p>
+    <p><b class="tag t-more">截图里的四组</b>记录（随手记、最近、事件）→ 对象（待办、项目、领域、工作区、人）→ 委托（Agents）→ 系统。从上往下是一条流水线：先随手记下来，再整理成人、项目、待办这类「对象」，最后把对象交给 agent 去办。<span class="flag">按截图推断</span></p>
+    <p>有意思的是「项目」和「领域」分成了两项，正好是第 2 章那个定义：项目有终点，领域是跨项目的长期范围。他前一天刚说上下文层没见到好用的 App，这个可能就是他自己的答案。</p>
+    <p>名字：谛听是地藏菩萨座下善于听辨的神兽，《西游记》里真假美猴王就是它听出来的。给听会议的工具起这个名，意思是不光记下说了什么，还要分辨真假。</p>
+    <table>
+      <tr><th></th><th>coco</th><th>谛听</th></tr>
+      <tr><td>进来的</td><td>一场会：录音、转写、聊天</td><td>一条随手记：文字、语音、图片</td></tr>
+      <tr><td>攒下的</td><td>人、项目、承诺、术语</td><td>人、项目、待办、领域</td></tr>
+      <tr><td>出去的</td><td>给人看的简报和洞察</td><td>交给 agent 去办</td></tr>
+    </table>
+    <p><b class="tag t-you">coco 能借两点</b>一，「承诺」现在只跟踪谁答应了什么，可以升级成能交给 agent 执行的待办。二，DLG 各客户的会议混在一个库里，可以按客户或长期主题分「领域」。反过来，会前简报和跨会洞察，他的截图里看不到，是 coco 已经有的。</p>
+  </article>
+  <article class="card">
+    <h3 data-n="6">一本工具书：吴军《计算之魂》</h3>
+    <p class="one"><b class="tag">一句话</b>他发来的 PDF，前 Google 研究员吴军写的计算机思维入门，412 页。不用从头读，按你手上的问题挑。</p>
+    <p class="note">PDF 是扫描版，没有文字层，丢进 NotebookLM 之前要先做文字识别。</p>
+    <table>
+      <tr><th>你的问题</th><th>读哪一节</th></tr>
+      <tr><td>电脑到底是什么，AI 上限在哪</td><td>引子 0.3、0.4</td></tr>
+      <tr><td>为什么老在讲「状态」</td><td>第 9 章 9.1、9.2</td></tr>
+      <tr><td>索引为什么能省上下文</td><td>第 7 章 7.2、7.3</td></tr>
+      <tr><td>信息怎么被编码</td><td>第 3 章 3.5 哈夫曼编码</td></tr>
+      <tr><td>抽象和模式识别</td><td>第 4 章</td></tr>
+      <tr><td>并行和分工</td><td>第 8 章 8.1</td></tr>
+    </table>
+    <p class="note">第 1、2、5、6、10、11 章偏算法和面试题，可以跳过。</p>
+  </article>
+</section>
+
+<!-- ============ 7 快脑慢脑 ============ -->
+<section class="chapter" data-title="快脑慢脑" data-caption="<b>图 7</b>左边红铃是杏仁核（快跑！），右边蓝齿轮是前额叶（慢慢想）。压力表指针越高，铃越响，齿轮越转不动">
+  <header class="chead"><div class="plate">
     <span class="cnum">07</span>
-    <h2>意义来自相对位置</h2>
-    <p class="csub">概念图、向量与记忆</p>
-    <p class="clead">一个词是什么意思，不看它自己，看它的伙伴。</p>
-  </header>
+    <h2>快脑，慢脑，和身体</h2>
+    <p class="csub">人这一侧</p>
+    <p class="clead">从这一章起，主角换成人。先学的第二个就在这里：一个人可以很会「看出模式」，却不太会「一步步推」。这件事决定你怎么读同事，也决定你怎么读自己。</p>
+  </div></header>
   <article class="card">
-    <h3>Concept map：连线上要写字</h3>
-    <p class="one"><b class="tag">一句话</b>把概念画成节点、关系画成写了字的连线；一个概念是什么意思，由它连着谁决定。</p>
-    <p><b class="tag t-more">展开</b>概念图是康奈尔大学的 Joseph Novak 团队在 1970 年代发展出来的。它和思维导图不一样：思维导图是从一个中心长出来的<strong>树</strong>；概念图是<strong>网</strong>，每条连线上要写关系（导致、属于、取决于），读出来是一句完整的话。它的祖先是 1968 年 Quillian 提出的语义网络，也就是后来知识图谱的祖先。</p>
-    <p><b class="tag t-you">跟你的关系</b>手里一堆乱乱的关键词，摊开，两两之间能写出一句「A ___ B」的才连线，写不出的先不连。连完你会看到哪几个词连线最多，那就是你真正在想的东西。</p>
-    <p class="src">来源：Novak &amp; Cañas (2008). The Theory Underlying Concept Maps；Quillian (1968). Semantic Memory。</p>
+    <h3 data-n="7">系统一，系统二</h3>
+    <p class="one"><b class="tag">一句话</b>系统一是快的、自动的「一眼看出来」；系统二是慢的、费劲的「一步步推」。抽象能力属于系统一，不属于系统二。</p>
+    <p><b class="tag t-more">展开</b>看到一张脸，你一瞬间就知道对方在生气，这是系统一。心算 17 × 24，你得停下来一步步算，这是系统二。这对名字是两位心理学家 2000 年提的，卡尼曼 2011 年的《思考，快与慢》让它出了圈。卡尼曼是心理学家，拿的却是诺贝尔经济学奖，所以 Ronin 说这是「经济学从认知科学借走的术语」。</p>
+    <p><b class="tag t-more">他加的那一层才是重点</b>他说自己以前以为抽象能力强的人，逻辑也强。后来发现错了：抽象的起点是模式识别，那是系统一。所以一个人可以一眼看出隐喻、看出小概率事件之间的关联，同时逻辑推理只是普通水平。你当场确认了，说的就是你。</p>
+    <p><b class="tag t-more">它的坑</b>错误的抽象，加上事后找理由。他的比喻是「没有一楼，挖了一个地下室」。例子是「因为某件事，就宣判某个人社交死亡」。你说前几年做得出这种事，现在觉得傻。</p>
+    <p><b class="tag t-more">机器那一侧</b>他文档里说，GPT-4 只有系统一；o1、R1 接上了系统二，却出了新毛病：长长的推理里，第三步把「有可能」当成「就是」。系统一和系统二不是两个模型，是同一个旋钮的两档，差在「转几圈」。</p>
+    <p><b class="tag t-you">马上能用的练习</b>你对同事的行为冒出一个解读时（系统一给的），先给它贴个标签：「假设」。然后逼自己找一条相反的证据。找不到，再当真。这一步就是手动接上系统二。可以并进你 Gallup 计划里的「周二一问一认」。</p>
+    <p class="note">卡尼曼那本确实难读，不是翻译的锅。只想拿走概念，读第一部分（系统一二）和第三部分（过度自信）就够。</p>
+  </article>
+  <article class="card private">
+    <h3 data-n="7">杏仁核与前额叶</h3>
+    <p class="one"><b class="tag">一句话</b>杏仁核是大脑的烟雾报警器，负责「快跑」；前额叶是总指挥，负责计划和刹车。压力一大，报警器会把总指挥压下去。</p>
+    <p><b class="tag t-more">展开</b>这个分工是神经科学的基本共识。压力激素一高，前额叶就不太灵，杏仁核接管（Arnsten 2009）。</p>
+    <p>Ronin 用它解释你的经历：小时候一个人被留在家里或办公室翻书，面对「难以解决的冲突」时，杏仁核一次次接管；看错模式的代价很高，于是你对模式的感觉被练得特别敏锐。长大以后，你就更容易抓到隐喻和藏着的关系。</p>
+    <p><b class="tag t-more">哪些是定论</b>「在高冲突或被忽视的环境里长大的孩子，对威胁信号更敏感」有研究支持（比如更快认出愤怒的表情）。「所以更擅长隐喻和抽象」是 Ronin 往前推的一步，逻辑通顺，但没找到直接研究。<span class="flag">他的假说</span></p>
+    <p><b class="tag t-you">跟你的关系</b>他接着说：「因为没人教你，你是第一代，你可以传递给后代。」意思是，这份敏感是环境给你的本事，也是代价。现在你有机会有意识地用它，而不是被它用。</p>
   </article>
   <article class="card">
-    <h3>国王 − 男人 ＋ 女人 ≈ 女王</h3>
-    <p><b class="tag t-more">展开</b>语言学家 Firth 1957 年说：「看一个词的伙伴，就知道它的意思。」2013 年的 word2vec 把这句话做成了算法：每个词变成一串数字（向量），意思完全由它和其他词的相对位置决定。最有名的例子就是场景最后出现的那个平行四边形。</p>
-    <p>把一段文字写下来，是把网状的想法压成一条线；读的人要把线还原成网。</p>
-    <p class="src">来源：Firth (1957)；Mikolov et al. (2013). Efficient Estimation of Word Representations in Vector Space。</p>
+    <h3 data-n="7">知识不在任何一个人那里</h3>
+    <p class="one"><b class="tag">一句话</b>哈耶克说，有用的知识散在每个人手里，没有哪个中心能收齐；价格，就是把这些散的知识汇总起来的信号。</p>
+    <p><b class="tag t-more">展开</b>番茄减产了，没人挨家挨户通知你，但菜市场的番茄涨价了，大家自然就少买一点。几百万人「当时当地」的小知识，被压缩成了一个数字。这是哈耶克 1945 年《知识在社会中的运用》的意思。Ronin 说他「比卡尼曼更抽象」。</p>
+    <p><b class="tag t-more">它为什么出现</b>Ronin 说「我们并不拥有知识，知识属于上帝」，你说想翻阅他的大脑。哈耶克的版本是：知识不在任何一个人那里，在人和人之间。这也是他那句「平台撮合的是人，AI 生不出这个」的底子。</p>
+    <p class="note">你读过的 Dario Amodei《恩典之机》引了哈耶克，可以顺着看。</p>
   </article>
   <article class="card">
-    <h3>Embedding 与检索：RAG 的好坏不在模型</h3>
-    <p class="one"><b class="tag">一句话</b>把一段文字压成一串数字，意思相近的两段，数字串也相近。检索就是拿问题的数字串去找最近的几段。</p>
-    <p><b class="tag t-more">展开</b>RAG（检索增强生成，2020）的流水线：资料切块，每块算向量存起来；来了问题，找最近的几块，塞进上下文让模型回答。它是「无状态」的标准补丁：模型不记得，就每次现查现给。四个地方会坏：切块太大（向量变成平均值，谁都不像）或太小（缺上下文）；问题和资料措辞差太远（问「哪款表防水」，资料写「WR 100m」）；找回来了但模型没用上（上一章的中间遗忘）；资料里本来就没有，模型编一个。</p>
-    <p><b class="tag t-you">跟你的关系</b>排查「问了没答对」时，先分清是<strong>没检索到</strong>，还是<strong>检索到了没答对</strong>。两种修法完全不同。AI 搜索也是先检索再生成：内容要先被检索到，才谈得上被引用。</p>
-    <p class="src">来源：Lewis et al. (2020). Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks. NeurIPS。</p>
+    <h3 data-n="7">注意力残留：一只脚还卡在门里</h3>
+    <p class="one"><b class="tag">一句话</b>每次换一件事，上一件事都会在脑子里留下一点残留，占着下一件事的位置。反复看消息，就是在不停制造残留。</p>
+    <p><b class="tag t-more">展开</b>像从一个房间走到另一个房间，一只脚还卡在门里。研究者 Sophie Leroy 2009 年给它起名叫「注意力残留」，没做完的事残留更重。Ronin 的做法是工作时不看手机、不反复确认消息，因为「反复确认会让大脑持续保持被触达的状态」，而「碎片化信息会让自己觉得这一天没什么进展」。这两句都能追到司马贺那句「信息的丰富造成注意力的贫乏」。</p>
+    <p><b class="tag t-you">跟你的关系</b>你已经在订会议室专注干活了。他补的一步是：把电脑上的微信也关掉。你回的是「再聊几句再关」。</p>
   </article>
   <article class="card">
-    <h3>记忆是重建，不是检索</h3>
-    <p class="one"><b class="tag">一句话</b>人记住的不是录像，是几个离散特征，回忆时再拼一次；一样东西跟越多别的东西连过，越记得住。</p>
-    <p><b class="tag t-more">展开</b>Bartlett 1932 年让英国被试反复复述一个美洲原住民故事，复述越来越像被试自己的文化。Loftus 和 Palmer 1974 年问「两车<em>猛撞</em>时车速多少」的一组，比问「两车<em>碰到</em>时」的一组报出的车速更高，一周后还有更多人「记得」有碎玻璃（实际没有）。Craik 和 Lockhart 1972 年的加工层次理论：加工得越深、和已有知识挂得越多，保持越久。</p>
-    <p><b class="tag t-you">跟你的关系</b>为什么同一个道理，读好几遍读不进去，做成游戏就看进去了？游戏把它放进了角色、对白、选择、后果好几个场景，连接变多了。讲一个概念给别人，至少换三个场景讲。</p>
-  </article>
-  <article class="card">
-    <h3>Ontology 和符号能力</h3>
-    <p><b class="tag t-more">展开</b>Ontology 是给一个领域定规矩：有哪些类的东西，它们之间能有哪些关系。打个比方：ontology 是<strong>表头和填表规则</strong>，知识图谱是<strong>填好的表</strong>。先把类和关系定清楚，比先堆数据重要。</p>
-    <p>再往上一层，是「符号能力」：把一张图压缩成一个可以操作的节点，再用这些节点搭新的图，最后还能展开回现实。「反馈回路」只有四个字，在懂的人脑子里能展开成：状态变化 → 被传感器测到 → 进入控制器 → 产生调节 → 反过来改变状态。</p>
-    <p class="src">来源：Gruber (1993). A Translation Approach to Portable Ontology Specifications；Ronin《基础模式》第 8 部分。</p>
+    <h3 data-n="7">睡 5 到 6 个周期</h3>
+    <p class="one"><b class="tag">一句话</b>一个睡眠周期大约 90 分钟。成人一晚睡 5 到 6 个周期，也就是 7.5 到 9 小时。</p>
+    <p><b class="tag t-more">展开</b>这是他那句「你应该现在入睡，然后睡 5-6 个周期（7.5-9）」。90 分钟只是平均，每个人在 70 到 120 分钟之间浮动，按周期定闹钟只是个粗略工具。白天补觉（你的全季钟点房方案）也不冲突：睡 20 分钟，或者睡满一个周期；中间长度最容易在深睡里被叫醒。</p>
+    <p>他又补过两句。「累的时候就好好休息，控制慢性压力」：这句很扎实，长期压力的累积会伤身体，也伤前额叶，接上一张卡。「建议早上运动」：证据没那么硬，2019 年一篇综述发现晚上运动一般不影响睡眠，只有睡前一小时内的剧烈运动会让入睡变难。</p>
+    <p><b class="tag t-you">跟你的关系</b>你晚上八点多运动、十一点睡，问题不大。早上运动真正的好处是：不会被加班挤掉。</p>
   </article>
 </section>
 
-<!-- ============ 8 工作台 ============ -->
-<section class="chapter" data-title="工作台" data-caption="<b>场景</b> · 中心的光是模型，只会吐 token。四周的砖一块块飞来，砌成拱门和玫瑰窗：那是它的工作台">
-  <header class="chead">
+<!-- ============ 8 相对位置 ============ -->
+<section class="chapter" data-title="相对位置" data-caption="<b>图 8</b>软木板上钉着一个个词，两两之间说得出一句话的才拉线。线最多的那颗钉子长得最大">
+  <header class="chead"><div class="plate">
     <span class="cnum">08</span>
-    <h2>工作台</h2>
-    <p class="csub">模型之外的那座教堂</p>
-    <p class="clead">LLM 只能吐 token。决定最终效果的，是它外面那一整套工程。</p>
-  </header>
+    <h2>意义来自相对位置</h2>
+    <p class="csub">记忆、压缩和人味</p>
+    <p class="clead">一个词是什么意思，由它挨着谁决定。一段记忆能不能留下，由它连着多少东西决定。这一章也解释了：为什么那些你读不进去的东西，做成游戏你就读进去了。</p>
+  </div></header>
   <article class="card">
-    <h3>砌墙还是建教堂</h3>
-    <p class="one"><b class="tag">一句话</b>模型已经差不多了，拉开差距的是 harness：包着模型的那层程序，管工具、上下文、循环和权限。</p>
-    <p><b class="tag t-more">展开</b>一位逆向研究过几家 AI 编程工具的从业者的体感是：「Anthropic 非常耐心地给 Claude 这个模型准备好了它的工作台」，工具定义得非常详细，上下文层「设计得非常美」；同样的模型换一套粗糙的工程，输出就差一截。这是他的个人判断。「你是在砌墙还是在建教堂」来自流传很广的三个石匠寓言，出处不可考。</p>
-    <p><b class="tag t-you">跟你的关系</b>身边人说「AI 答得不好」，多数时候不是模型不行，是没给它工作台：文件、工具、规则、上下文。你写的每一份说明文件、接的每一个工具，都是在搭工作台。</p>
+    <h3 data-n="8">概念图：把想法摊成一张网</h3>
+    <p class="one"><b class="tag">一句话</b>把概念画成点，把关系画成写了字的线。一个概念的意思，由它连着谁决定。</p>
+    <p><b class="tag t-more">展开</b>你发了两张活动上记的关键词图，「乱乱的」。他建议你试试 concept map，接着说：「他们需要彼此的相对位置来让你的意义呈现出来。」「这是最基础的语义网络，也是神经网络参数的一种极简形式。」</p>
+    <ul>
+      <li><strong>概念图和思维导图不一样</strong>：思维导图是从中心长出来的一棵树；概念图是一张网，每条线上要写关系（导致、属于、取决于），读出来是一句完整的话。</li>
+      <li><strong>和神经网络的关系</strong>：语言学家 Firth 说过「看一个词的伙伴，就知道它的意思」。2013 年的 word2vec 把每个词变成空间里的一个点，意思全靠它和别的点的相对位置。最有名的例子：国王 − 男人 + 女人 ≈ 女王。</li>
+      <li><strong>他那句「像程序的 build」</strong>：写一段文字，是把网状的想法压成一条线；读的人要把线还原成网。</li>
+    </ul>
+    <p><b class="tag t-you">跟你的关系</b>你装了 XMind skill，但 XMind 默认画的是树。做概念图要多一步：把关键词摊开，两两之间能写出一句「A ___ B」的才连线，写不出的先不连。连完你会看到哪几个词连线最多，那就是你那天真正在想的事。</p>
   </article>
   <article class="card">
-    <h3>文本即接口：为什么命令行适合 AI</h3>
-    <p class="one"><b class="tag">一句话</b>Unix 五十年前定下的原则「每个程序只做一件事，输出是纯文本，可以接给下一个程序」，正好是 AI 最容易用的接口形态。</p>
-    <p><b class="tag t-more">展开</b>1978 年 McIlroy 写下 Unix 哲学。四十年里图形界面把这些藏了起来，因为人不爱读字。现在反转了：AI 读文字的速度和精度远超读图，按钮和菜单对它是障碍。</p>
-    <p>博主木遥在《苦涩的教训的边界》里给了更深一层：传统软件像左脑（符号，几十年打磨到极致），大模型像右脑，中间是胼胝体。有些活<strong>左脑已经掌握了标准答案</strong>，右脑能做的只是逼近它：全局替换、精确计数、日期运算、数据库汇总。这类活永远该交给工具，而不是让模型硬算。</p>
-    <p class="src">来源：McIlroy, Pinson &amp; Tague (1978). Bell System Technical Journal；Sutton (2019). The Bitter Lesson；木遥（farmostwood）AI 专栏。</p>
+    <h3 data-n="8">记忆是重建，不是回放</h3>
+    <p class="one"><b class="tag">一句话</b>人记住的不是一段录像，是几块碎片，回想时再拼一次。一样东西和越多别的东西连过，越记得住。</p>
+    <p><b class="tag t-more">展开</b>这是 9.9 那场会上 Ronin 讲的学习理论。他的例子：第一次和喜欢的人约会，你只记得发型、香水、对方说过的几句话，「至于她长什么样子，有可能你都不记得」。所以一个词（他举 corner）要在不同场景里见大约 20 次，还要听伦敦、纽约、洛杉矶三种口音。「一首诗在伤心时念过、在离别时背过，于是不仅会背，还会唱。」中国人学英语难，是「一楼还没盖，就去盖五楼六楼」，一楼是声音和文字对齐。</p>
+    <p><b class="tag t-more">有实验的部分</b>1932 年，有人让英国人反复复述一个美洲原住民的故事，越讲越像他们自己的文化。1974 年的车祸实验里，被问「两车<em>猛撞</em>时多快」的人，比被问「两车<em>碰到</em>时多快」的人报的车速更高，一周后还更多人「记得」有碎玻璃，其实没有。</p>
+    <p><b class="tag t-you">跟你的关系</b>这解释了你在群里那句：「我好多遍都读不进去的内容，做成游戏就看进去了。」游戏把同一个道理放进角色、对白、选择、后果好几个场景，连接多了。书斋物语和第一炉香不只是玩具，是这套理论的一个实现。觉然做课也能用：一个概念，至少换三个场景讲。</p>
   </article>
   <article class="card">
-    <h3>工具调用与 MCP：线上到底传了什么</h3>
-    <p class="one"><b class="tag">一句话</b>模型并不「执行」工具。它输出一段结构化文字说「我想调这个工具，参数是这些」，你的程序去执行，把结果贴回对话，模型再往下说。</p>
-    <p><b class="tag t-more">展开</b>这解释了三件事。<strong>工具描述就是路由</strong>：模型只凭描述决定用不用，所以描述要短，只说什么时候用。<strong>工具结果是最大的注入口</strong>：结果是外部文本，模型分不清里面的话是数据还是指令，网页里藏一句写给 AI 的话就可能被照做。<strong>该不该信工具</strong>，是模型自己的判断，会错。MCP 是 Anthropic 2024 年 11 月开放的协议，给这套来回定了统一的插头：一个 server 写一次，各家工具都能接。</p>
-    <p><b class="tag t-you">跟你的关系</b>AI「不肯用工具」或「乱用工具」，先改描述，别先换模型；它读了一段网页就变了行为，是结果注入，不是模型变坏。</p>
+    <h3 data-n="8">影关英语：把训练 AI 的方法倒过来教人</h3>
+    <p class="one"><b class="tag">一句话</b>他接手的英语产品，思路是「把多模态大模型的训练方法倒过来，就是人类的语言学习方法」：拿电影片段当材料，先听、不看字幕，由易到难一关关过。</p>
+    <p><b class="tag t-more">展开</b>他的几句话：「应用类语言和运动相似，多听就好。」「最大的误区就是把英语当书来学，而不是当方言来学。」「粤语和普通话完全不一样，但是你不会恐惧粤语。」「很多时候，兴趣远大于天赋。」</p>
+    <p>新界面拿《绿皮书》做例子：一部片分成 144 关，每关一个片段、一句台词。世界观片里有一句把原理说透了：「你的耳朵听到的不是六个词，是三块声音。」母语者说话会连读、吞音，听到的是一块一块的。</p>
+    <ul>
+      <li><strong>「倒过来」</strong>：训练 AI 有个方法叫「课程学习」，样本从易到难排，模型学得更好。他把这个顺序还给了人。</li>
+      <li><strong>「比现在难一点点」</strong>：语言学家 Krashen 说人靠听懂「比自己水平高一点」的材料习得语言，写作 i+1。</li>
+    </ul>
+    <p><b class="tag t-you">跟你的关系</b>你说出国好几年英语还是没自信。这套说法给了一个解释：你学的是「书」，缺的是大量「听得懂一点点」的输入。教同事用 AI 也一样：每一批材料比他们现在会的多一步，别一口气讲到 agent。</p>
   </article>
   <article class="card">
-    <h3>评估：你怎么知道它变好了</h3>
-    <p class="one"><b class="tag">一句话</b>没有固定的测试集，改 prompt 就是在猜。最小形式是：十个固定输入，加你手写的「好答案长什么样」，每次改完都跑一遍。</p>
-    <p><b class="tag t-more">展开</b>三种打分：有唯一正解就<strong>精确匹配</strong>；写三到五条「好答案必须有什么」逐条打勾（<strong>评分表</strong>）；让另一个模型按评分表打分（<strong>模型当裁判</strong>）。最后一种快，但裁判有偏见：偏爱长的、偏爱排在前面的、偏爱像自己写的。至少抽一部分人工复核。</p>
-    <p class="src">来源：Zheng et al. (2023). Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena. NeurIPS。</p>
+    <h3 data-n="8">压缩过头，人味就没了</h3>
+    <p class="one"><b class="tag">一句话</b>你问他的 AI 为什么写得像文言文。他说是 system prompt 的问题，然后给了一条退化链：过度抽象 → 过度压缩 → 文化剥离 → 失去人味。</p>
+    <p><b class="tag t-more">展开</b>他的提示词大概要求高度抽象和精炼。于是模型每句都在压：删掉例子，删掉语气，删掉让读者对得上号的背景。剩下的句子密度很高，但读者得自己解压，没有上下文的人解不开。你自己说过一句更好的：「缩写词就像一个 zip 文件夹，解压后才知道。」</p>
+    <p><b class="tag t-more">和「写短一点」不矛盾</b>第 3 章 Astra 博客让你把 skill 写短，这里又说压缩丢人味。区别在读者是谁。给机器的（指路牌、完成标准），读者是模型，越短越准。给人的，读者没有你的上下文，压掉的要还回去。<strong>对机器压缩，对人解压。</strong></p>
+    <p><b class="tag t-you">跟你的关系</b>你当场说：「我要当你的翻译官。」这就是第 10 章 Echo 的活：把研究者和工程师的压缩说法，解压给业务的人。你给 DLG 定的「去 AI 味」，给觉然定的「说人话」，做的都是解压。这本册子也是。</p>
   </article>
   <article class="card">
-    <h3>用户不需要那么好的油</h3>
-    <p class="one"><b class="tag">一句话</b>「炼油厂被取代，不是因为炼油技术不够好，而是用户并不需要那么好的油。」</p>
-    <p><b class="tag t-more">展开</b>这是 Christensen《创新者的窘境》（1997）的「性能过度供给」：主流产品的性能超过大多数人用得上的程度以后，竞争转向价格、便利和「够用」。他后来补了一步：性能不够时，各部件绑死的<strong>整合者</strong>赢；性能过剩以后，接口标准化的<strong>模块化者</strong>赢。放到 AI 上：模型不够强时，模型和工作台要绑死；够强以后，工作台可以随便换模型。</p>
-    <p><b class="tag t-you">跟你的关系</b>选模型、选工具，先问「这个任务够不够用」，不问「哪个最强」。</p>
-    <p class="src">来源：Christensen (1997)；Christensen &amp; Raynor (2003). The Innovator's Solution；Ben Thompson, Frontier Overhangs, Stratechery (2026-09)。</p>
+    <h3 data-n="8">图示不是图表</h3>
+    <p class="one"><b class="tag">一句话</b>你问他那些图怎么让 Claude 做的，他纠正你：「这不是图表，图表会调用内联图表渲染器，而不是图示。」</p>
+    <p><b class="tag t-more">展开</b>图表（chart）是把<strong>数据</strong>画到坐标上：柱状、折线、饼图。图示（diagram）是把<strong>概念</strong>画成形状：层级（树）、框架（矩阵、四格）、网络（点和线）、流程、事件线。跟 Claude 说「图表」，它会去找数字画坐标；说「图示」，再说出是哪一种形状，它才会画出你脑子里那种图。</p>
+    <p>你说想到的中文词第一个都是「图表」，自称「0 国语言掌握者」。他说「其实就是对语言不敏感」「刻意训练」。刻意训练有出处：有明确目标、即时反馈、专门练弱项，才会进步，光重复不行。</p>
+    <p>他截图里的那段常驻规则，把「我要干什么」对应到「你该给我什么形态」，摘几句：</p>
+    <blockquote>当我需要解释时，你最好帮我构造认知对象以及他们的基础模式……<br>当我需要理解时，你最好可视化以节省我的认知带宽<br>当我需要体感时，你最好可交互化、可操作化<br>当我想要应用时，你最好提供可计算化、可操作化的 methods & approach</blockquote>
+    <p><b class="tag t-you">跟你的关系</b>你装了 XMind、Whimsical 两个 MCP 但用得少。他的做法是不去挑工具，先把形态说准，让 Claude 自己挑怎么画；而且把「说准形态」写进了常驻规则，不用每次重说。</p>
   </article>
   <article class="card">
-    <h3>两头留下，中间塌掉</h3>
-    <p><b class="tag t-more">展开</b>一个推演（作者自己标明证据等级低于前文）：智力便宜之后，最后只会剩两种东西：把智力堆到极致的<strong>模型公司</strong>，和空前繁荣的<strong>人对人服务业</strong>。中间那条带子塌下去，不是因为做得不好，是两头不靠：智力密度撑不起模型公司的门槛，又不需要人的身体在场。塌的那条带子，正是「做一个 App」。应用撮合的是功能，AI 能凭空生成；平台撮合的是人，AI 生不出来。</p>
-    <p class="note">它背后有哈耶克 1945 年的老道理：知识分散在每个人手里，没有任何中心能收齐，价格（和平台）是把分散知识汇总起来的信号系统。</p>
+    <h3 data-n="8">Ontology：先定表头，再填表</h3>
+    <p class="one"><b class="tag">一句话</b>ontology 是给一个领域立规矩：有哪几类东西，它们之间能有哪些关系。知识图谱，是按这套规矩填进去的具体内容。</p>
+    <p><b class="tag t-more">展开</b>打个比方：ontology 是表头和填表规则，知识图谱是填好的那张表。他转来一篇《Graph 的尽头是自进化 Ontology》，说这是「一个经典问题，怎么让机器理解上下文和领域知识」。「自进化」大概是让 agent 在使用中自己补类和关系。<span class="flag">原文没读到</span></p>
+    <p>你说「所见皆信息」，他回「卡尔·波普尔欢迎你」。最接近的可能是波普尔的「三个世界」：物理世界、心里的世界，和书本理论这种人造出来却独立存在的知识。<span class="flag">只能猜</span></p>
+    <p><b class="tag t-you">跟你的关系</b>DLG 的品牌知识库（品牌、产品、战役、KOL、帖子之间的关系），和 GEO 的实体梳理，本质都是这个问题。先把类和关系定清楚，比先堆数据重要。</p>
   </article>
 </section>
 
-<!-- ============ 9 人 ============ -->
-<section class="chapter" data-title="人" data-caption="<b>场景</b> · 创新扩散曲线。光从左往右亮，到早期采用者和早期大众之间卡住：那道沟">
-  <header class="chead">
+<!-- ============ 9 讲明白 ============ -->
+<section class="chapter" data-title="讲明白" data-caption="<b>图 9</b>左边崖上的人走到边上就停了。往下滚，木板一块块铺过去，他们才走到对面：这就是「讲明白」">
+  <header class="chead"><div class="plate">
     <span class="cnum">09</span>
-    <h2>人这一侧</h2>
-    <p class="csub">做出来越来越便宜，讲明白越来越贵</p>
-    <p class="clead">机器的那一半讲完了。剩下的瓶颈，都在人身上。</p>
-  </header>
+    <h2>做出来越来越便宜，<br>讲明白越来越贵</h2>
+    <p class="csub">价值传递</p>
+    <p class="clead">AI 让「做出一个东西」便宜到近乎免费。于是难的那一步挪了位置：别人能不能一眼看懂它是什么。这一章 Ronin 在讲别人，也被钱鹏飞讲到了他自己身上。</p>
+  </div></header>
   <article class="card">
-    <h3>抽象的起点是系统一</h3>
-    <p class="one"><b class="tag">一句话</b>抽象能力的起点是模式识别，那是系统一，不是系统二。</p>
-    <p><b class="tag t-more">展开</b>所以一个人可以擅长抽象（一眼看出隐喻、看出小概率事件之间的关联），同时逻辑推理只是普通水平。抽象的弊端是错误的抽象加上合理化：「没有一楼，挖了一个地下室」。</p>
-    <p><b class="tag t-you">跟你的关系</b>对别人的行为冒出一个解读时，先给它贴个标签：「假设」。然后逼自己找一条相反的证据，找不到再当真。这一步，就是手动接上系统二。</p>
-  </article>
-  <article class="card">
-    <h3>创新扩散与鸿沟</h3>
-    <p class="one"><b class="tag">一句话</b>一样新东西在一群人里传开，顺序是固定的：2.5% 创新者，13.5% 早期采用者，34% 早期大众，34% 晚期大众，16% 落后者。前两类和后面之间有一道沟，大多数技术死在沟里。</p>
-    <p><b class="tag t-more">展开</b>Rogers 1962 年从农业推广研究里总结出这条钟形曲线。五类人的理由不同：创新者要新，早期采用者要领先，早期大众要「别人用过没出事」，晚期大众要「不用不行了」，落后者要「旧的没了」。Moore 1991 年指出：早期采用者看可能性，早期大众看同行的成功案例，同一套说法打不动两群人。</p>
-    <p><b class="tag t-you">跟你的关系</b>带别人用 AI，先找主动来问你的那几个，让他们做出能展示的成果，再拿成果去说服其他人。对早期大众别讲功能，讲「隔壁组用它做月报省了两天，出过什么问题，怎么兜底」。</p>
-    <p class="src">来源：Rogers (1962). Diffusion of Innovations；Moore (1991). Crossing the Chasm。</p>
-  </article>
-  <article class="card">
-    <h3>产品死于价值无法传递</h3>
+    <h3 data-n="9">产品死于「价值无法传递」</h3>
     <p class="one"><b class="tag">一句话</b>技术扎实的小众产品死得快，多半不是点子差、技术不行，是用户还没弄明白它是什么。</p>
-    <p><b class="tag t-more">展开</b>「大众在理解产品的优劣之前，需要先理解产品是什么。」市场成熟度不够的品类，需要更简单的形态，不是更复杂的。一场会上有人给一个 AI 教练 App 挑出了问题：它有一套别处没有的绝活，却埋在流程深处，第一屏摆的是 20 步问卷。结论只有一句：<strong>从外面看，「没做」和「做了没讲」是同一件事。</strong></p>
-    <p>问用户时，用《妈妈测试》的问法：只问过去和具体（「上次遇到这事你怎么办的」），不问未来和假设（「如果有个工具能……你会用吗」），后一种连你妈都会说会用。</p>
-    <p><b class="tag t-you">跟你的关系</b>拿你手上的东西检查：一个没听过的人，看第一屏，能不能一句话说出这是什么。</p>
-    <p class="src">来源：Moore (1991)；Fitzpatrick (2013). The Mom Test；Christensen 等 (2016). Competing Against Luck。</p>
+    <p><b class="tag t-more">展开</b>你讲了活动上一位技术出身的朋友：起点是「硬件版 Typeless」，后来加了翻译、agent、浏览器控制，能控制整台电脑，但拉不到投资。你说：「好强啊，大神！但我好像还是没什么动力去用。」他的回应连起来是一整堂产品课：</p>
+    <ul>
+      <li>「市场不需要第二个 typeless。」</li>
+      <li>「他应该拿起一个小本本，认真地和用户一起聊一个晚上。」</li>
+      <li>「大众在理解产品的优劣之前，需要先理解产品是什么。」</li>
+      <li>「这是绝大多数小众创业死掉的原因，不是点子不够好，不是技术不够扎实，而是价值无法传递。」</li>
+      <li>「做自己需要的东西，只有自己一个买家。」「写字楼下的包子铺三年赚了一百万，而写字楼上的创业团队要破产了。」</li>
+      <li>你又举了一个小产品，他说：「木工在闲暇之余会喜欢做一些小玩意……乐趣是不需要评价的。」</li>
+    </ul>
+    <p><b class="tag t-more">现成的理论</b>《跨越鸿沟》（1991）：早期尝鲜的人买的是新技术本身，愿意自己折腾；后面的大多数人买的是「解决我一个具体问题的完整方案」。两群人之间有条沟，大多数高科技产品死在这里。跨过去的办法，是先收窄到一个具体场景，做到一眼看懂。「小本本」那句，对应《The Mom Test》：问对方<em>过去实际做过</em>什么、花过什么钱，别问「你将来会不会用」，后一种只能换来客气话。</p>
+    <p><b class="tag t-you">跟你的关系</b>你那句「好强但没动力用」，就是沟对面的用户反应，你自己就是样本。拿它检查你手上的东西：一个没听说过的人，看第一屏，能不能一句话说出这是什么。</p>
   </article>
   <article class="card">
-    <h3>生产力 J 曲线</h3>
-    <p class="one"><b class="tag">一句话</b>一项通用技术进入组织后，生产力统计先下降再上升：前期的投入（培训、改流程、建数据）全被记成成本，收益要等流程改完才出现。</p>
-    <p><b class="tag t-more">展开</b>1987 年索洛说：「计算机时代处处可见，唯独在生产力统计里看不见。」2021 年 Brynjolfsson 等人给了解释，画出来是一个 J：先掉，再涨。J 的底部，是最容易被砍预算的时候。</p>
-    <p><b class="tag t-you">跟你的关系</b>有人问「投了这么多，效果在哪」时，先看采用率和改了几个流程，再看时间和钱；把看不见的投入（工具、知识库、培训人次）单独列一栏。</p>
-    <p class="src">来源：Brynjolfsson, Rock &amp; Syverson (2021). The Productivity J-Curve. AEJ: Macroeconomics。</p>
+    <h3 data-n="9">钱鹏飞那一刀</h3>
+    <p class="one"><b class="tag">一句话</b>9 月 9 日那场会，Ronin 说了 76% 的字，但会议的转向全来自钱鹏飞那 24%。最后一次，钱鹏飞说：「你研究的对象不是学习本身，是一个商业，你的课题是如何做生意。」</p>
+    <p><b class="tag t-more">展开</b>（全部出自那份会议图版）</p>
+    <ul>
+      <li>钱鹏飞给的顺序是：<strong>人性 → 潜质 → 学习目标 → 方法</strong>。「先要谈的是人性的问题——人是懒的，人是好面子的……」Ronin 整场会一直在最后那层「方法」上（怎么记得更快）。</li>
+      <li>「牛刀宰鸡」：「你这个牛刀宰的是不是鸡？可能不是个鸡，它可能是条蛇。」大妈跳舞要的是凤凰传奇的节奏，不是乐理。</li>
+      <li><strong>绝活放错了位置</strong>：他的 AI 教练 App 有一套别处没有的东西（拍照抠图、贴成画、摇一摇有物理效果），却埋在流程深处，第一屏摆的是 20 步问卷。钱鹏飞：「我看不到上来这个好像是个与众不同的 APP。」Ronin：「其实我是有的，但我确实是没有想到把它做到台前。」</li>
+      <li>图版的结论：<strong>「从外面看，『没做』和『做了没讲』是同一件事。」</strong></li>
+    </ul>
+    <p>他两周后对那位硬件朋友说的「价值无法传递」，正是两周前钱鹏飞用在他自己身上的。<span class="flag">这是推断，不是他说的</span></p>
+    <p><b class="tag t-you">跟你的关系</b>三处能直接用。书斋、第一炉香这些游戏，第一屏放的是不是「别处没有」的那个东西？觉然的课和 DLG 的培训，是不是也从「方法」讲起，跳过了「人为什么会打开」？还有你那句「举手，我想当面听」：图版证明他最需要的，恰恰是钱鹏飞这种从商业和人性一侧切进来的人。这正是你 Gallup 里「关系建立」的强项。</p>
   </article>
   <article class="card">
-    <h3>损失厌恶，和指标变成目的</h3>
-    <p><b class="tag t-more">展开</b>人对失去的痛感，大约是同等获得的两倍；手里已有的东西会被高估（Kahneman &amp; Tversky 1979；Thaler 1980）。别人不换工作方式，多半不是看不见新的好，是舍不得旧的熟。所以把「试用」设计成没有损失：旧流程照跑，新工具并行一周。</p>
-    <p>另一条是古德哈特定律：<strong>当一个指标变成目标，它就不再是好指标。</strong>只看 AI 用量，大家就会为了用量而用。</p>
-    <p class="src">来源：Kahneman &amp; Tversky (1979). Econometrica；Strathern (1997) 对古德哈特定律的概括。</p>
+    <h3 data-n="9">会议图版这个格式，coco 可以直接借</h3>
+    <p class="one"><b class="tag">一句话</b>那份图版是从一场会的逐字稿里做出来的信息图报告。它的几个做法，正好是 coco 还没有的。</p>
+    <ul>
+      <li><strong>按分钟画出每人说了多少字</strong>：上下两色，一眼看出谁在独讲、话语权在哪几刻换了手。比一句「76% / 24%」信息多得多。</li>
+      <li><strong>每个结论都标层级</strong>：观察到的、推断的、不知道的，分开写。</li>
+      <li><strong>更正公开写</strong>：初版记错了 agent 数量，第二版改正，并把更正写在图下面。</li>
+      <li><strong>分歧不压平</strong>：两人意见不同的地方，原样画两边。</li>
+      <li><strong>待办按人列</strong>，每条带原话。</li>
+    </ul>
+    <p><b class="tag t-you">跟你的关系</b>能借的三件：每分钟发言量的时间轴；观察和推断分开标（你 vault 的 ✅⚠️❓ 规则已经是这个思路）；看得见的更正区。对 DLG 客户会议，「话语权易手」那张图能直接回答：客户在哪几个点上主动接过了话题。</p>
   </article>
   <article class="card">
-    <h3>不能太高，也不能太低</h3>
-    <p><b class="tag t-more">展开</b>「如果你是房间里最高的人，说明你来错了地方。」但也不能太低。维果茨基的「最近发展区」：学习发生在「自己做不到、有人带一把能做到」的那一段。契克森米哈赖的心流：挑战略高于能力时人最投入。</p>
-    <p><b class="tag t-you">跟你的关系</b>找输入源的标准不是「对方整体比我强」，是「在我正卡住的那一格，比我强一点」。</p>
+    <h3 data-n="9">施乐实验室与苹果：「人群没有分群」</h3>
+    <p class="one"><b class="tag">一句话</b>你吐槽那个 999 刀闭门会，他的诊断是定位没想清楚：「一类人追寻理想与密教，一类人追寻目光和掌声，人群没有分群。」</p>
+    <p><b class="tag t-more">展开</b>「分群」是市场营销的基本功：先按需求把人切开，选你要服务的那一群，再决定在他们心里占什么位置。他说自己「只是一个 PMM，兼研究兼开发」。PMM（产品市场经理）每天干的就是这个，所以这句诊断是他的本行。</p>
+    <p>他说第一类人是「施乐实验室」。施乐的帕洛阿尔托研究中心在 70 年代做出了图形界面、以太网、激光打印机、个人电脑原型，还有艾伦·凯的 Smalltalk，但施乐自己几乎没把它们变成生意。1979 年乔布斯去参观，之后做出了 Macintosh。你问反义词，他说「Apple Inc」。你第二天凌晨补了一句：「apple 也没有错，没有让实验室的发现都只存在于实验室里。」技术史的结论也是这样：发明和创新是两件事。</p>
+    <p><b class="tag t-you">跟你的关系</b>你对那个社群的不舒服（「加入进去之后会被他当作资源」），用他的框架说就是：组织者要目光和掌声，你要信息交换，两群人被关进了同一个房间。你说「如果被当作资源的同时能获得信息交换，那我愿意让渡」。这是一笔清楚的交换，前提是你知道自己在换什么。</p>
   </article>
   <article class="card">
-    <h3>有 1000 个人需要你</h3>
-    <p class="one"><b class="tag">一句话</b>「有 1000 个人需要你，你就成功了。」但还有两个条件：他们是不是非你不可，你的东西能不能不靠你本人就被分发出去。</p>
-    <p><b class="tag t-more">展开</b>这是 Kevin Kelly 2008 年《1,000 True Fans》的变体：一个创作者有 1000 个愿意每年为你花 100 美元的真粉丝，就能靠作品生活。这里把「粉丝」换成「需要你的人」，再加上不可替代、能被分发。</p>
-    <p><b class="tag t-you">跟你的关系</b>拿三个条件检查手上的事：需要、非你不可、能分发。</p>
+    <h3 data-n="9">The Prompting Company：你 GEO 的直接对标</h3>
+    <p class="one"><b class="tag">一句话</b>你当年做作品集用的建站工具 Typedream，那三位创始人现在做 GEO 了，公司叫 The Prompting Company。</p>
+    <p><b class="tag t-more">GEO 先说人话</b>以前做 SEO，是让你在搜索结果里排前面。GEO 是让 AI 在回答别人问题的时候，提到你。</p>
+    <p><b class="tag t-more">展开</b>三位创始人是印尼移民，之前做过 Typedream（被 beehiiv 收购）和一个登录工具（被 Stytch 收购），这次拿了 650 万美元种子轮。做法三步：</p>
+    <ol>
+      <li>找出大家常问 AI 的、带购买意图的问题；</li>
+      <li>生成结构化的内容来回答这些问题；</li>
+      <li>把来访的 AI agent 引到专门为 AI 准备的页面。</li>
+    </ol>
+    <p>CEO 的原话：「大多数公司的网站还只为人设计，但互联网上增长最快的用户群是 AI agent。」</p>
+    <p><b class="tag t-you">跟你的关系</b>拿它三步对照 DLG：第一步对应 Elsie 交代的 SOV 工具和 Emergine 的监测；第三步（给 AI 专门准备的页面），DLG 的奢侈品客户能不能做、愿不愿做，值得问一句。你注意到他们还加了文风分析。群里拉你做 GEO 的那位朋友，也可以拿这家当对标。</p>
+    <p class="src">来源：TechCrunch, 2025-10-30。</p>
+  </article>
+  <article class="card">
+    <h3 data-n="9">「画面不重要，声音不重要，文字最重要」</h3>
+    <p class="one"><b class="tag">一句话</b>他认为 Claude 证明了：语言模型写代码、调度别的工具，就能做出视频。所以单独做视频模型是「歧途」。</p>
+    <p><b class="tag t-more">展开</b>群里这阵子那些「一句话出片」，其实是模型写了一段动画代码，浏览器一帧帧画出来，配乐配音交给 Suno、ElevenLabs。代码是文字，所以他说文字最重要。他还有一句：「当一个岗位工程化的时候，说明这个岗位需要依靠人的判断就少了。」</p>
+    <p><b class="tag t-more">这是他的判断，不是共识</b>群里同时有人说「画面精美这件事 AI 还搞不定」；你也说 Suno 的音乐编辑起来很麻烦。另外，「看懂视频」那一侧，大家公认 Gemini 很强。所以「歧途」如果只指<em>生成</em>，证据多一些；如果连<em>理解</em>也算上，就站不住。</p>
+    <p><b class="tag t-you">跟你的关系</b>「岗位工程化」那句可以拿去看 DLG：设计、文案、剪辑里，哪些环节已经能写成流程交给 agent，剩下的判断才是人的位置。</p>
+  </article>
+  <article class="card">
+    <h3 data-n="9">做视频，要的是 context，不是指令</h3>
+    <p class="one"><b class="tag">一句话</b>你连着两次「请交出你的 prompt」，他说：「我的 prompt 在 flomo 里。」「严格来说，做一个视频，需要的是 context，不是指令。」</p>
+    <p><b class="tag t-more">展开</b>他后来发的《同一盏灯》大纲，就是他说的 context 长什么样。不是一句「帮我做个视频」，是七块：</p>
+    <ol>
+      <li>一句话：整支片要让人记住的那句。</li>
+      <li>叙事线，以及为什么这么排。</li>
+      <li>视觉规则：底色、每种颜色代表什么、字号、动作几秒。</li>
+      <li>分镜表：按 120 拍每分钟切成 30 小节，每一镜写明时间、字、画面、声音。</li>
+      <li>哪三帧适合截图。</li>
+      <li>砍掉了什么，为什么砍。</li>
+      <li>音乐规格：调性、主旋律、每个声部用什么音色。</li>
+    </ol>
+    <p>音乐也是代码合成的，不是 Suno 生成的。和上一张卡是同一个判断。</p>
+    <p><b class="tag t-more">世界观片和宣传片</b>他发过一支影关英语的片子，你说「很好的讲解原理的视频，但这不是一个好的宣传视频」。他说：「这是世界观视频。」「宣传片是要快节奏的。」紧接着发来一支快节奏版。世界观片讲清楚「为什么」，宣传片让人「想试」。</p>
+    <p><b class="tag t-you">跟你的关系</b>你喜欢的写法是「风格必须快节奏、炸裂、炫目」，给风格下形容词；他的写法是把每一秒要发生什么写死。前者适合宣传片，要惊喜；后者适合讲道理，要准确。给同事做开场视频之前，先定它是哪一种。</p>
+  </article>
+  <article class="card">
+    <h3 data-n="9">管理、软件和毛利</h3>
+    <p class="one"><b class="tag">一句话</b>他有两个判断：90 到 00 年代的高速发展，主要靠管理提升了「调度能力」；软件的成本无限接近于零，只要用户够多。</p>
+    <p><b class="tag t-more">展开</b>你讲以前在二次元主题咖啡厅打杂，他说「水的毛利在 80%」「app 在 90%」。<span class="flag">他的估计，当量级看</span>软件第一份很贵，之后每多卖一份几乎不花钱，这是信息经济学的老结论。你问开发呢，他说「开发就是人力」。你说同类软件太多、用户看不到，他说「已经到末期了，自然演化」。你回的是：「下一步沉思：我怎么培养自己的管理能力。」</p>
+    <p><b class="tag t-you">跟你的关系</b>「开发就是人力」正在被 AI 改写，这也是你说的「AI 后非码农的产品创意有机会实现了」。但本章开头那条结论不变：做出来越来越便宜，有人用才是难的。</p>
   </article>
 </section>
 
-<!-- ============ 10 尾声 ============ -->
-<section class="chapter" data-title="尾声" data-caption="<b>场景</b> · 两个星座。左边七位定义了机器和人机关系，右边七位在今天写 AI 之后的事">
-  <header class="chead">
+<!-- ============ 10 你的位置 ============ -->
+<section class="chapter" data-title="你的位置" data-hud="need" data-caption="<b>图 10</b>小山上站着你，周围一千个小人。往下滚，需要你的人一个个亮起来">
+  <header class="chead"><div class="plate">
     <span class="cnum">10</span>
-    <h2>两组七人</h2>
-    <p class="csub">「你会在不经意间遇到他们」</p>
-    <p class="clead">读到这里，前面所有的词都能在这十四个人身上找到出处。</p>
-  </header>
+    <h2>你站在哪</h2>
+    <p class="csub">Echo、内部人，和需要你的 1000 个人</p>
+    <p class="clead">「先学这五个」的最后一个，是你的职业定位。他前后给过好几个说法：真 FDE、Echo、刘备、AIO 的下位替代。拼起来是一张挺清楚的地图。</p>
+  </div></header>
   <article class="card">
-    <h3>信息时代七人组</h3>
-    <p><b class="tag t-more">展开</b>七个人分两派。<strong>定义机器的</strong>：</p>
+    <h3 data-n="10">Delta 与 Echo</h3>
+    <p class="one"><b class="tag">一句话</b>Palantir 派到客户那里的团队是两人一组：Delta 写代码；Echo 不写代码，负责弄清问题、重排流程、让人真的用起来。</p>
+    <p><b class="tag t-more">展开</b>Delta 就是 FDE（驻场工程师），像一个派驻在外的小 CTO。Echo 懂机构里的人情和政治、懂工作流的真实样子、懂大家为什么不愿意用。两人的张力，保证东西既做得出来，又对得上业务。Ronin 说 FDE「主要是帮助平台型企业从客户那里获得行业数据」，「和他配合的还有一个岗位叫 echo」。</p>
+    <p><b class="tag t-you">跟你的关系</b>你说「双人配合比较合理，但目前已经是一个人干六个人的活了」。按你的 Gallup（关系建立 5、战略 3、执行 2），你更像 Echo，眼下同时兼着 Delta。这不是让你放弃开发，是说你在 DLG 真正稀缺的是 Echo 那一半：知道哪个位置放错了人，知道同事真正需要什么。他看了你的 Gallup 说「比较适合做 C 级别人力资源的工作，负责从业务架构到组织架构，想一想刘备」，说的也是 Echo。他叫你「真 FDE」，是在夸你。</p>
+  </article>
+  <article class="card">
+    <h3 data-n="10">你其实不叫 FDE</h3>
+    <p class="one"><b class="tag">一句话</b>他认为国内 FDE 只有一条路：「帮老板搞自动化」。而且你做的事，严格说不叫 FDE。</p>
+    <p><b class="tag t-more">展开</b>他的话很重：「FDE 是个『外人』。」「企业内部都推不动，你指望一个外人推？」「这比咨询分析师还不靠谱。」然后转过来对你说：「你不能叫 FDE，因为 FDE 实际上是平台企业帮助行业中相关企业解决数据问题。」「你本质上是一个 AIO 的下位替代。」「企业要进行数字化转型，内部有余力就会聘请你这类人才，当然现在是 AI 化转型。」</p>
+    <p><b class="tag t-you">跟你的关系</b>你是公司「内部有余力聘请的人」，不是外人。这是优势：你有授权，有上下文。给自己的定位可以写成「企业内部的 AI 转型负责人」，比「FDE」准，也更好讲。「AIO」具体指什么他没说，放进最后一章的问题里。</p>
+  </article>
+  <article class="card">
+    <h3 data-n="10">SICP：用一层层的墙管住复杂</h3>
+    <p class="one"><b class="tag">一句话</b>MIT 1985 年的编程入门书。它教的不是哪门语言，是怎么用「抽象」管住复杂。</p>
+    <p><b class="tag t-more">展开</b>核心是「抽象屏障」：每一层只露出接口，藏住怎么做的。像公司里的交接，上游只交一份文件，下游只读那份文件，不需要知道上游开了几次会。书里最有名的一句：「程序首先是写给人读的，其次才是给机器执行的。」</p>
+    <p>他那份 AI 编程流程图「基于 SICP 和 Anthropic 的 SDLC」：从需求、规格、计划、代码到验收，每层产出一份东西，下一层只读这份东西。他说「普通人没有古法手搓编程的话，缺乏对应的心智模式」，指的就是：拆分、分层、守住不变的规矩。</p>
+    <p>你嫌它把简单事说复杂。他的回答是「和你想控制的规模有关系」：街边包子店，一个本子记流水就够；要同时管 10 台、100 台云主机，就复杂了。你说：「那不就是我现在做的吗。」所以这套东西你迟早要用。</p>
+    <p><b class="tag t-you">最省力的入门</b>不读书。看 1986 年 MIT 的 SICP 视频课第一讲（约一小时），或者只读书的 1.1 节和 2.1 节。</p>
+  </article>
+  <article class="card">
+    <h3 data-n="10">有 1000 个人需要你，你就成功了</h3>
+    <p class="one"><b class="tag">一句话</b>他问你怎么定义成功，你列了一长串条件。他说：「有 1000 个人需要你，你就成功了。」</p>
+    <p><b class="tag t-more">展开</b>「有人需要你，说明你直接参与价值传递。」「打工是价值分配……整个公司是一个人，这个人被 1000、10000 个人需要。」你说那我们都已经成功了。他补了两句关键的：「问题是你的那 1000 个人并不是非你不可。」「而且难以规模化，于是无法去中心化分发。」</p>
+    <p>合起来是三个条件：<strong>有人需要、非你不可、能分发出去</strong>。Kevin Kelly 2008 年有篇《一千个真粉丝》：一个创作者有 1000 个愿意每年为你花 100 美元的人，就能靠作品生活。他的版本把「粉丝」换成了「需要你的人」，又加了后两个条件。</p>
+    <p>他还发过一条讲彼得·蒂尔「三个时间尺度」的视频，说「觉得你需要」：短期看开不开心、学没学到，中期看简历，长期看重不重要。你回：「我现在工作的短期和中期价值是有的，长期价值是偏弱的。」</p>
+    <p><b class="tag t-you">跟你的关系</b>拿三个条件检查手上的事：有没有一群具体的人需要（DLG 同事、培训学员、玩你游戏的人）？他们是不是非你不可？你的东西能不能不靠你本人就被分发出去（课程、工具、文章）？你说的「长期价值偏弱」，大概就是第三条还没有。</p>
+  </article>
+  <article class="card">
+    <h3 data-n="10">声音这一块，你是老师</h3>
+    <p class="one"><b class="tag">一句话</b>他问你音乐、音效、配音有没有好用的服务，你给他讲了影视声音是怎么分工的。这一条，是你教他。</p>
+    <p><b class="tag t-more">展开</b>你讲：AI 之前，一部片子的声音要好几个部门。配音进棚做 ADR（演员后期重录对白）；音效分环境音、合成的特殊音效、拟声；音乐又是另一个领域。拟声英文叫 Foley，就是人碰到东西时的声音：翻书、笔尖划纸、衣服摩擦。这个名字来自 1920 年代末在环球影业做现场拟声的 Jack Foley。你还说音效「是一个不太被重视的部门」，要是能把这些细分全组合起来，「确实可以做出一个史无前例的工具」。</p>
+    <p><b class="tag t-you">跟你的关系</b>你做过音效师，这是他没有的东西，也是「非你不可」的候选。他在做的影关英语、他的视频都需要声音，这里你能给他的，比你从他那里拿的更具体。</p>
+  </article>
+  <article class="card">
+    <h3 data-n="10">「中之人」：不出镜，也能做自媒体</h3>
+    <p class="one"><b class="tag">一句话</b>你说想克服镜头羞耻做自媒体，他建议走「中之人」路线：写文案、录声音，不出镜，可以用虚拟形象。</p>
+    <p><b class="tag t-more">展开</b>「中之人」是日语里，藏在玩偶服或虚拟主播背后的那个真人；「皮套」是虚拟主播的形象。你说「纯文案就够了」「克隆音色去读」。后来他又说：「你的心性，做自媒体对你来说是一个痛苦却适合的工作。」你问是不是怕恶评，他说：「不是害怕，是你不喜欢被冤枉。」</p>
+    <p><b class="tag t-you">跟你的关系</b>你最怕的不是被看见，是被冤枉。所以真要做，先做文字和声音，评论区怎么处理提前想好（不回、只回事实、或者交给助手），这比先克服镜头重要。</p>
+  </article>
+  <article class="card">
+    <h3 data-n="10">房间里最高的人</h3>
+    <p class="one"><b class="tag">一句话</b>你说聊 AI 时身边基本只有你在输出，你需要输入。他说：「如果你是房间里最高的人，说明你来错了地方。」又补了一句：要找一个相对的位置，不能太高也不能太低。</p>
+    <p><b class="tag t-more">展开</b>你开玩笑说想去 DeepSeek 或 Anthropic 当前台，他说「那里可能也没有良师益友」。两个现成的理论说的是同一个区间：</p>
     <ul>
-      <li><strong>图灵</strong>：1936 年证明存在一台能模拟任何其他计算机器的通用机器，划出「可计算」的边界。</li>
-      <li><strong>冯·诺依曼</strong>：1945 年确立「程序和数据放在同一块存储里」，今天所有电脑都是这个结构。</li>
-      <li><strong>香农</strong>：第一章。</li>
+      <li><strong>最近发展区</strong>（维果茨基）：学习发生在「自己做不到、有人带一把能做到」那一段。</li>
+      <li><strong>心流</strong>（契克森米哈赖）：挑战比能力略高一点，人最投入；高太多焦虑，低太多无聊。</li>
     </ul>
-    <p><strong>研究人和机器怎么配合的</strong>：</p>
+    <p><b class="tag t-you">跟你的关系</b>找输入的标准，不是「对方整体比我强」，是「在我正卡住的那一格，比我强一点」。钱鹏飞只说了 24% 的字，但每次都接在 Ronin 的盲区上，这就是「相对位置」的样子。技术深度上可以找 Ronin，产品和商业上找钱鹏飞这类人，一线玩法上 VF999 的徐善、Jiacheng 已经够用。</p>
+  </article>
+</section>
+
+<!-- ============ 11 拔出来看 ============ -->
+<section class="chapter" data-title="拔出来看" data-caption="<b>图 11</b>镜头从你身边升起，看见你和 Ronin、老板、同事、爸妈之间的线。升到上面那一层，就是 n+1 层">
+  <header class="chead"><div class="plate">
+    <span class="cnum">11</span>
+    <h2>把自己拔出来看</h2>
+    <p class="csub">你，和你身边的人</p>
+    <p class="clead">这一章不是知识点。是深夜那些对话里，他对你说过的话。同事、老板、父母、兴趣、衰老。他很少给建议，多半是给你一个往上看一层的位置。</p>
+  </div></header>
+  <article class="card private">
+    <h3 data-n="11">谁受益，谁受损</h3>
+    <p class="one"><b class="tag">一句话</b>你讲了和一位同事的冲突。他没评对错，只让你问两个问题：「整个事情，谁受益，谁受损？」以及「谁授权的？」</p>
+    <p><b class="tag t-more">展开</b>那天你先得知身边有同事要被裁。然后讲到另一位：他半年没推动的项目，你接手一个月做完了，之后他对你态度很差。Ronin 的回应：</p>
     <ul>
-      <li><strong>维纳</strong>：1948 年《控制论》，反馈回路，第六章那个环。</li>
-      <li><strong>司马贺</strong>：有限理性，「满意即可」；1971 年写下「信息的丰富造成注意力的贫乏」。</li>
-      <li><strong>恩格尔巴特</strong>：1962 年《增强人类智力》，计算机是增强人，不是替代人；1968 年「所有演示之母」首次公开展示鼠标和超链接。</li>
-      <li><strong>艾伦·凯</strong>：面向对象的原始提出者，原意是把程序拆成一群互相发消息、各管各状态的小「细胞」。「预测未来最好的方法是发明它」。</li>
+      <li>「砸人饭碗，犹如杀人父母。」</li>
+      <li>「你不把自己拔出来，就不看到真相。」</li>
+      <li>「因为你的出现本身，而非你的行为影响了他。」「你的存在属性不是由你决定，而是由 leader 决定。」</li>
+      <li>「你凭什么推动他的业务线？谁授权的？」你说老板。他说：「那不就是老板借刀杀人。」</li>
+    </ul>
+    <p>「谁受益」是一句古罗马法谚 cui bono：查案先看谁从中得利。</p>
+    <p><b class="tag t-you">跟你的关系</b>他给的是一套把情绪换成结构的问法。下次再遇到，先写三行：这件事的授权人是谁；我的出现改变了谁的处境；谁从现在的局面里得利。写完再决定是友善还是正面冲突。你自己已经说过「可能老板只是要我的出现来敲打他」，这就是第三行。</p>
+    <p><b class="tag t-more">第二天晚上</b>你说公司「明显风光不再了」，打算写简历。他问：「关键是你想要什么？」你说养活自己、尽可能多赚点。他引你自己的话回了一句：「你的表达是自己能够被人尽其才。」最后他说：「因为你确实被气到了。」「需要抱抱被气到的自己，让自己不生气。」他没给建议，给的是两件事：先弄清目的，先照顾好此刻的情绪。</p>
+  </article>
+  <article class="card private">
+    <h3 data-n="11">父母的「上下文」固化了</h3>
+    <p class="one"><b class="tag">一句话</b>国庆回家你和家里吵了几次。他的解释是：现在强大的那个人是你；而父母，像大模型一样，会留在自己的那个年代。</p>
+    <p><b class="tag t-more">展开</b>你说早上和爸爸吵架，他说：「因为，现在强大的人是你。」「你还没有习惯这具强大身体里的力量如何与家庭成员之间配合。」「当然，他们也很不习惯。」后来你讲到一位长辈替你弟弟讲「吃苦论」，喝醉了还打电话催婚，爸妈默许，你说自己「在这方面有点应激」。他说：「看来你想要分家了。」「其实父母也是小朋友。」「只是每个人的 context layer 发生不同程度的固化。」「人其实和大模型的型号是一样的，会留在过去。」</p>
+    <p><b class="tag t-more">现成的说法</b>家庭治疗里有个词叫「自我分化」：和原生家庭保持感情上的连接，同时不被家里的情绪和规矩带着走。分化得好的人能做到「不同意，但不翻脸」。他说的「分家」不是搬出去，是这个意思。</p>
+    <p><b class="tag t-you">跟你的关系</b>大模型的比喻很好用。模型有训练截止日期，你不会因为它不知道最新消息而生气，只会补上下文。对父母也一样：催他们进步，是往一个旧模型里硬塞新知识，效果有限。更省力的是，先决定哪些事你自己拍板，不需要他们同意。</p>
+  </article>
+  <article class="card">
+    <h3 data-n="11">兴趣变成钱，兴趣就没了</h3>
+    <p class="one"><b class="tag">一句话</b>你说他研究这么前沿，回报还没跟上。他连着回了四句，合起来是一套关于回报的看法。</p>
+    <ul>
+      <li><strong>「居于木雁之间，应有龙蛇之变。」</strong>出自《庄子·山木》：山里的大树因为没用活下来，主人家的鹅因为不会叫被杀了。弟子问该怎么办，庄子先说「处在有用和没用之间」，又自己否定了一半，说更好的是像龙和蛇，该显就显，该藏就藏。</li>
+      <li><strong>「找到一个长长的雪坡滚雪球会更好玩一些。」</strong>巴菲特：人生像滚雪球，要找很湿的雪和很长的坡。说的是复利。</li>
+      <li><strong>「把自己的兴趣变成钱，兴趣很快就没了。」</strong>心理学叫「过度理由效应」：本来爱画画的小孩，被告知画了有奖之后，自由时间里反而画得少了。事先许诺、和表现挂钩的奖励最伤兴趣；事后意外的奖励和夸奖不会。</li>
+      <li><strong>「金融即融金。」</strong>字面倒过来读：让钱自己流动、自己生钱，和滚雪球是一回事。<span class="flag">这是一种解读</span></li>
+    </ul>
+    <p>后来他说你是「一个等待戈多的人」，又说：「如果你能明确地知道自己的天命，你就有足够的理由燃烧自己。」你说天命是辅佐，他回：「还没有起风。」不知道自己要什么时，人会一直等；知道了，就值得全力投入；什么时候投入，要等风。和「龙蛇之变」是同一个判断。</p>
+    <p><b class="tag t-you">跟你的关系</b>你说过自己「不能允许任何一件交到我手里的事情因为我的能力而失败」。这句定的是<em>别人交来的事</em>的标准。他那几句问的是另一件事：<em>你自己选的事</em>，是什么。</p>
+  </article>
+  <article class="card private">
+    <h3 data-n="11">清洁是熵减，很累</h3>
+    <p class="one"><b class="tag">一句话</b>一个下雨天，他说「清洁是熵减，很累」，然后讲了一串关于复杂和衰老的话。</p>
+    <blockquote>你：今天外面雨绵绵，晚饭可以外卖（请好好吃饭<br>他：清洁是熵减，很累。今天已经吃过了，晚上就不吃了，正好禁食 16 小时<br>他：人生就是负担越来越多，复杂性越来越高<br>他：所以尽可能少占有和产生连接<br>他：人的衰老，是系统无法处理复杂性<br>他：复杂，complexity，complex，com + plex，共同纠缠产生复杂<br>你：主要是我已经很久没有想要占有一个人的冲劲了<br>你：所以老师继续淡下去吧！我去追逐下一次衰老了<br>他：好</blockquote>
+    <p><b class="tag t-more">熵减先说人话</b>屋子不收拾会越来越乱，这是世界的默认方向，叫熵增。把它收拾整齐，要花力气，叫熵减。</p>
+    <p><b class="tag t-you">为什么收进来</b>这不是知识点，是状态。和上一张卡是同一件事的两面：占有和连接都要付代价，代价是复杂，复杂让人老。你一边说「不能允许交到我手里的事失败」，一边说「很久没有想要占有一个人的冲劲了」，这两句放在一起，比任何一个概念都值得想一想。</p>
+  </article>
+  <article class="card">
+    <h3 data-n="11">n+1 层：能看见自己的那一层</h3>
+    <p class="one"><b class="tag">一句话</b>他和钱鹏飞从「什么是值得过的生活」聊到宗教、哲学和 AI：各种安身立命的经典，都在人身上造一个「n+1 层」，也就是能看见自己的那一层。</p>
+    <p><b class="tag t-more">展开</b>他说：「这个觉察就是观自在菩萨的观自在，就是古希腊神庙上的认识你自己，就是王阳明的知行合一，也是道家的内观，科学家的内省。」「在研究者来看就是元认知，佛教称之为般若。」（小更正：「认识你自己」刻在德尔斐的阿波罗神庙，不是帕特农神庙。般若的意思是智慧。）</p>
+    <p>钱鹏飞说：「佛提供了闭环，哲学没有闭环，提供了一个知性循环路径，后者引领科学改变世界。」他接：「他们的 loop engineering 选择了不同的拓扑。」说人话：都是循环，形状不一样。一个绕回原点，一个一直往外开口。</p>
+    <p>还有一句接得上司马贺：「旧的机制选择了最便宜最可行的方案，不追求最优，追求当前最可用。」</p>
+    <p><b class="tag t-more">你的回应</b>你讲了大学朋友怎么把你从低谷里拽回来。他说「你在拟态」「会比较耗蓝」：拟态是一种生物模仿另一种的样子，蓝条是游戏里的法力值。意思是你在学那位朋友的乐观画风，但那不是你的出厂设置，维持起来费劲。你回：「我证明个毛线，我本来就好得很。」后来他说：「你只是在表达。」</p>
+    <p><b class="tag t-you">跟你的关系</b>「n+1 层」就是你这几个月在练的东西：写复盘，让 Claude 分析你们的对话，做这份清单，都是在给自己加一层能看见自己的眼睛。</p>
+  </article>
+</section>
+
+<!-- ============ 12 尾声 ============ -->
+<section class="chapter" data-title="下次见面" data-caption="<b>图 12</b>一盏盏纸灯笼往上飘：没问完的问题，下次见面再问">
+  <header class="chead"><div class="plate">
+    <span class="cnum">12</span>
+    <h2>留给下次见面</h2>
+    <p class="csub">判断表、几句白话、只有他能回答的问题</p>
+    <p class="clead">你说过他「每一步预判都中了」。与其记住「他很准」，不如把他的判断写下来，到期回来打勾。</p>
+  </div></header>
+  <article class="card">
+    <h3 data-n="12">他的时间判断表</h3>
+    <table>
+      <tr><th>说的时间</th><th>判断</th><th>回来对照</th></tr>
+      <tr><td>2023 年底</td><td>2027 年会有好莱坞级别的 AIGC（今年 9 月他说 2026 年底已可实现）</td><td>2027 年底</td></tr>
+      <tr><td>2026-09-27</td><td>24 小时常驻的智能体要来了</td><td>未给时间</td></tr>
+      <tr><td>2026-09（会上）</td><td>2027 年会出 $2000 一档的 Ultra</td><td>2027 年</td></tr>
+      <tr><td>2026-10-08</td><td>6 个月内冒出新的 Jev，进入后训练大爆发</td><td>2027 年 4 月</td></tr>
+      <tr><td>2026-10-08</td><td>只卖模型能力的公司会在第二阶段死掉，「Kimi 和 GLM 都会死」</td><td>未给时间</td></tr>
+    </table>
+    <p class="note">「好莱坞级别」没有公认标准，到时候怎么算「中」，你自己先定一个。</p>
+  </article>
+  <article class="card">
+    <h3 data-n="12">几句被你划过去的话，翻成白话</h3>
+    <ul>
+      <li><strong>「文化把战略当午餐」</strong>：再好的战略，遇到不配合的组织文化也会失效。他用它说上一代企业的核心竞争力在组织，下一代「以 agent 为核心，人退位」。</li>
+      <li><strong>「连接与计算」</strong>：平台的价值是把人连起来，AI 的价值是算得又快又好。夹在中间的应用，两边都不占。</li>
+      <li><strong>「From prompt to loop」</strong>：从「写好一句提示词」，走到「设计一个循环」。迷失的时候，回到起点想：模型是一个不记得你、只会猜下一个词的函数。</li>
+      <li><strong>「当你放弃可能性的时候，你能获得主体性」</strong>：选择就是放弃。一直留着所有可能性的人，其实没在选。你回的是「我拥有主体性」。</li>
+      <li><strong>「优秀是素养，厉害是能力，这是 2 个方向」</strong>：你追问他之前的夸奖走没走心，他把两个词拆开了。</li>
+      <li><strong>「MBTI 只是一种心理量表，就像量身高一样」</strong>：你说你用它来塑造别人对你的第一印象。这个用法，它撑得住。</li>
+      <li><strong>「文静是你的保护色，暴力是你保护自己的手段」</strong>：表哥说你现在说话文文静静，初中却经常揍他。两者不冲突，都是自我保护，方式不同。你回：「懂我。」</li>
+      <li><strong>「知止而后有定」</strong>：出自《大学》。先知道停在哪，心才定得下来。他把它改成了一条给 Claude 的规则。</li>
+      <li><strong>「缩写词就像一个 zip 文件夹，解压后才知道」</strong>：这句是你说的。很准，留着。</li>
     </ul>
   </article>
   <article class="card">
-    <h3>今天的七位写作者：先读这五篇</h3>
-    <p>一手经验、短、对 AI 既用得深又不信广告。湾区七人里，先读这五篇，合计一小时：</p>
-    <ul>
-      <li><strong>Jason Wei</strong>《验证的不对称性与验证者法则》（2025）：有些任务解起来难、验起来容易。满足「有客观真值、几秒可验、可并行验、低噪声、有连续分值」的任务，AI 迟早全部解决。判断什么工作会先被自动化，用这五条打分。</li>
-      <li><strong>Geoffrey Litt</strong>《理解，才是新的瓶颈》（2026）：AI 写代码之后人还要不要看懂？要，但不是为了检查，是为了还能参与。</li>
-      <li><strong>Steph Ango</strong>《理解不能外包》（2023）：四百多词，寄生虫的比喻。</li>
-      <li><strong>Nabeel Qureshi</strong>《关于 Palantir 的反思》（2024）：驻场工程师（Delta）和部署策略师（Echo）这套搭档的一手记录。前者写代码，后者定义问题、重设流程、推动采用。</li>
-      <li><strong>Paul Graham</strong>《会写与不会写》（2024）：AI 代笔让写作的压力消失，世界会分成会写和不会写两种人。而写作就是思考。</li>
-    </ul>
-    <p class="note">另外两位：Linus Lee（「思想的合成器」）、Michael Nielsen（如何对科技保持明智的乐观）。篇名为中文译名。</p>
-  </article>
-  <article class="card">
-    <h3>边界：这一切的前提是「符号够用」</h3>
-    <p><b class="tag t-more">展开</b>今天模型会的每件事（问答、长链推理、写代码、调工具、操作电脑）都落在符号那一枝。另一枝是触觉、温度、力反馈、身体的位置感，一格都没填上。人操控自己的身体不需要语言，所以问题不是模型学不学得会，是<strong>那种数据在哪</strong>。</p>
-    <p>具身的门槛在哪？同一个人隔七个月给过两个答案：一是「有没有一个逃不掉的硬边界」（会摔、会坏、配额用完就没了；token 消耗是代谢，限额警告是饥饿），二是「输出端能不能离开符号」。两个答案不冲突，但也没合上。摆出来，比选一个更诚实。</p>
+    <h3 data-n="12">只有 Ronin 能回答的问题</h3>
+    <p>原清单攒了 28 个，这里挑最值得当面问的：</p>
+    <ol>
+      <li>「任务或者工作只有两种类型」那天，到底怎么说的？</li>
+      <li>他那份 AI 编程流程图，对应 SICP 的哪几个概念？</li>
+      <li>「其实大家都缺数据」是说群里那几位，还是整个行业？他要去的具身公司缺哪一类：遥控演示、真机试错，还是仿真？</li>
+      <li>谛听的四组（记录 / 对象 / 委托 / 系统），是不是就是他说的那几层？agent 拿到一个待办之后具体怎么办？</li>
+      <li>BP 机那条：他心里是一台单独的硬件，还是手机上的通知加快捷回复？</li>
+      <li>9.9 会议之后，AI 教练 App 把那套绝活搬到第一屏了吗？</li>
+      <li>「多模态是歧途」，只指生成画面，还是也包括看懂画面？</li>
+      <li>「叫我哥」写在哪一层？一般聊多长它开始掉？</li>
+      <li>「用户不需要那么好的油」，是所有用户，还是某一类用户、某一类任务？</li>
+      <li>「你本质上是一个 AIO 的下位替代」，AIO 指什么？</li>
+      <li>human × Agent<sup>n</sup>，他自己现在的 n 是多少？验收怎么做？</li>
+      <li>那段关于复杂和衰老的话，是他的通用看法，还是针对你那句说的？</li>
+    </ol>
+    <p class="note">还有一件你能补上的：他 9 月 16 日那两张图（loop 四格、AI 概念扫描）当时没读到。截图放进 vault，第 5 章那张卡就能从「推断」改成「原图」。</p>
   </article>
 </section>
 
 <section class="ending">
-  <p class="q">做出来越来越便宜，<br>讲明白越来越贵。</p>
-  <p class="fine">本页由几份个人补课笔记消化而成：与 Ronin 的对话补课清单、Claude 观察补课清单、《状态换了三次地方》、硅谷博客选读。私人对话与工作细节已略去，推断与未核实处保留原笔记的标注。「延伸」卡片为另行补充，出处写在卡片底部。<br>视觉致敬 <a href="https://github.com/iamtechartist" rel="noopener">Techartist</a> 的浏览器 3D 作品。Three.js r169 · 2026</p>
+  <p class="q">峰留给人，<br>谷交给 Agent。</p>
+  <p class="fine">本页只以《Ronin 对话补课清单》为主材料（2026-09-06 至 10-09，七批，74 条），按主线重新分章、重写文案；原笔记未改动。私人对话保留，因为这是写给 Coco 自己读的版本。推断与未核实处沿用原笔记的标注；标「延伸」的卡片为另行查证的补充，出处写在卡片底部。<br>视觉向 <a href="https://github.com/iamtechartist" rel="noopener">Techartist</a> 的「书」那一路作品学习（立体书 Fold、给学生的物理课本 Every Joule）：每章从书页上弹起一个讲概念的纸模型。Three.js r169 · 2026</p>
 </section>
 
 </main>
